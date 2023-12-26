@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fyp/Screens/HomeScreen/home_screen.dart';
 import 'package:fyp/Screens/SignInScreen/sigin.dart';
 import '/HelperMaterial/constant.dart';
 import '/HelperMaterial/errors.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
+import 'package:fyp/Screens/navigation_bar.dart';
 
 class SigninForm extends StatefulWidget {
   const SigninForm({super.key});
@@ -145,10 +147,10 @@ class _SigninFormState extends State<SigninForm> {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
                 //KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, SignInScreen.routeName);
+                Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },
-            child: const Text("Continue"),
+            child: const Text("Sign In"),
           ),
         ],
       ),

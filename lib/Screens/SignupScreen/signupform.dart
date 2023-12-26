@@ -3,6 +3,7 @@ import 'package:fyp/HelperMaterial/constant.dart';
 //import 'package:flutter_svg/svg.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
+import 'package:fyp/Screens/HomeScreen/home_screen.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -176,6 +177,7 @@ class _SignUpFormState extends State<SignUpForm> {
               borderRadius: BorderRadius.circular(35),
 
             ),
+
             child: DropdownButton<String>(
               padding: const EdgeInsets.fromLTRB(10, 5, 0.0, 0.0),
               borderRadius: BorderRadius.circular(50),
@@ -211,10 +213,10 @@ class _SignUpFormState extends State<SignUpForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
-                //  Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },
-            child: const Text("Continue"),
+            child: const Text("Sign Up"),
           ),
         ],
       ),
