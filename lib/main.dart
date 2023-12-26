@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
-//import 'package:fyp/Screens/SignInScreen/sigin.dart';
 import 'Screens/onBoardingScreen/onboardscreen.dart';
 import 'HelperMaterial/routes.dart';
-//import 'Screens/SignupScreen/signup.dart';
+
 
 
 void main() {
