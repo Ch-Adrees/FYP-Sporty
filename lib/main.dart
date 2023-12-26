@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
 import 'Screens/onBoardingScreen/onboardscreen.dart';
 import 'HelperMaterial/routes.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 
 
 void main() {
