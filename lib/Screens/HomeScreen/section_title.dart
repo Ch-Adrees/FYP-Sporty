@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:fyp/HelperMaterial/constant.dart';
 class SectionTitle extends StatelessWidget {
   const SectionTitle({
     Key? key,
@@ -24,7 +24,7 @@ class SectionTitle extends StatelessWidget {
         ),
         TextButton(
           onPressed: press,
-          style: TextButton.styleFrom(foregroundColor: Colors.grey),
+          style: TextButton.styleFrom(foregroundColor: kPrimaryColor),
           child: Text("View all",),
         ),
       ],

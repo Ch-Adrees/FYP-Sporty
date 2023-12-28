@@ -4,6 +4,7 @@ import 'package:fyp/Screens/SignInScreen/sigin.dart';
 import '/HelperMaterial/constant.dart';
 import '/HelperMaterial/errors.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
+import 'package:fyp/Screens/ForgetPassword/forget_password_screen.dart';
 import 'package:fyp/Screens/navigation_bar.dart';
 
 class SigninForm extends StatefulWidget {
@@ -130,11 +131,12 @@ class _SigninFormState extends State<SigninForm> {
               //     const Text("Remember me"),
               const Spacer(),
               GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                    context, SignInScreen.routeName),
+                onTap: () =>
+                  Navigator.pushNamed(context, ForgetPassScreen.routeName),
+
                 child: const Text(
                   "Forgot Password",
-                  style: TextStyle(decoration: TextDecoration.underline),
+                  style: TextStyle(decoration: TextDecoration.underline, color: kPrimaryColor),
                 ),
               )
             ],

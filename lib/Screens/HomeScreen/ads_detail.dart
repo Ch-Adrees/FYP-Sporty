@@ -21,7 +21,7 @@ class AdsDetail extends StatelessWidget {
         onTap: press,
         child: SizedBox(
           width: 242,
-          height: 150,
+          height: 100,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Stack(
