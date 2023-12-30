@@ -3,6 +3,7 @@ import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/Screens/OTPScreen/otp_screen.dart';
+import 'package:fyp/HelperMaterial/no_account_text.dart';
 
 
 class ForgotPassForm extends StatefulWidget {
@@ -66,11 +67,14 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
                 Navigator.pushNamed(context, OtpScreen.routeName);
               }
             },
             child: const Text("Send Code"),
           ),
+          const SizedBox(height: 20),
+          const NoAccountText(),
         ],
       ),
     );

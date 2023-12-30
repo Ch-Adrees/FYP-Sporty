@@ -3,7 +3,8 @@ import 'package:fyp/HelperMaterial/constant.dart';
 //import 'package:flutter_svg/svg.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
-import 'package:fyp/Screens/HomeScreen/home_screen.dart';
+import 'package:fyp/Screens/navigation_bar.dart';
+import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -183,7 +184,7 @@ class _SignUpFormState extends State<SignUpForm> {
               borderRadius: BorderRadius.circular(50),
 
               value: selectedRole,
-              hint: const Text('Select'),
+              hint: const Text('Select Your Role'),
               icon: const Icon(Icons.arrow_drop_down),
               underline:Container(height: 0,) ,
               iconSize:30,
@@ -202,6 +203,9 @@ class _SignUpFormState extends State<SignUpForm> {
                   child: Text(value),
                 );
               }).toList(),
+              //decoration: InputDecoration(
+
+
             ),
           ),
 
@@ -212,8 +216,13 @@ class _SignUpFormState extends State<SignUpForm> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, HomeScreen.routeName);
+
+                if(selectedRole == 'Seller'){
+                  Navigator.pushNamed(context, CompleteProfile.routeName);
+                }
+                else{
+                  Navigator.pushNamed(context, NavBarScreen.routeName);
+                }
               }
             },
             child: const Text("Sign Up"),

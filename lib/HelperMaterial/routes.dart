@@ -6,6 +6,7 @@ import 'package:fyp/Screens/HomeScreen/home_screen.dart';
 import 'package:fyp/Screens/ForgetPassword/forget_password_screen.dart';
 import 'package:fyp/Screens/OTPScreen/otp_screen.dart';
 import 'package:fyp/Screens/navigation_bar.dart';
+import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
 
 
 
@@ -18,6 +19,7 @@ final Map<String,WidgetBuilder> listOfRoutes={
   OtpScreen.routeName: (context) => const OtpScreen(),
   SignUpScreen.routeName: (context) => const SignUpScreen(),
   HomeScreen.routeName: (context) => const HomeScreen(),
+  CompleteProfile.routeName: (context) => const CompleteProfile(),
 
 
 };

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
 import 'Screens/onBoardingScreen/onboardscreen.dart';
-import 'package:fyp/Screens/HomeScreen/home_screen.dart';
 import 'HelperMaterial/routes.dart';
-import 'package:fyp/Screens/ForgetPassword/forget_password_screen.dart';
+import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
 
 
 
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Sporty App',
       theme: AppTheme.lightTheme(context),
-      //home: const ForgetPassScreen(),
+      //home: const CompleteProfile(),
       initialRoute: OnBoardScreen.routeName,
       routes: listOfRoutes,
     );

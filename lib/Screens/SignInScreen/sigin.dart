@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fyp/HelperMaterial/no_account_text.dart';
 import 'package:fyp/Screens/SignInScreen/signinform.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
-import 'package:fyp/Screens/SignupScreen/signup.dart';
 import 'package:fyp/HelperMaterial/social_card.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -75,26 +75,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    // NoAccountText(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Don’t have an account? ",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                              context, SignUpScreen.routeName),
-                          child: const Text(
-                            "Sign Up",
-                            style:
-                                TextStyle(fontSize: 16, color: kPrimaryColor),
-                          ),
-                        ),
-                      ],
-                    ),
+                    const SizedBox(height: 16),
+                    const NoAccountText(),
+
                   ],
                 ),
               ),

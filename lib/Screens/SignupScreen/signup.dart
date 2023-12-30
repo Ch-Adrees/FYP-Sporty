@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/SignupScreen/signupform.dart';
 import 'package:fyp/HelperMaterial/social_card.dart';
+import 'package:fyp/HelperMaterial/no_account_text.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -66,6 +67,8 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 16),
+                  const NoAccountText(),
                 ],
               ),
             ),
