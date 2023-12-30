@@ -7,7 +7,9 @@ const Color inActiveIconColor = Color(0xFFB6B6B6);
 
 class NavBarScreen extends StatefulWidget {
   const NavBarScreen({super.key});
+
   static String routeName = "/";
+
   @override
   State<NavBarScreen> createState() => _NavBarScreenState();
 }
@@ -23,8 +25,24 @@ class _NavBarScreenState extends State<NavBarScreen> {
 
   final pages = [
     const HomeScreen(),
+//    const FavoriteScreen(),
+    const Center(
+      child: Text("Chat"),
+    ),
+    const Center(
+      child: Text("Aa jati ha pehlay burer khilao"),
+    ),
+    const Center(
+      child: Text("Chat"),
+    ),
+    const Center(
+      child: Text("Chat"),
+    ),
 
+
+    //  const ProfileScreen()
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +90,23 @@ class _NavBarScreenState extends State<NavBarScreen> {
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
+              "assets/icons/Heart Icon.svg",
+              colorFilter: const ColorFilter.mode(
+                inActiveIconColor,
+                BlendMode.srcIn,
+              ),
+            ),
+            activeIcon: SvgPicture.asset(
+              "assets/icons/Heart Icon.svg",
+              colorFilter: const ColorFilter.mode(
+                kPrimaryColor,
+                BlendMode.srcIn,
+              ),
+            ),
+            label: "Adrees",
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
               "assets/icons/Chat bubble Icon.svg",
               colorFilter: const ColorFilter.mode(
                 inActiveIconColor,
@@ -109,4 +144,3 @@ class _NavBarScreenState extends State<NavBarScreen> {
     );
   }
 }
-

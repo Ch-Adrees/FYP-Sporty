@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fyp/Screens/HomeScreen/home_header.dart';
 import 'package:fyp/Screens/HomeScreen/ads_slider.dart';
 import 'package:fyp/Screens/HomeScreen/categories.dart';
+import 'package:fyp/Screens/HomeScreen/products.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -22,6 +23,8 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(height: 25),
                 Category(),
                 SizedBox(height: 25),
+                Product(),
+
 
 
               ],

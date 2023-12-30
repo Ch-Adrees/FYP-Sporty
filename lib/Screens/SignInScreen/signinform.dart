@@ -149,7 +149,7 @@ class _SigninFormState extends State<SigninForm> {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
                 //KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, HomeScreen.routeName);
+                Navigator.pushNamed(context, NavBarScreen.routeName);
               }
             },
             child: const Text("Sign In"),
