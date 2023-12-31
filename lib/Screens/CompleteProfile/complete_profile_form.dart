@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+//import 'package:image_picker_plus/image_picker_plus.dart';
+//import 'package:image_picker/image_picker.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
@@ -7,9 +10,10 @@ class CompleteProfileForm extends StatefulWidget {
   const CompleteProfileForm({super.key});
 
   @override
-  _CompleteProfileFormState createState() => _CompleteProfileFormState();
+  CompleteProfileFormState createState() => CompleteProfileFormState();
+
 }
-class _CompleteProfileFormState extends State<CompleteProfileForm>{
+class CompleteProfileFormState extends State<CompleteProfileForm>{
   final _formkey = GlobalKey<FormState>();
   final List<String> errors =[];
   String? firstName, lastName, shopName, phoneNo, address;
@@ -27,6 +31,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>{
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -144,12 +149,30 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>{
               suffixIcon: CustomSuffixIcons(svgIcon: "assets/icons/Location point.svg"),
             ),
           ),
+          const SizedBox(height: 20,),
+          // const ElevatedButton(
+          //   onPressed: _pickImage,
+          //   child: Text('Add Picture'),
+          // ),
+      //   ElevatedButton(
+      //   onPressed: () async {
+      //     ImagePickerPlus picker = ImagePickerPlus(context);
+      //
+      //     SelectedImagesDetails? details =
+      //     await picker.pickImage(source: ImageSource.gallery);
+      //     //if (details != null) await displayDetails(details);
+      //   },
+      //   child: const Text("Normal 1"),
+      // ),
           FormError(errors: errors),
-          const SizedBox(height: 35),
+          const SizedBox(height: 30),
           ElevatedButton(
             onPressed: () {
               if (_formkey.currentState!.validate()) {
                 //Navigator.pushNamed(context, OtpScreen.routeName);
+                  const SnackBar(
+                    content: Text('Profile setup success!'),
+                  );
               }
             },
             child: const Text("Continue"),
@@ -159,3 +182,41 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>{
     );
   }
 }
+
+
+// Future<void> _pickImage() async {
+//   final ImagePicker _picker = ImagePicker();
+//   XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+//
+//   if (image != null) {
+//     // Process the selected image (save it, display it, etc.)
+//     // You can set the image variable in your state to display it in the UI
+//   }
+// }
+
+
+// ElevatedButton normal1(BuildContext context) {
+//   return ElevatedButton(
+//     onPressed: () async {
+//       ImagePickerPlus picker = ImagePickerPlus(context);
+//
+//       SelectedImagesDetails? details =
+//       await picker.pickImage(source: ImageSource.gallery);
+//       if (details != null) await displayDetails(details);
+//     },
+//     child: const Text("Normal 1"),
+//   );
+// }
+
+// Future<void> displayDetails(SelectedImagesDetails details) async {
+//   await Navigator.of(context).push(
+//     CupertinoPageRoute(
+//       builder: (context) {
+//         // return DisplayImages(
+//         //     selectedBytes: details.selectedFiles,
+//         //     details: details,
+//         //     aspectRatio: details.aspectRatio);
+//       },
+//     ),
+//   );
+//}
