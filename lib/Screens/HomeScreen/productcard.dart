@@ -6,14 +6,16 @@ class ProductCard extends StatelessWidget {
   const ProductCard({
     Key? key,
     this.width = 140,
-    this.aspectRatio = 1.02,
+    this.aspectRatio = 1.0,
     required this.product,
     required this.onPress,
+    this.price,
   }) : super(key: key);
 
   final double width, aspectRatio;
   final Products product;
   final VoidCallback onPress;
+  final String? price;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class ProductCard extends StatelessWidget {
             AspectRatio(
               aspectRatio: 1.02,
               child: Container(
+
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: kSecondaryColor.withOpacity(0.1),
