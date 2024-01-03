@@ -145,9 +145,15 @@ class _SigninFormState extends State<SigninForm> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
+                if(email == "chadreeswarriach@gmail.com" && password == "adrees123"){
+                  //Navigator.pushNamed(context, routeName);
+                }
+                else{
+                  Navigator.pushNamed(context, NavBarScreen.routeName);
+                }
                 // if all are valid then go to success screen
                 //KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, NavBarScreen.routeName);
+
               }
             },
             child: const Text("Sign In"),

@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-//import 'package:image_picker_plus/image_picker_plus.dart';
-//import 'package:image_picker/image_picker.dart';
-//import 'package:flutter/cupertino.dart';
+import 'package:fyp/HelperMaterial/errors.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
-import 'package:fyp/HelperMaterial/errors.dart';
-import 'package:fyp/Screens/SellerHomeScreen/seller_home_screen.dart';
-
-class CompleteProfileForm extends StatefulWidget {
-  const CompleteProfileForm({super.key});
+class UploadAdsForm extends StatefulWidget {
+  const UploadAdsForm({super.key});
 
   @override
-  CompleteProfileFormState createState() => CompleteProfileFormState();
-
+  UploadAdsFormState createState() => UploadAdsFormState();
 }
-class CompleteProfileFormState extends State<CompleteProfileForm>{
+
+class UploadAdsFormState extends State<UploadAdsForm> {
   final _formkey = GlobalKey<FormState>();
   final List<String> errors =[];
-  String? firstName, lastName, shopName, phoneNo, address;
+  String? productCode, productTitle, productDescription, productQuantity, productPrice;
+
+  Image? productImages;
+  Color? productColors;
   void addError({String? error}){
     if(!errors.contains(error)){
       setState(() {
@@ -32,7 +30,6 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -41,46 +38,46 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
         children: [
           const SizedBox(height: 20),
           TextFormField(
-            onSaved: (newValue) => firstName = newValue,
+            onSaved: (newValue) => productCode = newValue,
             onChanged: (value){
               if(value.isNotEmpty){
-                removeError(error: kNameNullError);
+                removeError(error: kProductCodeNullError);
               }
               return;
             },
             validator: (value){
               if(value!.isEmpty){
-                addError(error: kNameNullError);
+                addError(error: kProductCodeNullError);
                 return "";
               }
               return null;
             },
             decoration: const InputDecoration(
-              label: Text("First Name"),
-              hintText: "Enter your First Name",
+              label: Text("Product Code"),
+              hintText: "Enter Product code",
               floatingLabelBehavior: FloatingLabelBehavior.always,
               suffixIcon: CustomSuffixIcons(svgIcon: "assets/icons/User.svg"),
             ),
           ),
           const SizedBox(height: 20),
           TextFormField(
-            onSaved: (newValue) => lastName = newValue,
+            onSaved: (newValue) => productTitle = newValue,
             onChanged: (value){
               if(value.isNotEmpty){
-                removeError(error: kNameNullError);
+                removeError(error: kProductTitleNullError);
               }
               return;
             },
             validator: (value){
               if(value!.isEmpty){
-                addError(error: kNameNullError);
+                addError(error: kProductTitleNullError);
                 return "";
               }
               return null;
             },
             decoration: const InputDecoration(
-              labelText: "Last Name",
-              hintText: "Enter your last name",
+              labelText: "Product Title",
+              hintText: "Enter Product Title",
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -90,23 +87,23 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
           const SizedBox(height: 20),
           TextFormField(
             keyboardType: TextInputType.phone,
-            onSaved: (newValue) => phoneNo = newValue,
+            onSaved: (newValue) => productDescription = newValue,
             onChanged: (value) {
               if (value.isNotEmpty) {
-                removeError(error: kPhoneNumberNullError);
+                removeError(error: kProductDescriptionNullError);
               }
               return;
             },
             validator: (value) {
               if (value!.isEmpty) {
-                addError(error: kPhoneNumberNullError);
+                addError(error: kProductDescriptionNullError);
                 return "";
               }
               return null;
             },
             decoration: const InputDecoration(
-              labelText: "Phone Number",
-              hintText: "Enter your phone number",
+              labelText: "Product Description",
+              hintText: "Enter Product Description",
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -115,23 +112,24 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
           ),
           const SizedBox(height: 20),
           TextFormField(
-            onSaved: (newValue) => shopName = newValue,
+            keyboardType: TextInputType.phone,
+            onSaved: (newValue) => productQuantity = newValue,
             onChanged: (value) {
               if (value.isNotEmpty) {
-                removeError(error: kShopNameNullError);
+                removeError(error: kProductQuantityNullError);
               }
               return;
             },
             validator: (value) {
               if (value!.isEmpty) {
-                addError(error: kShopNameNullError);
+                addError(error: kProductQuantityNullError);
                 return "";
               }
               return null;
             },
             decoration: const InputDecoration(
-              labelText: "Shop Name",
-              hintText: "Enter your shop name",
+              labelText: "Product Quantity",
+              hintText: "Enter no. of items",
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -140,23 +138,24 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
           ),
           const SizedBox(height: 20),
           TextFormField(
-            onSaved: (newValue) => address = newValue,
+            keyboardType: TextInputType.phone,
+            onSaved: (newValue) => productPrice = newValue,
             onChanged: (value) {
               if (value.isNotEmpty) {
-                removeError(error: kAddressNullError);
+                removeError(error: kProductPriceNullError);
               }
               return;
             },
             validator: (value) {
               if (value!.isEmpty) {
-                addError(error: kAddressNullError);
+                addError(error: kProductPriceNullError);
                 return "";
               }
               return null;
             },
             decoration: const InputDecoration(
-              labelText: "Address",
-              hintText: "Enter your address",
+              labelText: "Product Price",
+              hintText: "Enter Product Price (Rs)",
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -164,73 +163,22 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
             ),
           ),
           const SizedBox(height: 20,),
-          // const ElevatedButton(
-          //   onPressed: _pickImage,
-          //   child: Text('Add Picture'),
-          // ),
-      //   ElevatedButton(
-      //   onPressed: () async {
-      //     ImagePickerPlus picker = ImagePickerPlus(context);
-      //
-      //     SelectedImagesDetails? details =
-      //     await picker.pickImage(source: ImageSource.gallery);
-      //     //if (details != null) await displayDetails(details);
-      //   },
-      //   child: const Text("Normal 1"),
-      // ),
+          //Add images and color bar
           FormError(errors: errors),
           const SizedBox(height: 30),
           ElevatedButton(
             onPressed: () {
               if (_formkey.currentState!.validate()) {
                 _formkey.currentState!.save();
-                Navigator.pushNamed(context, SellerHomeScreen.routeName);
+                //Navigator.pushNamed(context, SellerHomeScreen.routeName);
                 //Navigator.pushNamed(context, SellerHomeScreen.routeName);
 
               }
             },
-            child: const Text("Continue"),
+            child: const Text("Upload"),
           ),
         ],
       ),
     );
   }
 }
-
-
-// Future<void> _pickImage() async {
-//   final ImagePicker _picker = ImagePicker();
-//   XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-//
-//   if (image != null) {
-//     // Process the selected image (save it, display it, etc.)
-//     // You can set the image variable in your state to display it in the UI
-//   }
-// }
-
-
-// ElevatedButton normal1(BuildContext context) {
-//   return ElevatedButton(
-//     onPressed: () async {
-//       ImagePickerPlus picker = ImagePickerPlus(context);
-//
-//       SelectedImagesDetails? details =
-//       await picker.pickImage(source: ImageSource.gallery);
-//       if (details != null) await displayDetails(details);
-//     },
-//     child: const Text("Normal 1"),
-//   );
-// }
-
-// Future<void> displayDetails(SelectedImagesDetails details) async {
-//   await Navigator.of(context).push(
-//     CupertinoPageRoute(
-//       builder: (context) {
-//         // return DisplayImages(
-//         //     selectedBytes: details.selectedFiles,
-//         //     details: details,
-//         //     aspectRatio: details.aspectRatio);
-//       },
-//     ),
-//   );
-//}

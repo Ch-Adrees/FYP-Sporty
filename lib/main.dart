@@ -4,6 +4,7 @@ import 'Screens/onBoardingScreen/onboardscreen.dart';
 import 'HelperMaterial/routes.dart';
 import 'package:fyp/Screens/SellerHomeScreen/seller_home_screen.dart';
 import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
+import 'package:fyp/Screens/UploadAdsScreen/upload_ads_screen.dart';
 
 
 
@@ -20,9 +21,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Sporty App',
       theme: AppTheme.lightTheme(context),
-      home: const CompleteProfile(),
-      // initialRoute: OnBoardScreen.routeName,
-      // routes: listOfRoutes,
+      //home: const UploadAds(),
+      initialRoute: OnBoardScreen.routeName,
+      routes: listOfRoutes,
     );
   }
 }
