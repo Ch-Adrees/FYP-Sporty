@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
 import 'Screens/onBoardingScreen/onboardscreen.dart';
 import 'HelperMaterial/routes.dart';
-import 'package:fyp/Screens/SellerHomeScreen/seller_home_screen.dart';
 import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
 import 'package:fyp/Screens/UploadAdsScreen/upload_ads_screen.dart';
 
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Sporty App',
       theme: AppTheme.lightTheme(context),
-      //home: const UploadAds(),
+      //home: const CompleteProfile(),
       initialRoute: OnBoardScreen.routeName,
       routes: listOfRoutes,
     );
