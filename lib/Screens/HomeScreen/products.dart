@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fyp/Screens/HomeScreen/section_title.dart';
 import 'package:fyp/Screens/HomeScreen/demoproducts.dart';
 import 'package:fyp/Screens/HomeScreen/productcard.dart';
+import 'package:fyp/Screens/AllProducts/products_page.dart';
 
 class Product extends StatelessWidget {
   const Product({super.key});
@@ -14,7 +15,7 @@ class Product extends StatelessWidget {
         child: SectionTitle(
           title: "Products",
           press: () {
-            //Navigator.pushNamed(context, ProductsScreen.routeName);
+            Navigator.pushNamed(context, ProductPage.routeName);
           },
         ),
       ),

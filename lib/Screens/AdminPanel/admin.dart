@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/AdminPanel/Components/HeaderComponents/image_container.dart';
-import 'package:fyp/Screens/AdminPanel/Components/reuest.dart';
+import 'package:fyp/Screens/AdminPanel/Components/request_card.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fyp/Screens/AdminPanel/Models/advertisemnet.dart';
 import 'package:fyp/Screens/AdminPanel/Models/eventsads.dart';
@@ -9,6 +9,7 @@ import 'package:fyp/Screens/AdminPanel/Models/academies.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
+  static String routeName = "/admin_home";
 
   @override
   State<AdminPage> createState() => _AdminPageState();
