@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/AllProducts/Parts/search_bar.dart';
 import 'package:fyp/Screens/HomeScreen/demoproducts.dart';
 
@@ -20,7 +21,8 @@ class _ProductPageState extends State<ProductPage> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.shopping_cart),
+
+            icon: const Icon(Icons.shopping_cart_outlined),
           )
         ],
         leading: IconButton(
@@ -30,7 +32,9 @@ class _ProductPageState extends State<ProductPage> {
         title: const Text(
           "Products ",
           style: TextStyle(
-            fontSize: 17,
+            fontSize: 18,
+            fontFamily: 'Mulish',
+            color: kPrimaryColor,
             fontWeight: FontWeight.w600,
           ),
         ),
