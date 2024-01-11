@@ -5,7 +5,8 @@ import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/AdminPanel/Models/advertisemnet.dart';
 
 class RequestCards extends StatelessWidget {
-  const RequestCards({super.key, });
+  const RequestCards({super.key, required this.ads, });
+  final Advertisements ads ;
 
   Widget cardText(BuildContext context, String? value) {
     return Text(
@@ -81,10 +82,10 @@ class RequestCards extends StatelessWidget {
                   const SizedBox(
                     width: 7,
                   ),
-                  const  Flexible(
+                    Flexible(
                     child: AutoSizeText(
-                      'Pepsi Cricket Club',
-                      style:  TextStyle(
+                      '$ads.adsName',
+                      style: const  TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         decoration: TextDecoration.underline,
@@ -105,7 +106,7 @@ class RequestCards extends StatelessWidget {
                   children: [
                     cardText(context, 'Name:'),
                     const SizedBox(width: 4),
-                    cardTextAnswer(context, 'M.Hanan Haider'),
+                    cardTextAnswer(context, '$ads.organizerName'),
                   ],
                 ),
                 Row(
@@ -113,7 +114,7 @@ class RequestCards extends StatelessWidget {
                   children: [
                     cardText(context, 'Venue:'),
                     const SizedBox(width: 4),
-                    cardTextAnswer(context, 'Venue'),
+                    cardTextAnswer(context, '$ads.venue'),
                   ],
                 ),
                 Row(
@@ -121,7 +122,7 @@ class RequestCards extends StatelessWidget {
                   children: [
                     cardText(context, 'Date:'),
                     const SizedBox(width: 4),
-                    cardTextAnswer(context, '17-january-2024'),
+                    cardTextAnswer(context, '$ads.date'),
                   ],
                 ),
                 Row(

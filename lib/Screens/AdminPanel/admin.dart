@@ -16,9 +16,10 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPageState extends State<AdminPage> {
   Advertisements? adsType;
-  List<Advertisements> selectedList = [];
+  List<Advertisements> selectedList = listOfEventsAds;
   Color academyButtonColor = Colors.white;
   Color eventButtonColor = kPrimaryColor;
+  // This function built the animated line below the tab bars
   Widget buildNavigationLine(BuildContext context, Color color) {
     return AnimatedContainer(
       duration: kAnimationDuration,
@@ -163,12 +164,14 @@ class _AdminPageState extends State<AdminPage> {
                       height: 35,
                       child: TextButton(
                         onPressed: () {
-                          if (selectedList.isEmpty ||
-                              selectedList == listOfAcademiesAds) {
+                          {
                             setState(() {
-                              selectedList = listOfEventsAds;
-                              adsType = listOfEventsAds[0];
+                              academyButtonColor = Colors.white;
                               eventButtonColor = kPrimaryColor;
+                              if (selectedList.isEmpty ||
+                                  selectedList == listOfAcademiesAds) {
+                                selectedList = listOfEventsAds;
+                              }
                             });
                           }
                         },
@@ -195,10 +198,10 @@ class _AdminPageState extends State<AdminPage> {
                       child: TextButton(
                         onPressed: () {
                           setState(() {
+                            academyButtonColor = kPrimaryColor;
+                            eventButtonColor = Colors.white;
                             if (selectedList.isEmpty ||
                                 selectedList == listOfEventsAds) {
-                              academyButtonColor = kPrimaryColor;
-                              eventButtonColor = Colors.white;
                               selectedList = listOfAcademiesAds;
                             }
                           });
@@ -236,13 +239,12 @@ class _AdminPageState extends State<AdminPage> {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount:10,
+                  itemCount: 10,
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  itemBuilder:(_,int index)
-              {
-                return const RequestCards();
-              }),
+                  itemBuilder: (_, int index) {
+                   // return  RequestCards();
+                  }),
             ),
           ],
         )));

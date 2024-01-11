@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class Advertisements{
+
   final String adsName,venue;
   final DateTime date;
   final int fee;
