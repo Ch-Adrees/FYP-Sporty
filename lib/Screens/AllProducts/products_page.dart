@@ -7,6 +7,7 @@ import '../HomeScreen/productcard.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
+  static String routeName = "/all_product";
 
   @override
   State<ProductPage> createState() => _ProductPageState();

@@ -9,6 +9,8 @@ import 'package:fyp/Screens/navigation_bar.dart';
 import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
 import 'package:fyp/Screens/SellerHomeScreen/seller_home_screen.dart';
 import 'package:fyp/Screens/UploadAdsScreen/upload_ads_screen.dart';
+import 'package:fyp/Screens/AllProducts/products_page.dart';
+import 'package:fyp/Screens/AdminPanel/admin.dart';
 
 
 
@@ -24,6 +26,8 @@ final Map<String,WidgetBuilder> listOfRoutes={
   CompleteProfile.routeName: (context) => const CompleteProfile(),
   SellerHomeScreen.routeName: (context) => const SellerHomeScreen(),
   UploadAds.routeName: (context) => const UploadAds(),
+  ProductPage.routeName: (context) => const ProductPage(),
+  AdminPage.routeName: (context) => const AdminPage(),
 
 
 
