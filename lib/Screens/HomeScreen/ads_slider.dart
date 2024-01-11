@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:fyp/Screens/HomeScreen/ads_detail.dart';
 import 'package:fyp/Screens/HomeScreen/section_title.dart';

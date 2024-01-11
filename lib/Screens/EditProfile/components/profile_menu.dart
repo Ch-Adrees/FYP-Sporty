@@ -8,7 +8,8 @@ class ProfileMenu extends StatelessWidget {
   const ProfileMenu({
     super.key, required this.text, required this.icon, required this.press,
   });
-  final String text,icon;
+
+  final String text, icon;
   final VoidCallback press;
 
   @override
@@ -17,7 +18,7 @@ class ProfileMenu extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: TextButton(
         style: TextButton.styleFrom(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(18),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15)),
           backgroundColor: Color(0xFFF5F6F9),
@@ -31,7 +32,7 @@ class ProfileMenu extends StatelessWidget {
               color: kPrimaryColor,
             ),
             SizedBox(
-              width: 20,
+              width: 18,
             ),
             Expanded(
                 child: Text(

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:fyp/Screens/HomeScreen/search_field.dart';
 import 'package:fyp/Screens/HomeScreen/icon_with_count.dart';

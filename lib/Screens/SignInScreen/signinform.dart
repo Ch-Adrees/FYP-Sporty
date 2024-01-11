@@ -4,7 +4,6 @@ import '/HelperMaterial/errors.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/Screens/ForgetPassword/forget_password_screen.dart';
 import 'package:fyp/Screens/navigation_bar.dart';
-import 'package:fyp/Screens/AdminPanel/admin.dart';
 
 class SigninForm extends StatefulWidget {
   const SigninForm({super.key});
@@ -147,7 +146,7 @@ class _SigninFormState extends State<SigninForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 if(email == "chadreeswarriach@gmail.com" && password == "adrees123"){
-                  Navigator.pushNamed(context, AdminPage.routeName);
+                  //Navigator.pushNamed(context, routeName);
                 }
                 else{
                   Navigator.pushNamed(context, NavBarScreen.routeName);

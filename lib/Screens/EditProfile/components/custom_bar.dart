@@ -4,7 +4,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fyp/HelperMaterial/enum.dart';
-//import 'package:fyp/Screens/EditProfile/myprofile.dart';
 import 'package:fyp/Screens/HomeScreen/home_screen.dart';
 
 import '../../../HelperMaterial/constant.dart';
@@ -18,7 +17,7 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color inActiveIconColor = Color(0xFFB6B6B6);
+    final Color inActiveIconColor = Color.fromARGB(255, 205, 1, 1);
     return Container(
       padding: EdgeInsets.symmetric(vertical: 14),
       decoration: BoxDecoration(
