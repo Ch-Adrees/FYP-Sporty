@@ -4,6 +4,9 @@ import 'package:fyp/Screens/HomeScreen/demoproducts.dart';
 import 'package:fyp/Screens/HomeScreen/productcard.dart';
 import 'package:fyp/Screens/AllProducts/products_page.dart';
 
+import '../DetailProduct/Components/selected_detailed_product.dart';
+import '../DetailProduct/detailed_product.dart';
+
 class Product extends StatelessWidget {
   const Product({super.key});
 
@@ -29,7 +32,13 @@ class Product extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20),
                   child: ProductCard(
                     product: demoProducts[index],
-                    onPress: () {},
+                    onPress: () {
+                      Navigator.pushNamed(
+                        context,
+                        SingleProductScreen.routeName,
+                        arguments:SelectedDetailedProduct(product: demoProducts[index]),
+                      );
+                    },
                   ),
                 );
               }

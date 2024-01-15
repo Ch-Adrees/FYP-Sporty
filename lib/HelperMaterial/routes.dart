@@ -14,6 +14,7 @@ import 'package:fyp/Screens/SellerHomeScreen/seller_home_screen.dart';
 import 'package:fyp/Screens/UploadAdsScreen/upload_ads_screen.dart';
 import 'package:fyp/Screens/AllProducts/products_page.dart';
 import 'package:fyp/Screens/AdminPanel/admin.dart';
+import 'package:fyp/Screens/DetailProduct/detailed_product.dart';
 
 
 
@@ -34,6 +35,7 @@ final Map<String,WidgetBuilder> listOfRoutes={
   // ProfileScreen.routeName:(context) =>  ProfileScreen(),
   // EditProfileScreen.routeName:(context) => EditProfileScreen(),
   // WalletScreen.routeName:(context) => WalletScreen(),
+  SingleProductScreen.routeName:(context)=>const SingleProductScreen(),
 
 
 };
