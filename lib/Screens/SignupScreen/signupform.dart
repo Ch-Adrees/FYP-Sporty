@@ -3,7 +3,7 @@ import 'package:fyp/HelperMaterial/constant.dart';
 //import 'package:flutter_svg/svg.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
-import 'package:fyp/Screens/navigation_bar.dart';
+import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
 import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
 
 class SignUpForm extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
-import 'package:fyp/Screens/EditProfile/components/profile_screen.dart';
+//import 'package:fyp/Screens/EditProfile/components/profile_screen.dart';
 import 'package:fyp/Screens/HomeScreen/home_screen.dart';
 
 const Color inActiveIconColor = Color(0xFFB6B6B6);
@@ -36,7 +36,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
     const Center(
       child: Text("Chat"),
     ),
-   ProfileScreen(),
+   //ProfileScreen(),
   ];
 
   @override

@@ -3,7 +3,7 @@ import '/HelperMaterial/constant.dart';
 import '/HelperMaterial/errors.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/Screens/ForgetPassword/forget_password_screen.dart';
-import 'package:fyp/Screens/navigation_bar.dart';
+import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
 
 class SigninForm extends StatefulWidget {
   const SigninForm({super.key});
