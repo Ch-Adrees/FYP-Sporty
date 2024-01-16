@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
 import 'Screens/onBoardingScreen/onboardscreen.dart';

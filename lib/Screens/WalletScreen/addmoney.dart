@@ -5,7 +5,8 @@
 import 'package:flutter/material.dart';
 
 class AddMoneyDialog extends StatelessWidget {
-  final Function(double) onAddMoney;
+  double currentBalance = 20000;
+   final ValueSetter<double> onAddMoney;
   final TextEditingController _amountController = TextEditingController();
 
   AddMoneyDialog({Key? key, required this.onAddMoney}) : super(key: key);
