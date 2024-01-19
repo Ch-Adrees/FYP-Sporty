@@ -10,16 +10,16 @@ class OtpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            'OTP Verification',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 26.0,
-              color: kPrimaryColor,
-            ),
+        title: const Text(
+          'OTP Verification',
+          //textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 26.0,
+            color: kPrimaryColor,
+            fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
       ),
       body: const SizedBox(
         width: double.infinity,

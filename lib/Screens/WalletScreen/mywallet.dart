@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
 import 'package:fyp/Screens/WalletScreen/balancecard.dart';
 import 'package:fyp/Screens/WalletScreen/walletbutton.dart';
+import '../../HelperMaterial/constant.dart';
 import 'addmoney.dart' show AddMoneyDialog;
 import 'withdraw.dart' show WithDrawDialog;
 
@@ -33,16 +34,16 @@ class _WalletScreenState extends State<WalletScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.popAndPushNamed(context, ProfileScreen.routeName),
-          icon: const Icon(Icons.arrow_back_ios_new),
+        title: const Text(
+          'Wallet',
+          //textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 26.0,
+            color: kPrimaryColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        title: const Text('My Wallet'),
         centerTitle: true,
-        backgroundColor: Color(0xFFFFECDF),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15)),
-        ),
       ),
       body: SingleChildScrollView(
         child: SafeArea(

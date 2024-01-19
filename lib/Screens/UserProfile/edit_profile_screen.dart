@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fyp/Screens/UserProfile/components/profile_pic.dart';
 import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
 
+import '../../HelperMaterial/constant.dart';
+
 class EditProfileScreen extends StatefulWidget {
   static const String routeName = '/editprofile';
 
@@ -19,16 +21,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.popAndPushNamed(context, ProfileScreen.routeName),
-          icon: const Icon(Icons.arrow_back_ios_new),
+        title: const Text(
+          'Edit Profile',
+          //textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 26.0,
+            color: kPrimaryColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        title: Text('Edit Profile'),
         centerTitle: true,
-        backgroundColor: Color(0xFFFFECDF),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15)),
-        ),
       ),
       body: SingleChildScrollView(
         child: Center(

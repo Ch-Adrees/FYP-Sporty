@@ -5,6 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fyp/Screens/HomeScreen/section_title.dart';
 import 'package:fyp/Screens/HomeScreen/catagorycard.dart';
 
+import '../CategoryScreen/catagories_screen.dart';
+
 class Category extends StatelessWidget {
   const Category({super.key});
 
@@ -22,7 +24,9 @@ class Category extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SectionTitle(
           title: "Categories",
-          press: () {},
+          press: () {
+            Navigator.pushNamed(context, CategoryScreen.routeName);
+          },
         ),
       ),
       Padding(

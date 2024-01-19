@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/HomeScreen/home_screen.dart';
+import '../MyAdsScreen/allads.dart';
+import '../MyAdsScreen/postform.dart';
+import '../UserProfile/components/profile_screen.dart';
+
+import '../CategoryScreen/catagories_screen.dart';
 
 const Color inActiveIconColor = Color(0xFFB6B6B6);
 
@@ -26,16 +31,15 @@ class _NavBarScreenState extends State<NavBarScreen> {
   final pages = [
     const HomeScreen(),
 //    const FavoriteScreen(),
-    const Center(
-      child: Text("Chat"),
+    const CategoryScreen(),
+    PostAdScreen(),
+    const AllAdsScreen(),
+    ProfileScreen(
+      name: 'Ali',
+      email: 'Adrees@gmail.com',
     ),
-    const Center(
-      child: Text("Aa jati ha pehlay burer khilao"),
-    ),
-    const Center(
-      child: Text("Chat"),
-    ),
-   //ProfileScreen(),
+
+    //ProfileScreen(),
   ];
 
   @override

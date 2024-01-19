@@ -17,7 +17,7 @@ class Body extends StatelessWidget {
           SizedBox(height: 10),
           ProfileMenu(
             icon: "assets/icons/User Icon.svg",
-            text: "My Profile",
+            text: "Edit Profile",
             press: () {
               Navigator.pushReplacementNamed(
                   context, EditProfileScreen.routeName);

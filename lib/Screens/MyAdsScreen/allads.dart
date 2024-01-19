@@ -43,8 +43,8 @@ class _AllAdsScreenState extends State<AllAdsScreen> {
             height: 150,
             child: Image.asset(
               'assets/images/avatar.png', // Use a default image or ad-specific image property
-              width: 120,
-              height: 120,
+              width: 150,
+              height: 150,
               fit: BoxFit.cover,
             ),
           ),
@@ -109,16 +109,17 @@ class _AllAdsScreenState extends State<AllAdsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-    /*    leading: IconButton(
-          onPressed: () => Navigator.popAndPushNamed(context, HomeScreen.routeName),
-          icon: const Icon(Icons.arrow_back_ios_new),
-        ),*/
-        title:  Text('All Ads'),
+        title: const Text(
+          'All Ads',
+          //textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 22.0,
+            color: kPrimaryColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
-         backgroundColor: Color(0xFFFFECDF),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15)),
-      ),),
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

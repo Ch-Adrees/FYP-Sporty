@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
+import 'package:fyp/Screens/CategoryScreen/catagories_screen.dart';
+//import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
 import 'package:fyp/Screens/UserProfile/edit_profile_screen.dart';
 import 'package:fyp/Screens/WalletScreen/mywallet.dart';
 import 'package:fyp/Screens/onBoardingScreen/onboardscreen.dart';
@@ -34,10 +33,11 @@ final Map<String,WidgetBuilder> listOfRoutes={
   UploadAds.routeName: (context) => const UploadAds(),
   ProductPage.routeName: (context) => const ProductPage(),
   AdminPage.routeName: (context) => const AdminPage(),
-  ProfileScreen.routeName:(context) =>  ProfileScreen(name: 'ali',email: 'abc@gmail.com',),
+ // ProfileScreen.routeName:(context) =>  ProfileScreen(name: 'ali',email: 'abc@gmail.com',),
   EditProfileScreen.routeName:(context) => EditProfileScreen(),
   WalletScreen.routeName:(context) => WalletScreen(),
   SingleProductScreen.routeName:(context)=>const SingleProductScreen(),
+  CategoryScreen.routeName:(context)=>const CategoryScreen(),
 
 
 };

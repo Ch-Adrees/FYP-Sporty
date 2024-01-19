@@ -65,12 +65,17 @@ class _PostAdScreenState extends State<PostAdScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Post Ad'),
+        title: const Text(
+          'Post Ads',
+          //textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 22.0,
+            color: kPrimaryColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
-        backgroundColor: Color(0xFFFFECDF),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15)),
-      ),),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/Screens/HomeScreen/ads_detail.dart';
 import 'package:fyp/Screens/HomeScreen/section_title.dart';
+import '../MyAdsScreen/allads.dart';
 
  class AdsSlider extends StatelessWidget {
    const AdsSlider({super.key});
@@ -14,7 +15,9 @@ import 'package:fyp/Screens/HomeScreen/section_title.dart';
          Padding(padding: EdgeInsets.symmetric(horizontal: 20),
          child: SectionTitle(
            title: "Event & Academy Ads",
-           press: (){},
+           press: (){
+             Navigator.pushNamed(context, AllAdsScreen.routeName);
+           },
          ),
          ),
          SingleChildScrollView(

@@ -17,14 +17,18 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-        centerTitle: true,
-        backgroundColor: Color(0xFFFFECDF),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15)),
+        appBar: AppBar(
+          title: const Text(
+            'Profile',
+            //textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 26.0,
+              color: kPrimaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: true,
         ),
-      ),
       body:SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(20),
@@ -39,7 +43,7 @@ class ProfileScreen extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 50,
                     child: Image(image: 
-                    AssetImage('assets/images/avatar.png'),)),
+                    AssetImage('assets/icons/username-icon.svg'),)),
                               ),
                         /*      Positioned(
                                 bottom: 0,
@@ -55,20 +59,8 @@ class ProfileScreen extends StatelessWidget {
               ),
             Text('Name:${name}',style:TextStyle(fontSize: 15,fontWeight: FontWeight.w300),),
             Text('Email:${email}',style:TextStyle(fontSize: 15,fontWeight: FontWeight.w300),),
-            const SizedBox(height: 5,),
-            SizedBox(
-              width: 200,
-              child: ElevatedButton(onPressed:(){ Navigator.pushReplacementNamed(
-                  context, EditProfileScreen.routeName);},
-              // ignore: sort_child_properties_last
-              child: Text('Edit Profile'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimaryColor,
-                side: BorderSide.none,
-                shape: StadiumBorder(),
-              ),
-              )
-              ),
+            const SizedBox(height: 20,),
+
               Body(),
             ],
           ),
