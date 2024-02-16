@@ -1,6 +1,9 @@
+import 'dart:html';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 //import 'package:image_picker_plus/image_picker_plus.dart';
-//import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
@@ -18,6 +21,7 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
   final _formkey = GlobalKey<FormState>();
   final List<String> errors =[];
   String? firstName, lastName, shopName, phoneNo, address;
+  //File? _image;
   void addError({String? error}){
     if(!errors.contains(error)){
       setState(() {
@@ -32,6 +36,7 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
       });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -163,22 +168,10 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
               suffixIcon: CustomSuffixIcons(svgIcon: "assets/icons/Location point.svg"),
             ),
           ),
+
+
           const SizedBox(height: 20,),
-          // const ElevatedButton(
-          //   onPressed: _pickImage,
-          //   child: Text('Add Picture'),
-          // ),
-      //   ElevatedButton(
-      //   onPressed: () async {
-      //     ImagePickerPlus picker = ImagePickerPlus(context);
-      //
-      //     SelectedImagesDetails? details =
-      //     await picker.pickImage(source: ImageSource.gallery);
-      //     //if (details != null) await displayDetails(details);
-      //   },
-      //   child: const Text("Normal 1"),
-      // ),
-          FormError(errors: errors),
+         FormError(errors: errors),
           const SizedBox(height: 30),
           ElevatedButton(
             onPressed: () {

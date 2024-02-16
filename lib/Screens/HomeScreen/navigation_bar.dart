@@ -55,14 +55,18 @@ class _NavBarScreenState extends State<NavBarScreen> {
         items: [
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-              "assets/icons/Shop Icon.svg",
+              "assets/icons/house-icon.svg",
+              width: 25,
+              height: 25,
               colorFilter: const ColorFilter.mode(
                 inActiveIconColor,
                 BlendMode.srcIn,
               ),
             ),
             activeIcon: SvgPicture.asset(
-              "assets/icons/Shop Icon.svg",
+              "assets/icons/house-icon.svg",
+              width: 25,
+              height: 25,
               colorFilter: const ColorFilter.mode(
                 kPrimaryColor,
                 BlendMode.srcIn,
@@ -72,14 +76,18 @@ class _NavBarScreenState extends State<NavBarScreen> {
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-              "assets/icons/Heart Icon.svg",
+              "assets/icons/search-category-icon.svg",
+              width: 25,
+              height: 25,
               colorFilter: const ColorFilter.mode(
                 inActiveIconColor,
                 BlendMode.srcIn,
               ),
             ),
             activeIcon: SvgPicture.asset(
-              "assets/icons/Heart Icon.svg",
+              "assets/icons/search-category-icon.svg",
+              width: 25,
+              height: 25,
               colorFilter: const ColorFilter.mode(
                 kPrimaryColor,
                 BlendMode.srcIn,
@@ -89,31 +97,39 @@ class _NavBarScreenState extends State<NavBarScreen> {
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-              "assets/icons/Heart Icon.svg",
+              "assets/icons/plus-line-icon.svg",
+              width: 25,
+              height: 25,
               colorFilter: const ColorFilter.mode(
                 inActiveIconColor,
                 BlendMode.srcIn,
               ),
             ),
             activeIcon: SvgPicture.asset(
-              "assets/icons/Heart Icon.svg",
+              "assets/icons/plus-line-icon.svg",
+              width: 25,
+              height: 25,
               colorFilter: const ColorFilter.mode(
                 kPrimaryColor,
                 BlendMode.srcIn,
               ),
             ),
-            label: "Adrees",
+            label: "Post Ads",
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-              "assets/icons/Chat bubble Icon.svg",
+              "assets/icons/speaker-icon.svg",
+              width: 25,
+              height: 25,
               colorFilter: const ColorFilter.mode(
                 inActiveIconColor,
                 BlendMode.srcIn,
               ),
             ),
             activeIcon: SvgPicture.asset(
-              "assets/icons/Chat bubble Icon.svg",
+              "assets/icons/speaker-icon.svg",
+              width: 25,
+              height: 25,
               colorFilter: const ColorFilter.mode(
                 kPrimaryColor,
                 BlendMode.srcIn,
@@ -124,6 +140,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               "assets/icons/User Icon.svg",
+
               colorFilter: const ColorFilter.mode(
                 inActiveIconColor,
                 BlendMode.srcIn,
