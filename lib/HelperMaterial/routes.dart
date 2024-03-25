@@ -12,7 +12,7 @@ import 'package:fyp/Screens/OTPScreen/otp_screen.dart';
 import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
 import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
 import 'package:fyp/Screens/SellerHomeScreen/seller_home_screen.dart';
-import 'package:fyp/Screens/UploadAdsScreen/upload_ads_screen.dart';
+import 'package:fyp/Screens/UploadProductsScreen/upload_products_screen.dart';
 import 'package:fyp/Screens/AllProducts/products_page.dart';
 import 'package:fyp/Screens/AdminPanel/admin.dart';
 import 'package:fyp/Screens/DetailProduct/detailed_product.dart';
@@ -30,7 +30,7 @@ final Map<String,WidgetBuilder> listOfRoutes={
   HomeScreen.routeName: (context) => const HomeScreen(),
   CompleteProfile.routeName: (context) => const CompleteProfile(),
   SellerHomeScreen.routeName: (context) => const SellerHomeScreen(),
-  UploadAds.routeName: (context) => const UploadAds(),
+  UploadProducts.routeName: (context) => const UploadProducts(),
   ProductPage.routeName: (context) => const ProductPage(),
   AdminPage.routeName: (context) => const AdminPage(),
  // ProfileScreen.routeName:(context) =>  ProfileScreen(name: 'ali',email: 'abc@gmail.com',),

@@ -5,7 +5,7 @@ import 'package:fyp/HelperMaterial/app_themes.dart';
 import 'Screens/onBoardingScreen/onboardscreen.dart';
 import 'HelperMaterial/routes.dart';
 import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
-import 'package:fyp/Screens/UploadAdsScreen/upload_ads_screen.dart';
+import 'package:fyp/Screens/UploadProductsScreen/upload_products_screen.dart';
 
 
 

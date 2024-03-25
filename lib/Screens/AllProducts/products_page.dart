@@ -1,5 +1,3 @@
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
@@ -9,6 +7,7 @@ import 'package:fyp/Screens/HomeScreen/demoproducts.dart';
 import '../DetailProduct/Components/selected_detailed_product.dart';
 import '../DetailProduct/detailed_product.dart';
 import '../HomeScreen/productcard.dart';
+import 'package:fyp/Screens/AllProducts/Parts/all_products.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -44,44 +43,21 @@ class _ProductPageState extends State<ProductPage> {
             ),
           ),
         ),
-        title: const Text('Products',style: TextStyle(
-          fontSize:20,
-          fontWeight: FontWeight.w600,
-          color: kPrimaryColor,
-        ),),
+        title: const Text(
+          'Products',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: kPrimaryColor,
+          ),
+        ),
         centerTitle: true,
-
       ),
       body: SafeArea(
         child: Column(children: [
           const ProductSearchBar(),
-          const SizedBox(
-            height: 5,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: GridView.builder(
-                  shrinkWrap: true, // Set shrinkWrap to true
-                  itemCount: demoProducts.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisExtent: 235,
-                      mainAxisSpacing: 10),
-                  itemBuilder: (_, int index) => ProductCard(
-                      aspectRatio: 1.2,
-                      product: demoProducts[index],
-                      onPress: () {
-                        Navigator.pushNamed(
-                          context,
-                          SingleProductScreen.routeName,
-                          arguments: SelectedDetailedProduct(
-                              product: demoProducts[index]),
-                        );
-                      })),
-            ),
-          ),
+          const SizedBox(height: 5),
+          AllProducts(),
         ]),
       ),
     );

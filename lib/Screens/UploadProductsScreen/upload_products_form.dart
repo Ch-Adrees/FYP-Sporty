@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
-class UploadAdsForm extends StatefulWidget {
-  const UploadAdsForm({super.key});
+import 'package:image_picker/image_picker.dart';
+class UploadProductsForm extends StatefulWidget {
+  const UploadProductsForm({super.key});
 
   @override
-  UploadAdsFormState createState() => UploadAdsFormState();
+  UploadProductsFormState createState() => UploadProductsFormState();
 }
 
-class UploadAdsFormState extends State<UploadAdsForm> {
+class UploadProductsFormState extends State<UploadProductsForm> {
   final _formkey = GlobalKey<FormState>();
   final List<String> errors =[];
   String? productCode, productTitle, productDescription, productQuantity, productPrice;
@@ -164,6 +165,13 @@ class UploadAdsFormState extends State<UploadAdsForm> {
           ),
           const SizedBox(height: 20,),
           //Add images and color bar
+          ElevatedButton(
+            onPressed: () async {
+              // final pickedImage =
+              await ImagePicker().pickImage(source: ImageSource.gallery);
+            },
+            child: const Text("Select Image"),
+          ),
           FormError(errors: errors),
           const SizedBox(height: 30),
           ElevatedButton(

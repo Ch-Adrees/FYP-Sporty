@@ -1,5 +1,4 @@
-import 'dart:html';
-import 'dart:io';
+
 
 import 'package:flutter/material.dart';
 //import 'package:image_picker_plus/image_picker_plus.dart';
@@ -171,6 +170,14 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
 
 
           const SizedBox(height: 20,),
+          ElevatedButton(
+            onPressed: () async {
+              // final pickedImage =
+              await ImagePicker().pickImage(source: ImageSource.gallery);
+            },
+            child: const Text("Select Image"),
+          ),
+         const SizedBox(height: 30),
          FormError(errors: errors),
           const SizedBox(height: 30),
           ElevatedButton(
