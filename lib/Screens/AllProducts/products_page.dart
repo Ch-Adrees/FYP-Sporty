@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/AllProducts/Parts/search_bar.dart';
-import 'package:fyp/Screens/HomeScreen/demoproducts.dart';
-
-import '../DetailProduct/Components/selected_detailed_product.dart';
-import '../DetailProduct/detailed_product.dart';
-import '../HomeScreen/productcard.dart';
 import 'package:fyp/Screens/AllProducts/Parts/all_products.dart';
 
 class ProductPage extends StatefulWidget {
@@ -53,10 +47,10 @@ class _ProductPageState extends State<ProductPage> {
         ),
         centerTitle: true,
       ),
-      body: SafeArea(
+      body:const  SafeArea(
         child: Column(children: [
-          const ProductSearchBar(),
-          const SizedBox(height: 5),
+          ProductSearchBar(),
+          SizedBox(height: 5),
           AllProducts(),
         ]),
       ),

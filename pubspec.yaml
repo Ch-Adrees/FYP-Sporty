@@ -39,6 +39,8 @@ dependencies:
   auto_size_text: ^3.0.0
   get: ^4.6.6
   image_picker: ^1.0.1
+  riverpod: ^2.5.1
+  getwidget: ^4.0.0
   #image_picker_plus: ^0.5.9
   
 

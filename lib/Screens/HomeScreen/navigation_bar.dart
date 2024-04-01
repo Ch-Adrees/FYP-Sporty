@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/HomeScreen/home_screen.dart';
+import '../CategoryScreen/catagory_screen.dart';
 import '../MyAdsScreen/allads.dart';
 import '../MyAdsScreen/postform.dart';
 import '../UserProfile/components/profile_screen.dart';
 
-import '../CategoryScreen/catagories_screen.dart';
+
 
 const Color inActiveIconColor = Color(0xFFB6B6B6);
 

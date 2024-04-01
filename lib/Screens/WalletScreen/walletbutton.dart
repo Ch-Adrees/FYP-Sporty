@@ -29,7 +29,7 @@ class WalletButtons extends StatelessWidget {
           child: ElevatedButton(
             onPressed: press,
             style: ElevatedButton.styleFrom(
-              primary: const Color(0xFFFFECDF),
+              //primary: const Color(0xFFFFECDF),
             ),
             child:Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

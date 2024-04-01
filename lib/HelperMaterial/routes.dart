@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fyp/Screens/CategoryScreen/catagories_screen.dart';
 //import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
 import 'package:fyp/Screens/UserProfile/edit_profile_screen.dart';
 import 'package:fyp/Screens/WalletScreen/mywallet.dart';
@@ -16,13 +15,11 @@ import 'package:fyp/Screens/UploadProductsScreen/upload_products_screen.dart';
 import 'package:fyp/Screens/AllProducts/products_page.dart';
 import 'package:fyp/Screens/AdminPanel/admin.dart';
 import 'package:fyp/Screens/DetailProduct/detailed_product.dart';
+import 'package:fyp/Screens/CategoryScreen/catagory_screen.dart';
 
-
-
-
-final Map<String,WidgetBuilder> listOfRoutes={
+final Map<String, WidgetBuilder> listOfRoutes = {
   NavBarScreen.routeName: (context) => const NavBarScreen(),
-  OnBoardScreen.routeName:(context)=>const OnBoardScreen(),
+  OnBoardScreen.routeName: (context) => const OnBoardScreen(),
   SignInScreen.routeName: (context) => const SignInScreen(),
   ForgetPassScreen.routeName: (context) => const ForgetPassScreen(),
   OtpScreen.routeName: (context) => const OtpScreen(),
@@ -33,11 +30,11 @@ final Map<String,WidgetBuilder> listOfRoutes={
   UploadProducts.routeName: (context) => const UploadProducts(),
   ProductPage.routeName: (context) => const ProductPage(),
   AdminPage.routeName: (context) => const AdminPage(),
- // ProfileScreen.routeName:(context) =>  ProfileScreen(name: 'ali',email: 'abc@gmail.com',),
-  EditProfileScreen.routeName:(context) => EditProfileScreen(),
-  WalletScreen.routeName:(context) => WalletScreen(),
-  SingleProductScreen.routeName:(context)=>const SingleProductScreen(),
-  CategoryScreen.routeName:(context)=>const CategoryScreen(),
-
-
+  // ProfileScreen.routeName:(context) =>  ProfileScreen(name: 'ali',email: 'abc@gmail.com',),
+  EditProfileScreen.routeName: (context) => EditProfileScreen(),
+  WalletScreen.routeName: (context) => const WalletScreen(),
+  SingleProductScreen.routeName: (context) => const SingleProductScreen(),
+  CategoryScreen.routeName: (context) => const CategoryScreen(),
 };
+
+

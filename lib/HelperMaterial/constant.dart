@@ -2,12 +2,11 @@
 
 import 'package:flutter/material.dart';
 
-
 const kPrimaryColor = Color(0xFFE5370E);
 const kPrimaryLightColor = Color(0xFFFFECDF);
-final _gradientLighterColor= const Color(0xFFFF7643).withOpacity(0.7);
-final  _gradientbeforeLighterColor=Color(0xFFFFA53E).withOpacity(0.7);
-final   kPrimaryGradientColor = LinearGradient(
+final _gradientLighterColor = const Color(0xFFFF7643).withOpacity(0.7);
+final _gradientbeforeLighterColor = Color(0xFFFFA53E).withOpacity(0.7);
+final kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
   colors: [_gradientbeforeLighterColor, _gradientLighterColor],
@@ -16,6 +15,7 @@ const kSecondaryColor = Color(0xFF979797);
 const kTextColor = Colors.black;
 
 const kAnimationDuration = Duration(milliseconds: 200);
+const List<String> imagesPath = ["assets/images/istockphoto-1355687160-1024x1024.jpg","assets/images/istockphoto-1355687160-1024x1024.jpg","assets/images/istockphoto-1355687160-1024x1024.jpg","assets/images/istockphoto-1355687160-1024x1024.jpg"];
 
 const headingStyle = TextStyle(
   fontSize: 24,
@@ -23,12 +23,11 @@ const headingStyle = TextStyle(
   color: Colors.black,
   height: 1.5,
 );
-
 const defaultDuration = Duration(milliseconds: 250);
 
 // Form Error
 final RegExp emailValidatorRegExp =
-RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 const String kEmailNullError = "Please Enter your email";
 const String kInvalidEmailError = "Please Enter Valid Email";
 const String kPassNullError = "Please Enter your password";
@@ -43,6 +42,12 @@ const String kProductTitleNullError = "Please Enter Product Title";
 const String kProductDescriptionNullError = "Please Enter Product Description";
 const String kProductQuantityNullError = "Please Enter Product Quantity";
 const String kProductPriceNullError = "Please Enter Product Price";
+List<Color> listOfColors = [
+  Colors.blue.shade100,
+  Colors.amber.shade200.withOpacity(0.5),
+  Colors.orange.shade200.withOpacity(0.6),
+  Colors.brown.shade200.withOpacity(0.8)
+];
 
 final otpInputDecoration = InputDecoration(
   contentPadding: const EdgeInsets.symmetric(vertical: 16),

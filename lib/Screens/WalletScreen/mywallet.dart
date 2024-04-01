@@ -3,7 +3,6 @@
 // ignore_for_file: library_private_types_in_public_api, duplicate_ignore, duplicate_ignore, prefer_const_constructors, sized_box_for_whitespace, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
-import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
 import 'package:fyp/Screens/WalletScreen/balancecard.dart';
 import 'package:fyp/Screens/WalletScreen/walletbutton.dart';
 import '../../HelperMaterial/constant.dart';

@@ -30,7 +30,7 @@ class AddMoneyDialog extends StatelessWidget {
           ElevatedButton(
             onPressed: () => _validateAndAddMoney(context),
             style: ElevatedButton.styleFrom(
-              primary: Colors.green,
+              //primary: Colors.green,
             ),
             child: Text('Save'),
           ),
@@ -61,7 +61,7 @@ class AddMoneyDialog extends StatelessWidget {
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(),
               style: ElevatedButton.styleFrom(
-                primary: Colors.red,
+               // primary: Colors.red,
               ),
               child: Text('OK'),
             ),
