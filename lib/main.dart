@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
 import 'package:riverpod/riverpod.dart';
@@ -9,9 +10,12 @@ import 'HelperMaterial/routes.dart';
 import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
 import 'package:fyp/Screens/UploadProductsScreen/upload_products_screen.dart';
 
-
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+ runApp (const MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -48,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                           radius: 50,
                           child:SvgPicture.asset(
                             "assets/icons/username-icon.svg",
-                            color:Colors.black45,
+                           // color:Colors.black45,
                             height: 80,
                             width: 65,
                           ),
