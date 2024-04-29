@@ -1,9 +1,10 @@
 // ignore_for_file: unused_import
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fyp/Screens/SignupScreen/signup.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
-import 'package:riverpod/riverpod.dart';
 import 'Screens/CategoryScreen/catagory_screen.dart';
 import 'Screens/onBoardingScreen/onboardscreen.dart';
 import 'HelperMaterial/routes.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Sporty App',
       theme: AppTheme.lightTheme(context),
-      home: const CategoryScreen(),
+      home: const ProviderScope(child: SignUpScreen(),),
       // initialRoute: OnBoardScreen.routeName,
       // routes: listOfRoutes,
     );

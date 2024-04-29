@@ -68,7 +68,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   onChanged: (value) {
                     setState(() {
                       selectedcategory = listOfCategories
-                          .where((category) => category.category_name
+                          .where((category) => category.categoryName
                               .toLowerCase()
                               .contains(value.toLowerCase()))
                           .toList();
@@ -131,7 +131,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           ),
                                           Text(
                                             selectedcategory[index]
-                                                .category_name,
+                                                .categoryName,
                                             textAlign: TextAlign.center,
                                             style: const TextStyle(
                                               color:

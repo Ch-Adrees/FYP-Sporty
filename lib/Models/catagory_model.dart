@@ -1,20 +1,20 @@
 class Category {
-  String category_name;
-  Category({required this.category_name});
+  String categoryName;
+  Category({required this.categoryName});
 }
 
 List<Category> listOfCategories = [
-  Category(category_name: 'Cricket'),
-  Category(category_name: 'Badminton'),
-  Category(category_name: 'Football'),
-  Category(category_name: 'Swimming'),
-  Category(category_name: 'Hockey'),
-  Category(category_name: 'Gym'),
-  Category(category_name: 'Squash'),
-  Category(category_name: 'Volleyball'),
-  Category(category_name: 'Gymnastic'),
-  Category(category_name: 'RUnning'),
-  Category(category_name: 'athletic'),
-  Category(category_name: 'jumping'),
-  Category(category_name: 'Etc'),
+  Category(categoryName: 'Cricket'),
+  Category(categoryName: 'Badminton'),
+  Category(categoryName: 'Football'),
+  Category(categoryName: 'Swimming'),
+  Category(categoryName: 'Hockey'),
+  Category(categoryName: 'Gym'),
+  Category(categoryName: 'Squash'),
+  Category(categoryName: 'Volleyball'),
+  Category(categoryName: 'Gymnastic'),
+  Category(categoryName: 'Running'),
+  Category(categoryName: 'athletic'),
+  Category(categoryName: 'jumping'),
+  Category(categoryName: 'Etc'),
 ];

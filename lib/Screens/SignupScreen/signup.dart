@@ -4,10 +4,15 @@ import 'package:fyp/Screens/SignupScreen/signupform.dart';
 import 'package:fyp/HelperMaterial/social_card.dart';
 import 'package:fyp/HelperMaterial/no_account_text.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
   static String routeName = "/signUp";
 
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

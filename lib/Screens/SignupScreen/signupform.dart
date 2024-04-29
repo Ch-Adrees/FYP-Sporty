@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+//import 'package:fyp/Features/Authentication/auth_controller.dart';
+//import 'package:fyp/Features/Users/Customer/customer_service.dart';
+import 'package:fyp/Features/providers.dart';
+//import 'package:fyp/Features/Authentication/auth_controller.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 //import 'package:flutter_svg/svg.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
-import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
-import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
 
-class SignUpForm extends StatefulWidget {
-  const SignUpForm({super.key});
+
+class SignUpForm extends ConsumerStatefulWidget {
+  const SignUpForm({Key? key}) : super(key: key);
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
+  _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _SignUpFormState extends ConsumerState<SignUpForm> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final _formKey = GlobalKey<FormState>();
   List<String?> errors = [];
   void addError({String? error}) {
@@ -37,17 +50,17 @@ class _SignUpFormState extends State<SignUpForm> {
   String? password;
   String? confirmPassword;
   bool _isObscure = false;
-  bool _isconfirmObscure=false;
+  bool _isconfirmObscure = false;
   String? selectedRole;
   @override
   Widget build(BuildContext context) {
-
     return Form(
       key: _formKey,
       child: Column(
         children: [
           TextFormField(
             keyboardType: TextInputType.emailAddress,
+            controller: _emailController,
             onSaved: (newValue) => email = newValue,
             onChanged: (value) {
               if (value.isNotEmpty) {
@@ -78,10 +91,10 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            controller: _passwordController,
             obscureText: !_isObscure,
             onSaved: (newValue) => password = newValue,
             onChanged: (value) {
-
               if (value.isNotEmpty) {
                 removeError(error: kPassNullError);
               } else if (value.length >= 8) {
@@ -100,27 +113,25 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
             decoration: InputDecoration(
-              labelText: "Password",
-              hintText: "Enter your password",
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _isObscure?
-                      Icons.visibility:
-                      Icons.visibility_off,
-                ),
-                onPressed: (){
-                  setState(() {
-                    _isObscure= !_isObscure;
-                  });
-                },
-              )
-            ),
+                labelText: "Password",
+                hintText: "Enter your password",
+                // If  you are using latest version of flutter then lable text and hint text shown like this
+                // if you r using flutter less then 1.20.* then maybe this is not working properly
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isObscure ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isObscure = !_isObscure;
+                    });
+                  },
+                )),
           ),
           const SizedBox(height: 20),
           TextFormField(
+            controller: _confirmPasswordController,
             obscureText: !_isconfirmObscure,
             onSaved: (newValue) => confirmPassword = newValue,
             onChanged: (value) {
@@ -142,24 +153,21 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
             decoration: InputDecoration(
-              labelText: "Confirm Password",
-              hintText: "Re-enter your password",
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
-              floatingLabelBehavior: FloatingLabelBehavior.always,
+                labelText: "Confirm Password",
+                hintText: "Re-enter your password",
+                // If  you are using latest version of flutter then lable text and hint text shown like this
+                // if you r using flutter less then 1.20.* then maybe this is not working properly
+                floatingLabelBehavior: FloatingLabelBehavior.always,
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _isconfirmObscure?
-                    Icons.visibility:
-                    Icons.visibility_off,
+                    _isconfirmObscure ? Icons.visibility : Icons.visibility_off,
                   ),
-                  onPressed: (){
+                  onPressed: () {
                     setState(() {
-                      _isconfirmObscure= !_isconfirmObscure;
+                      _isconfirmObscure = !_isconfirmObscure;
                     });
                   },
-                )
-            ),
+                )),
           ),
 
           // FormError(errors: errors),
@@ -167,27 +175,23 @@ class _SignUpFormState extends State<SignUpForm> {
 
           Container(
             padding: const EdgeInsets.all(5.0),
-
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.black,
                 width: 1.0,
-
-
               ),
               borderRadius: BorderRadius.circular(35),
-
             ),
-
             child: DropdownButton<String>(
               padding: const EdgeInsets.fromLTRB(10, 5, 0.0, 0.0),
               borderRadius: BorderRadius.circular(50),
-
               value: selectedRole,
               hint: const Text('Select Your Role'),
               icon: const Icon(Icons.arrow_drop_down),
-              underline:Container(height: 0,) ,
-              iconSize:30,
+              underline: Container(
+                height: 0,
+              ),
+              iconSize: 30,
               isExpanded: true,
               elevation: 16,
               style: const TextStyle(color: Colors.black),
@@ -196,7 +200,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   selectedRole = newValue!;
                 });
               },
-              items: <String>['Select','Customer', 'Seller']
+              items: <String>['Select', 'customer', 'seller']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -204,8 +208,6 @@ class _SignUpFormState extends State<SignUpForm> {
                 );
               }).toList(),
               //decoration: InputDecoration(
-
-
             ),
           ),
 
@@ -213,16 +215,23 @@ class _SignUpFormState extends State<SignUpForm> {
           FormError(errors: errors),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-
-                if(selectedRole == 'Seller'){
-                  Navigator.pushNamed(context, CompleteProfile.routeName);
-                }
-                else{
-                  Navigator.pushNamed(context, NavBarScreen.routeName);
-                }
+                ref.read(authControllerProvider).registerUser(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    userType: selectedRole!,
+                    context: context); 
+                // switch (selectedRole) {
+                //   case "Seller":
+                //     Navigator.pushNamed(context, SellerHomeScreen.routeName);
+                //   case "customer":
+                //     Navigator.pushNamed(context, HomeScreen.routeName);
+                //   case "admin":
+                //     Navigator.pushNamed(context, AdminPage.routeName);
+                //   default:
+                //}
               }
             },
             child: const Text("Sign Up"),
