@@ -14,9 +14,9 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  TextEditingController _name =new TextEditingController();
-  TextEditingController _email=new TextEditingController();
-  
+  TextEditingController _name = new TextEditingController();
+  TextEditingController _email = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +73,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder:(context)=>ProfileScreen(name:_name.text,email:_email.text,))); // Implement save functionality here
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ProfileScreen(
+                                        name: _name.text,
+                                        email: _email.text,
+                                      ))); // Implement save functionality here
                               print('Save button pressed');
                             },
                             child: Text('Save'),
@@ -82,9 +86,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ElevatedButton(
                             onPressed: () {
                               // Implement cancel functionality here
-                              Navigator.popAndPushNamed(context,ProfileScreen.routeName); // Close the current screen
+                              Navigator.popAndPushNamed(
+                                  context,
+                                  ProfileScreen
+                                      .routeName); // Close the current screen
                             },
-                            child: Text('Cancel'),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFFFFE6E6)), // Change color here
+                            ),
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(color: Colors.black),
+                            ),
                           ),
                         ],
                       ),
