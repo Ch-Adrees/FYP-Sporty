@@ -12,7 +12,7 @@ class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final CustomerNotifier customerNotifier;
-  late final UserModel user;
+  
   final SellerNotifier sellerNotifier;
   AuthServices(this.sellerNotifier, this.customerNotifier);
 
@@ -22,14 +22,19 @@ class AuthServices {
       required String userType,
       required BuildContext context}) async {
     try {
+      if (context.mounted) ProviderWidgets.showLoadingDialog(context);
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
+      await _firestore
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({'email': email,'userType': userType});
       if (context.mounted) {
         switch (userType) {
           case 'customer':
             {
               ProviderWidgets.showLoadingDialog(context);
-              user = CustomerModel(
+              UserModel user = CustomerModel(
                   nameOfUser: "",
                   phoneNumber: "",
                   address: "",
@@ -39,15 +44,15 @@ class AuthServices {
               await customerNotifier.createCustomer(
                   user as CustomerModel, _firestore, context);
               if (context.mounted) {
-                ProviderWidgets.showToast(
+                ProviderWidgets.showFlutterToast(
                     context, "Customer has Been Registered Successfuly");
+                Navigator.of(context).pop();
               }
             }
             break;
           case 'seller':
             {
-              ProviderWidgets.showLoadingDialog(context);
-              user = SellerModel(
+             UserModel user = SellerModel(
                   shopName: "",
                   shopAdress: "",
                   nameOfUser: "",
@@ -56,14 +61,14 @@ class AuthServices {
                   profilePic: "",
                   userId: userCredential.user!.uid,
                   username: email);
-              ProviderWidgets.showLoadingDialog(context);
+
               await sellerNotifier.createSeller(
                   user as SellerModel, _firestore, context);
               if (context.mounted) {
                 Navigator.of(context).pop();
               }
               if (context.mounted) {
-                ProviderWidgets.showToast(
+                ProviderWidgets.showFlutterToast(
                     context, "Seller has Been Registered Successfuly");
               }
             }
@@ -74,6 +79,8 @@ class AuthServices {
             }
             break;
         }
+        
+      
       }
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {

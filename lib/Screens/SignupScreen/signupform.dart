@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-//import 'package:fyp/Features/Authentication/auth_controller.dart';
-//import 'package:fyp/Features/Users/Customer/customer_service.dart';
 import 'package:fyp/Features/providers.dart';
-//import 'package:fyp/Features/Authentication/auth_controller.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
-//import 'package:flutter_svg/svg.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
 
