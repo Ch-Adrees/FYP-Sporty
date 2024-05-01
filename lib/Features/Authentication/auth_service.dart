@@ -7,12 +7,13 @@ import 'package:fyp/Features/provi_wid.dart';
 import 'package:fyp/Models/customer_model.dart';
 import 'package:fyp/Models/seller_model.dart';
 import 'package:fyp/Models/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final CustomerNotifier customerNotifier;
-  
+
   final SellerNotifier sellerNotifier;
   AuthServices(this.sellerNotifier, this.customerNotifier);
 
@@ -28,12 +29,11 @@ class AuthServices {
       await _firestore
           .collection('users')
           .doc(userCredential.user!.uid)
-          .set({'email': email,'userType': userType});
+          .set({'email': email, 'userType': userType});
       if (context.mounted) {
         switch (userType) {
           case 'customer':
             {
-              ProviderWidgets.showLoadingDialog(context);
               UserModel user = CustomerModel(
                   nameOfUser: "",
                   phoneNumber: "",
@@ -44,15 +44,15 @@ class AuthServices {
               await customerNotifier.createCustomer(
                   user as CustomerModel, _firestore, context);
               if (context.mounted) {
+                Navigator.of(context).pop();
                 ProviderWidgets.showFlutterToast(
                     context, "Customer has Been Registered Successfuly");
-                Navigator.of(context).pop();
               }
             }
             break;
           case 'seller':
             {
-             UserModel user = SellerModel(
+              UserModel user = SellerModel(
                   shopName: "",
                   shopAdress: "",
                   nameOfUser: "",
@@ -66,8 +66,6 @@ class AuthServices {
                   user as SellerModel, _firestore, context);
               if (context.mounted) {
                 Navigator.of(context).pop();
-              }
-              if (context.mounted) {
                 ProviderWidgets.showFlutterToast(
                     context, "Seller has Been Registered Successfuly");
               }
@@ -75,22 +73,42 @@ class AuthServices {
             break;
           default:
             {
-              ProviderWidgets.showToast(context, "Invalid User Type :");
+              Navigator.of(context).pop();
+              ProviderWidgets.showFlutterToast(context, "Invalid User Type :");
             }
             break;
         }
-        
-      
       }
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {
-        ProviderWidgets.showLoadingDialog(context);
-        ProviderWidgets.showToast(context, "Error:${e.message}");
-      }
-    } finally {
-      if (context.mounted) {
         Navigator.of(context).pop();
+        ProviderWidgets.showFlutterToast(context, "Error:${e.message}");
       }
     }
   }
+
+  // Future<String> loginUser(
+  //     {required String email,
+  //     required String password,
+  //     required BuildContext context}) async {
+  //   try {
+  //     ProviderWidgets.showLoadingDialog(context);
+  //     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+  //         email: email, password: password);
+  //     DocumentSnapshot<Map<String, dynamic>> user = await _firestore
+  //         .collection('users')
+  //         .doc(userCredential.user!.uid)
+  //         .get();
+  //     if (user.exists) {
+  //       Map<String, dynamic> userData = user.data()!;
+  //       SharedPreferences sharedPreferences =
+  //           await SharedPreferences.getInstance();
+  //       sharedPreferences.setString('email', userData['email']);
+  //       sharedPreferences.setString('userType', userData['userType']);
+  //       sharedPreferences.setBool('isLoggedIn', true);
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     ProviderWidgets.showFlutterToast(context, e.message!);
+  //   }
+  // }
 }
