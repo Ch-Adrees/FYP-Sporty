@@ -40,6 +40,7 @@ const String kShopNameNullError = "Please Enter your Shop Name";
 const String kProductCodeNullError = "Please Enter Product Code";
 const String kProductTitleNullError = "Please Enter Product Title";
 const String kProductDescriptionNullError = "Please Enter Product Description";
+const String kProductCategoryNullError = "Please Enter Product Category";
 const String kProductQuantityNullError = "Please Enter Product Quantity";
 const String kProductPriceNullError = "Please Enter Product Price";
 List<Color> listOfColors = [

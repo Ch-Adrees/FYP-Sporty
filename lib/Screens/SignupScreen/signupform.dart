@@ -5,6 +5,10 @@ import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
 
+import '../AdminPanel/admin.dart';
+import '../HomeScreen/home_screen.dart';
+import '../SellerHomeScreen/seller_home_screen.dart';
+
 
 class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -227,7 +231,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                 //   case "admin":
                 //     Navigator.pushNamed(context, AdminPage.routeName);
                 //   default:
-                //}
+                // }
               }
             },
             child: const Text("Sign Up"),

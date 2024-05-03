@@ -18,9 +18,15 @@ class Post {
   final String category;
   final String image;
 
-  Post({required this.title, required this.venue, required this.date, required this.fee, required this.organizerName, required this.phoneNumber, required this.category, required this.image});
-
- 
+  Post(
+      {required this.title,
+      required this.venue,
+      required this.date,
+      required this.fee,
+      required this.organizerName,
+      required this.phoneNumber,
+      required this.category,
+      required this.image});
 }
 
 class PostAdScreen extends StatefulWidget {
@@ -43,23 +49,22 @@ class _PostAdScreenState extends State<PostAdScreen> {
   String selectedCity = 'Select City';
   String selectedCategory = 'Select Category';
 
- Future<void> _pickImage() async {
-  try {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+  Future<void> _pickImage() async {
+    try {
+      final ImagePicker _picker = ImagePicker();
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
-    if (image != null) {
-      setState(() {
-        _pickedImage = image;
-      });
-    } else {
-      print('Image picking cancelled or failed.');
+      if (image != null) {
+        setState(() {
+          _pickedImage = image;
+        });
+      } else {
+        print('Image picking cancelled or failed.');
+      }
+    } catch (e) {
+      print('Error picking image: $e');
     }
-  } catch (e) {
-    print('Error picking image: $e');
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +88,9 @@ class _PostAdScreenState extends State<PostAdScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text('Post Your Ads Here'),
-              SizedBox(height: 25,),
+              SizedBox(
+                height: 25,
+              ),
               TextField(
                 controller: titleController,
                 decoration: InputDecoration(labelText: 'Ad Name'),
@@ -91,7 +98,7 @@ class _PostAdScreenState extends State<PostAdScreen> {
               SizedBox(height: 16),
               TextField(
                 controller: cityController,
-               // maxLines: 4,
+                // maxLines: 4,
                 decoration: InputDecoration(labelText: 'Venue'),
               ),
               SizedBox(height: 16),
@@ -106,7 +113,7 @@ class _PostAdScreenState extends State<PostAdScreen> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: 'Fee'),
               ),
-                SizedBox(height: 16),
+              SizedBox(height: 16),
               TextField(
                 controller: textController,
                 keyboardType: TextInputType.text,
@@ -133,59 +140,61 @@ class _PostAdScreenState extends State<PostAdScreen> {
                 ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value,style: TextStyle(color: Color(0xFFCC5656)),),
+                    child: Text(
+                      value,
+                      style: TextStyle(color: Color(0xFFCC5656)),
+                    ),
                   );
                 }).toList(),
               ),
               SizedBox(height: 16),
-             GestureDetector(
-  onTap: _pickImage,
-  child: Container(
-    width: 120,
-    height: 120,
-    decoration: BoxDecoration(
-      color: Colors.transparent,
-      border: Border.all(color: kPrimaryColor, width: 2.0),
-      borderRadius: BorderRadius.circular(15.0),
-    ),
-    child: Stack(
-      alignment: Alignment.center,
-      children: [
-        if (_pickedImage != null)
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15.0),
-            child: Image.file(
-              File(_pickedImage!.path),
-              height: 120,
-              width: 120,
-              fit: BoxFit.cover,
-            ),
-          ),
-        if (_pickedImage == null)
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(
-                Icons.image,
-                size: 40,
-                color: kPrimaryColor,
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Upload Image',
-                style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 12,
+              GestureDetector(
+                onTap: _pickImage,
+                child: Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border.all(color: kPrimaryColor, width: 2.0),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      if (_pickedImage != null)
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.file(
+                            File(_pickedImage!.path),
+                            height: 120,
+                            width: 120,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      if (_pickedImage == null)
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.image,
+                              size: 40,
+                              color: kPrimaryColor,
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'Upload Image',
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
-      ],
-    ),
-  ),
-),
-
-SizedBox(height: 8),
+              SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
                   _postAd();
@@ -207,30 +216,30 @@ SizedBox(height: 8),
   }
 
   void _postAd() {
-  // Validate the form fields before posting
-  if (_validateForm()) {
-    // Create a Post object with the collected data
-    var newPost = Post(
-      title: titleController.text,
-      phoneNumber: phoneController.text,
-      category: selectedCategory,
-      image: _pickedImage != null ? _pickedImage!.path : '',
-      venue: cityController.text,
-      date: dateController.text,
-      fee: numberController.text,
-      organizerName: textController.text,
-    );
+    // Validate the form fields before posting
+    if (_validateForm()) {
+      // Create a Post object with the collected data
+      var newPost = Post(
+        title: titleController.text,
+        phoneNumber: phoneController.text,
+        category: selectedCategory,
+        image: _pickedImage != null ? _pickedImage!.path : '',
+        venue: cityController.text,
+        date: dateController.text,
+        fee: numberController.text,
+        organizerName: textController.text,
+      );
 
-    // Navigate to MyAdsScreen and pass the newPost data
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MyAdsScreen(newPost: newPost,)
-      ),
-    );
+      // Navigate to MyAdsScreen and pass the newPost data
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MyAdsScreen(
+                  newPost: newPost,
+                )),
+      );
+    }
   }
-}
-
 
   // Function to validate the form fields
   bool _validateForm() {
@@ -242,7 +251,7 @@ SizedBox(height: 8),
     titleController.clear();
     cityController.clear();
     phoneController.clear();
-   // Navigator.pop(context);
+    // Navigator.pop(context);
     Navigator.popAndPushNamed(context, HomeScreen.routeName);
 
     // Reset the selected city and category
@@ -254,7 +263,6 @@ SizedBox(height: 8),
     // Reset the picked image
     setState(() {
       _pickedImage = null;
-    }
-   );
+    });
   }
 }

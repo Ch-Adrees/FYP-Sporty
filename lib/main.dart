@@ -2,6 +2,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fyp/Screens/SignupScreen/signup.dart';
+import 'Screens/MyAdsScreen/postform.dart';
+import 'Screens/SellerHomeScreen/seller_home_screen.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
@@ -28,9 +30,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Sporty App',
       theme: AppTheme.lightTheme(context),
-      home: const ProviderScope(child: SignUpScreen(),),
+      //home: const ProviderScope(child: SignUpScreen(),),
       // initialRoute: OnBoardScreen.routeName,
       // routes: listOfRoutes,
+      home: const UploadProducts(),
+      //home: PostAdScreen(),
     );
   }
 }
