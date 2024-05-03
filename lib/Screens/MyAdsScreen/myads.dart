@@ -114,7 +114,8 @@ class _MyAdsScreenState extends State<MyAdsScreen> {
 
   // This function builds the list of cards based on the selected category
   Widget buildPostList() {
-    List<Post> posts = selectedList == listOfEventsAds ? eventPosts : academyPosts;
+    List<Post> posts =
+        selectedList == listOfEventsAds ? eventPosts : academyPosts;
 
     return ListView.builder(
       itemCount: posts.length,
@@ -141,15 +142,19 @@ class _MyAdsScreenState extends State<MyAdsScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Navigator.popAndPushNamed(context, ProfileScreen.routeName),
+          onPressed: () =>
+              Navigator.popAndPushNamed(context, ProfileScreen.routeName),
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
         title: const Text('My Post'),
         centerTitle: true,
-         backgroundColor: Color(0xFFFFECDF),
+        backgroundColor: Color(0xFFFFECDF),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15)),
-      ),),
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(15),
+              bottomRight: Radius.circular(15)),
+        ),
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,9 +225,8 @@ class _MyAdsScreenState extends State<MyAdsScreen> {
             ),
           ],
         ),
-        
       ),
-     // bottomNavigationBar:NavigationBar(NavBarScreen()),
+      // bottomNavigationBar:NavigationBar(NavBarScreen()),
     );
   }
 }

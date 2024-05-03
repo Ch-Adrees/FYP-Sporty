@@ -1,9 +1,10 @@
 // ignore_for_file: unused_import
+import 'package:double_tap_to_exit/double_tap_to_exit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fyp/Screens/SignInScreen/sigin.dart';
 import 'package:fyp/Screens/SignupScreen/signup.dart';
-import 'Screens/MyAdsScreen/postform.dart';
-import 'Screens/SellerHomeScreen/seller_home_screen.dart';
+import 'package:fyp/Screens/wrapper_screen.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
@@ -26,15 +27,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Sporty App',
-      theme: AppTheme.lightTheme(context),
-      //home: const ProviderScope(child: SignUpScreen(),),
-      // initialRoute: OnBoardScreen.routeName,
-      // routes: listOfRoutes,
-      home: const UploadProducts(),
-      //home: PostAdScreen(),
+    return ProviderScope(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Sporty App',
+        theme: AppTheme.lightTheme(context),
+        home: const WrappeScreen(),
+        // initialRoute: OnBoardScreen.routeName,
+        // routes: listOfRoutes,
+      ),
     );
   }
 }

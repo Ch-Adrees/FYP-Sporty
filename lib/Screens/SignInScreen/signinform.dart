@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fyp/Features/providers.dart';
 import '/HelperMaterial/constant.dart';
 import '/HelperMaterial/errors.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/Screens/ForgetPassword/forget_password_screen.dart';
-import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
 
-class SigninForm extends StatefulWidget {
+class SigninForm extends ConsumerStatefulWidget {
   const SigninForm({super.key});
 
   @override
-  State<SigninForm> createState() => _SigninFormState();
+  ConsumerState<SigninForm> createState() => _SigninFormState();
 }
 
-class _SigninFormState extends State<SigninForm> {
+class _SigninFormState extends ConsumerState<SigninForm> {
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _isObscure = false;
 
   final List<String?> errors = [];
@@ -35,6 +39,7 @@ class _SigninFormState extends State<SigninForm> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -42,6 +47,7 @@ class _SigninFormState extends State<SigninForm> {
       child: Column(
         children: [
           TextFormField(
+            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             onSaved: (newValue) => email = newValue,
             onChanged: (value) {
@@ -73,6 +79,7 @@ class _SigninFormState extends State<SigninForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            controller: _passwordController,
             obscureText: !_isObscure,
             onSaved: (newValue) => password = newValue,
             onChanged: (value) {
@@ -93,26 +100,23 @@ class _SigninFormState extends State<SigninForm> {
               }
               return null;
             },
-            decoration:  InputDecoration(
-              labelText: "Password",
-              hintText: "Enter your password",
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              //suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+            decoration: InputDecoration(
+                labelText: "Password",
+                hintText: "Enter your password",
+                // If  you are using latest version of flutter then lable text and hint text shown like this
+                // if you r using flutter less then 1.20.* then maybe this is not working properly
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                //suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _isObscure?
-                    Icons.visibility:
-                    Icons.visibility_off,
+                    _isObscure ? Icons.visibility : Icons.visibility_off,
                   ),
-                  onPressed: (){
+                  onPressed: () {
                     setState(() {
-                      _isObscure= !_isObscure;
+                      _isObscure = !_isObscure;
                     });
                   },
-                )
-            ),
+                )),
           ),
           const SizedBox(height: 10),
           Row(
@@ -130,11 +134,12 @@ class _SigninFormState extends State<SigninForm> {
               const Spacer(),
               GestureDetector(
                 onTap: () =>
-                  Navigator.pushNamed(context, ForgetPassScreen.routeName),
-
+                    Navigator.pushNamed(context, ForgetPassScreen.routeName),
                 child: const Text(
                   "Forgot Password",
-                  style: TextStyle(decoration: TextDecoration.underline, color: kPrimaryColor),
+                  style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: kPrimaryColor),
                 ),
               )
             ],
@@ -142,18 +147,27 @@ class _SigninFormState extends State<SigninForm> {
           FormError(errors: errors),
           const SizedBox(height: 35),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                if(email == "chadreeswarriach@gmail.com" && password == "adrees123"){
+                if (email == "chadreeswarriach@gmail.com" &&
+                    password == "adrees123") {
                   //Navigator.pushNamed(context, routeName);
+                } else {
+                  await ref.watch(authControllerProvider).loginUser(
+                      email: _emailController.text.toString(),
+                      password: _passwordController.text,
+                      context: context);
+                  // if (context.mounted) {
+                  //   Navigator.pushReplacement(context,
+                  //       MaterialPageRoute(builder: (context) {
+                  //     return const WrappeScreen();
+                  //   }));
+                  // }
                 }
-                else{
-                  Navigator.pushNamed(context, NavBarScreen.routeName);
-                }
+
                 // if all are valid then go to success screen
                 //KeyboardUtil.hideKeyboard(context);
-
               }
             },
             child: const Text("Sign In"),
