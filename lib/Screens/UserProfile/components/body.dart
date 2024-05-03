@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_string_escapes, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:fyp/Screens/MyOrder/myorderscreen.dart';
 import 'package:fyp/Screens/UserProfile/components/profile_menu.dart';
 import 'package:fyp/Screens/UserProfile/edit_profile_screen.dart';
 import 'package:fyp/Screens/MyAdsScreen/myads.dart';
@@ -8,7 +9,6 @@ import 'package:fyp/Screens/SignInScreen/sigin.dart';
 import 'package:fyp/Screens/WalletScreen/mywallet.dart';
 
 class Body extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -26,21 +26,22 @@ class Body extends StatelessWidget {
           ProfileMenu(
             icon: "assets/icons/Cart Icon.svg",
             text: "My Orders",
-            press: () {},
+            press: () {
+              Navigator.pushReplacementNamed(context, MyOrder.routeName);
+            },
           ),
           ProfileMenu(
             icon: "assets/icons/Heart Icon.svg",
             text: "My Post",
             press: () {
-              Navigator.pushReplacementNamed(context,MyAdsScreen.routeName);
+              Navigator.pushReplacementNamed(context, MyAdsScreen.routeName);
             },
           ),
           ProfileMenu(
             icon: "assets/icons/Bill Icon.svg",
             text: "My Wallet",
-            press: () { 
-              Navigator.pushReplacementNamed(context,WalletScreen.routeName);
-      
+            press: () {
+              Navigator.pushReplacementNamed(context, WalletScreen.routeName);
             },
           ),
           ProfileMenu(

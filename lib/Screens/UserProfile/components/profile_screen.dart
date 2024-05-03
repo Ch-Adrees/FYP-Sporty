@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, unused_import, prefer_const_literals_to_create_immutables, duplicate_ignore, must_be_immutable, unnecessary_brace_in_string_interps
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, unused_import, prefer_const_literals_to_create_immutables, duplicate_ignore, must_be_immutable, unnecessary_brace_in_string_interps, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,15 +44,15 @@ class ProfileScreen extends StatelessWidget {
                       width: 120,
                       height: 120,
                       child: CircleAvatar(
-                          backgroundColor:Colors.grey.withOpacity(0.3),
-                          radius: 50,
-                          child:SvgPicture.asset(
-                            "assets/icons/username-icon.svg",
-                           // color:Colors.black45,
-                            height: 80,
-                            width: 65,
-                          ),
-                    ),
+                        backgroundColor: Colors.grey.withOpacity(0.3),
+                        radius: 50,
+                        child: SvgPicture.asset(
+                          "assets/icons/username-icon.svg",
+                          color: Colors.black45,
+                          height: 80,
+                          width: 65,
+                        ),
+                      ),
                     ),
                   ],
                 ),

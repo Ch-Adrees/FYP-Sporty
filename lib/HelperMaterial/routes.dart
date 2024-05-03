@@ -1,4 +1,14 @@
+// ignore_for_file: avoid_web_libraries_in_flutter, unused_import
+
+import 'dart:js';
+
 import 'package:flutter/material.dart';
+import 'package:fyp/Screens/Cart%20Screen/cart_screen.dart';
+import 'package:fyp/Screens/MyAdsScreen/myads.dart';
+import 'package:fyp/Screens/MyOrder/myorderscreen.dart';
+import 'package:fyp/Screens/OrderCheckout/checkout.dart';
+import 'package:fyp/Screens/OrderCheckout/modals/shipping_address.dart';
+import 'package:fyp/Screens/Success%20Screen/success_screen.dart';
 //import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
 import 'package:fyp/Screens/UserProfile/edit_profile_screen.dart';
 import 'package:fyp/Screens/WalletScreen/mywallet.dart';
@@ -35,6 +45,21 @@ final Map<String, WidgetBuilder> listOfRoutes = {
   WalletScreen.routeName: (context) => const WalletScreen(),
   SingleProductScreen.routeName: (context) => const SingleProductScreen(),
   CategoryScreen.routeName: (context) => const CategoryScreen(),
+  MyCartScreen.routeName: (context) => const MyCartScreen(),
+  ShippingAndPaymentScreen.routeName: (context) =>
+      const ShippingAndPaymentScreen(),
+  CheckoutScreen.routeName: (context) => const CheckoutScreen(
+        fullName: '',
+        mobileNumber: '',
+        address: '',
+        city: '',
+        state: '',
+        country: '',
+        selectedPaymentMethodName: '',
+        selectedPaymentMethodImage: '',
+        products: [],
+      ),
+  SuccessScreen.routeName: (context) => const SuccessScreen(),
+  MyOrder.routeName: (context) => const MyOrder(),
+  MyAdsScreen.routeName: (context) => const MyAdsScreen(),
 };
-
-
