@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_web_libraries_in_flutter, unused_import
 
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:fyp/Screens/Cart%20Screen/cart_screen.dart';
 import 'package:fyp/Screens/MyAdsScreen/myads.dart';
