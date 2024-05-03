@@ -46,6 +46,7 @@ dependencies:
   cloud_firestore: ^4.16.1
   fluttertoast: ^8.2.5
   shared_preferences: ^2.2.3
+  double_tap_to_exit: ^1.0.1
  
   
 

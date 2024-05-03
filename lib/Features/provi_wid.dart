@@ -14,7 +14,7 @@ class ProviderWidgets {
     );
   }
 
-  static  void showFlutterToast(BuildContext context,String message)
+  static  void showFlutterToast(BuildContext context,String? message)
   {
     Fluttertoast.showToast(
         msg: message.toString(),
