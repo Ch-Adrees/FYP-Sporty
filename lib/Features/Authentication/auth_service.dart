@@ -160,11 +160,9 @@ class AuthServices {
     try {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
-      bool? loginStatus = sharedPreferences.getBool('isLoggedIn');
+      bool? loginStatus = sharedPreferences.getBool('isLoggedIn')??false ;
       String? userType =  sharedPreferences.getString('userType')!;
-      if (loginStatus == null) {
-        if (context.mounted)Navigator.pushNamed(context, SignInScreen.routeName);
-      } else if (loginStatus == false) {
+     if (loginStatus == false) {
         if (context.mounted) {
           ProviderWidgets.showFlutterToast(context, loginStatus.toString());
           Navigator.pushReplacementNamed(context, SignInScreen.routeName);
