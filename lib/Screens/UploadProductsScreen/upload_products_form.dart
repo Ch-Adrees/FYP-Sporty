@@ -237,55 +237,6 @@ class UploadProductsFormState extends State<UploadProductsForm> {
           const SizedBox(
             height: 20,
           ),
-          // GestureDetector(
-          //   onTap: _pickImage,
-          //   //controller: controller.productImageList,
-          //   child:
-          // Container(
-          //   width: 500,
-          //   height: 150,
-          //   decoration: BoxDecoration(
-          //     color: Colors.transparent,
-          //     border: Border.all(color: kPrimaryColor, width: 2.0),
-          //     borderRadius: BorderRadius.circular(15.0),
-          //   ),
-          //   child: Stack(
-          //     alignment: Alignment.center,
-          //     children: [
-          //       if (productImages != null)
-          //         ClipRRect(
-          //           borderRadius: BorderRadius.circular(15.0),
-          //           child: Image.file(
-          //             File(productImages!.path),
-          //             // XFile(_productImages as String) as File,
-          //             height: 120,
-          //             width: 120,
-          //             fit: BoxFit.cover,
-          //           ),
-          //         ),
-          //       if (productImages == null)
-          //         const Column(
-          //           mainAxisAlignment: MainAxisAlignment.center,
-          //           children: [
-          //             Icon(
-          //               Icons.image,
-          //               size: 40,
-          //               color: kPrimaryColor,
-          //             ),
-          //             SizedBox(height: 8),
-          //             Text(
-          //               'Upload Image',
-          //               style: TextStyle(
-          //                 color: kPrimaryColor,
-          //                 fontSize: 12,
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //     ],
-          //   ),
-          // ),
-          //),
       Container(
           width: 500,
           height: 120,
@@ -341,7 +292,7 @@ class UploadProductsFormState extends State<UploadProductsForm> {
                       //controller.isLoading = true;
                       await controller.UploadImages();
                       await controller.UploadProduct();
-                      //Get.back();
+                      Get.back();
                       //Navigator.pushNamed(context, SellerHomeScreen.routeName);
                       //Navigator.pushNamed(context, SellerHomeScreen.routeName);
                     }
