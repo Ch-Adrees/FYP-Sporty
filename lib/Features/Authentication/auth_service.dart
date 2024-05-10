@@ -160,7 +160,7 @@ class AuthServices {
     try {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
-      bool? loginStatus = sharedPreferences.getBool('isLoggedIn')??false ;
+      bool? loginStatus = sharedPreferences.getBool('isLoggedIn')?? false ;
       String? userType =  sharedPreferences.getString('userType')!;
      if (loginStatus == false) {
         if (context.mounted) {
