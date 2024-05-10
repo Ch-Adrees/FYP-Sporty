@@ -5,9 +5,6 @@ import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
 
-import '../AdminPanel/admin.dart';
-import '../HomeScreen/home_screen.dart';
-import '../SellerHomeScreen/seller_home_screen.dart';
 
 
 class SignUpForm extends ConsumerStatefulWidget {

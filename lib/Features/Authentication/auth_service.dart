@@ -161,11 +161,14 @@ class AuthServices {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       bool? loginStatus = sharedPreferences.getBool('isLoggedIn')??false ;
-      String? userType =  sharedPreferences.getString('userType')!;
+      String? userType =  sharedPreferences.getString('userType');
      if (loginStatus == false) {
         if (context.mounted) {
           ProviderWidgets.showFlutterToast(context, loginStatus.toString());
-          Navigator.pushReplacementNamed(context, SignInScreen.routeName);
+          Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return const SignInScreen();
+                }));
         }
       } else {
         Future.delayed(const Duration(seconds: 1), () {

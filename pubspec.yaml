@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.2.3
   double_tap_to_exit: ^1.0.1
   firebase_storage:
+  connectivity_plus: ^6.0.3
   
 
 
