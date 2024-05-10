@@ -26,16 +26,19 @@ class ProductController extends GetxController{
     productImageLink.clear();
     for (var item in productImageController) {
       try {
-        var filename = basename(item.path);
-        var destination = 'images/sellers/$productCodeController/$filename';
-        Reference ref = FirebaseStorage.instance.ref().child(destination);
-        await ref.putFile(item);
-        var n = await ref.getDownloadURL();
-        productImageLink.add(n);
-        print(productImageLink);
-        //Fluttertoast.showToast(msg: 'Successfully upload image');
+        if(item!= null) {
+          var filename = basename(item.path);
+          var destination = 'images/sellers/$productCodeController/$filename';
+          Reference ref = FirebaseStorage.instance.ref().child(destination);
+          await ref.putFile(item);
+          var n = await ref.getDownloadURL();
+          productImageLink.add(n);
+          print(productImageLink);
+          //Fluttertoast.showToast(msg: 'Successfully upload image');
+        }
       }
     catch(e){
+      print("Failed to upload images: $e");
     Fluttertoast.showToast(msg: "Failed to upload images");
     //ProviderWidgets.showFlutterToast(context, "Failed to upload images");
     }

@@ -46,7 +46,8 @@ class UploadProductsFormState extends State<UploadProductsForm> {
         }else{
           ProviderWidgets.showFlutterToast(context, 'Image picking cancelled or failed');
         }
-      });
+      }
+      );
     } catch (e) {
       ProviderWidgets.showFlutterToast(context, 'Error picking image');
     }
@@ -264,9 +265,9 @@ class UploadProductsFormState extends State<UploadProductsForm> {
                     crossAxisCount: 4,),
                 itemBuilder: (BuildContext context, int index) {
                   return Center(
-                      child: kIsWeb
-                          ? Image.network(productImages[index].path)
-                          : Image.file(productImages[index]));
+                      child: //kIsWeb
+                          //? Image.network(productImages[index].path)
+                           Image.file(productImages[index]));
                 },
               ),
             ),
@@ -292,7 +293,7 @@ class UploadProductsFormState extends State<UploadProductsForm> {
                       //controller.isLoading = true;
                       await controller.UploadImages();
                       await controller.UploadProduct();
-                      Get.back();
+                      //Get.back();
                       //Navigator.pushNamed(context, SellerHomeScreen.routeName);
                       //Navigator.pushNamed(context, SellerHomeScreen.routeName);
                     }
