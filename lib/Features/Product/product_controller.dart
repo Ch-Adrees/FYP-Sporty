@@ -4,9 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-import '../provi_wid.dart';
 
 class ProductController extends GetxController{
   var isLoading = false;
@@ -22,7 +20,7 @@ class ProductController extends GetxController{
   //final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 
-  UploadImages() async {
+  uploadImages() async {
     productImageLink.clear();
     for (var item in productImageController) {
       try {
@@ -33,12 +31,12 @@ class ProductController extends GetxController{
           await ref.putFile(item);
           var n = await ref.getDownloadURL();
           productImageLink.add(n);
-          print(productImageLink);
+          debugPrint(productImageLink.toString());
           //Fluttertoast.showToast(msg: 'Successfully upload image');
         }
       }
     catch(e){
-      print("Failed to upload images: $e");
+      debugPrint("Failed to upload images: $e");
     Fluttertoast.showToast(msg: "Failed to upload images");
     //ProviderWidgets.showFlutterToast(context, "Failed to upload images");
     }
@@ -69,7 +67,7 @@ class ProductController extends GetxController{
     // }
   }
 
-  UploadProduct() async{
+  uploadProduct() async{
 
     //  FirebaseFirestore.instance.collection("products").add({
     //   'p_code': productCodeController,

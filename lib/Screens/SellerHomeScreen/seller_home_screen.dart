@@ -59,7 +59,10 @@ class SellerHomeScreen extends StatelessWidget {
                   color: kPrimaryColor,
                 ),
                 child: IconButton(
-                  onPressed: () {Navigator.pushNamed(context, UploadProducts.routeName);},
+                  onPressed: () {Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return const UploadProducts();
+                }));},
                   icon: const Icon(Icons.add),
                   color: Colors.white,
                 ),

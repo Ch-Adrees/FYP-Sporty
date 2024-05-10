@@ -1,8 +1,5 @@
 import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fyp/Features/Product/product_controller.dart';
 import 'package:fyp/Features/provi_wid.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
@@ -10,8 +7,6 @@ import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
-//import '../../Features/provi_wid.dart';
 class UploadProductsForm extends StatefulWidget {
   const UploadProductsForm({super.key});
 
@@ -35,21 +30,23 @@ class UploadProductsFormState extends State<UploadProductsForm> {
   Future<void> pickImage() async {
     try {
       final ImagePicker picker = ImagePicker();
-      final pickedfile = await picker.pickMultiImage(imageQuality: 100, maxHeight: 1000, maxWidth: 1000);
+      final pickedfile = await picker.pickMultiImage(
+          imageQuality: 100, maxHeight: 1000, maxWidth: 1000);
 
       List<XFile> image = pickedfile;
       setState(() {
-        if(image.isNotEmpty){
-          for(var i=0; i< image.length; i++){
+        if (image.isNotEmpty) {
+          for (var i = 0; i < image.length; i++) {
             productImages.add(File(image[i].path));
           }
-        }else{
-          ProviderWidgets.showFlutterToast(context, 'Image picking cancelled or failed');
+        } else {
+          ProviderWidgets.showFlutterToast(
+              context, 'Image picking cancelled or failed');
         }
-      }
-      );
+      });
     } catch (e) {
-      ProviderWidgets.showFlutterToast(context, 'Error picking image');
+        ProviderWidgets.showFlutterToast(context, 'Error picking image');
+      
     }
   }
 
@@ -238,43 +235,43 @@ class UploadProductsFormState extends State<UploadProductsForm> {
           const SizedBox(
             height: 20,
           ),
-      Container(
-          width: 500,
-          height: 120,
-          padding: const EdgeInsets.fromLTRB(10, 15, 15, 10),
-
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            border: Border.all(color: kPrimaryColor, width: 2.0),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          child: Center(
-            child: SizedBox(
-              width: 300.0,
-              child: productImages.isEmpty
-                  ? const Center(child: Icon(
-                              Icons.image,
-                              size: 40,
-                              color: kPrimaryColor
-              ),
-              )
-                  : GridView.builder(
-                itemCount: productImages.length,
-                gridDelegate:
-                const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,),
-                itemBuilder: (BuildContext context, int index) {
-                  return Center(
-                      child: //kIsWeb
-                          //? Image.network(productImages[index].path)
-                           Image.file(productImages[index]));
-                },
+          Container(
+            width: 500,
+            height: 120,
+            padding: const EdgeInsets.fromLTRB(10, 15, 15, 10),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(color: kPrimaryColor, width: 2.0),
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: Center(
+              child: SizedBox(
+                width: 300.0,
+                child: productImages.isEmpty
+                    ? const Center(
+                        child:
+                            Icon(Icons.image, size: 40, color: kPrimaryColor),
+                      )
+                    : GridView.builder(
+                        itemCount: productImages.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Center(
+                              child: //kIsWeb
+                                  //? Image.network(productImages[index].path)
+                                  Image.file(productImages[index]));
+                        },
+                      ),
               ),
             ),
           ),
-      ),
 
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           ElevatedButton(
             onPressed: () {
               pickImage();
@@ -286,20 +283,20 @@ class UploadProductsFormState extends State<UploadProductsForm> {
           const SizedBox(height: 30),
           // controller.isLoading
           //    ? const CircularProgressIndicator(color: kPrimaryColor)
-               ElevatedButton(
-                  onPressed: () async {
-                    if (_formkey.currentState!.validate()) {
-                      _formkey.currentState!.save();
-                      //controller.isLoading = true;
-                      await controller.UploadImages();
-                      await controller.UploadProduct();
-                      //Get.back();
-                      //Navigator.pushNamed(context, SellerHomeScreen.routeName);
-                      //Navigator.pushNamed(context, SellerHomeScreen.routeName);
-                    }
-                  },
-                  child: const Text("Upload"),
-                ),
+          ElevatedButton(
+            onPressed: () async {
+              if (_formkey.currentState!.validate()) {
+                _formkey.currentState!.save();
+                //controller.isLoading = true;
+                await controller.uploadImages();
+                await controller.uploadProduct();
+                //Get.back();
+                //Navigator.pushNamed(context, SellerHomeScreen.routeName);
+                //Navigator.pushNamed(context, SellerHomeScreen.routeName);
+              }
+            },
+            child: const Text("Upload"),
+          ),
         ],
       ),
     );
