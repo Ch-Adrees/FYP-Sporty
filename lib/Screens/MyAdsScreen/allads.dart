@@ -6,9 +6,9 @@ import 'package:fyp/Screens/MyAdsScreen/postform.dart';
 import 'package:get/get.dart';
 
 import '../../HelperMaterial/constant.dart';
-import '../AdminPanel/Models/academies.dart';
-import '../AdminPanel/Models/advertisemnet.dart';
-import '../AdminPanel/Models/eventsads.dart';
+import '../../Models/academies.dart';
+import '../../Models/advertisemnet.dart';
+import '../../Models/eventsads.dart';
 
 class AllAdsScreen extends StatefulWidget {
   static const String routeName = "/allpost";

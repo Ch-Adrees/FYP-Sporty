@@ -36,7 +36,7 @@ class SellerHomeScreen extends StatelessWidget {
               SectionTitle(title: "Products", press: () {
                 Navigator.pushNamed(context, ProductPage.routeName);
               }),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
              const  AllProducts(),
 
             ],

@@ -5,9 +5,9 @@ import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/AdminPanel/Components/HeaderComponents/image_container.dart';
 import 'package:fyp/Screens/AdminPanel/Components/request_card.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fyp/Screens/AdminPanel/Models/advertisemnet.dart';
-import 'package:fyp/Screens/AdminPanel/Models/eventsads.dart';
-import 'package:fyp/Screens/AdminPanel/Models/academies.dart';
+import 'package:fyp/Models/advertisemnet.dart';
+import 'package:fyp/Models/eventsads.dart';
+import 'package:fyp/Models/academies.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});

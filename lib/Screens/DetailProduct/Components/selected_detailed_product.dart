@@ -1,4 +1,4 @@
-import 'package:fyp/Screens/HomeScreen/demoproducts.dart';
+import 'package:fyp/Models/product_model.dart';
 
 class SelectedDetailedProduct{
   final Products product;

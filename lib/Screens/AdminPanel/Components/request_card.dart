@@ -4,7 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
-import 'package:fyp/Screens/AdminPanel/Models/advertisemnet.dart';
+import 'package:fyp/Models/advertisemnet.dart';
 
 class RequestCards extends StatelessWidget {
   const RequestCards({super.key, required this.ads, });

@@ -38,7 +38,7 @@ dependencies:
   flutter_svg: ^2.0.9
   auto_size_text: ^3.0.0
   get: ^4.6.6
-  image_picker: ^1.0.1
+  image_picker: ^1.1.1
   getwidget: ^4.0.0
   firebase_core: ^2.28.0
   flutter_riverpod: ^2.5.1
@@ -47,8 +47,8 @@ dependencies:
   fluttertoast: ^8.2.5
   shared_preferences: ^2.2.3
   double_tap_to_exit: ^1.0.1
-  firebase_storage:
   connectivity_plus: ^6.0.3
+  firebase_storage: ^11.7.5
   
 
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
-import 'package:fyp/Screens/HomeScreen/demoproducts.dart';
+import 'package:fyp/Models/product_model.dart';
 class ProductCard extends StatelessWidget {
   const ProductCard({
     Key? key,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fyp/Screens/HomeScreen/demoproducts.dart';
+import 'package:fyp/Models/product_model.dart';
 
 class ProductData extends StatelessWidget {
   const ProductData({super.key, required this.product});

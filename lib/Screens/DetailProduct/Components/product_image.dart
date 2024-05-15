@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/Screens/DetailProduct/Components/product_small_images.dart';
-import '../../HomeScreen/demoproducts.dart';
+import '../../../Models/product_model.dart';
 
 class ProductImage extends StatefulWidget {
   const ProductImage({

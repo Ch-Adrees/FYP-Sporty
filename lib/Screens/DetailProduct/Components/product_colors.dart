@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/Screens/DetailProduct/Components/product_color_circle.dart';
-import 'package:fyp/Screens/HomeScreen/demoproducts.dart';
+import 'package:fyp/Models/product_model.dart';
 
 import '../../../HelperMaterial/constant.dart';
 class ProductColors extends StatelessWidget {

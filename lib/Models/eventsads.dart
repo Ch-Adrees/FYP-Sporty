@@ -1,7 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
-import 'package:fyp/Screens/AdminPanel/Models/advertisemnet.dart';
+import 'package:fyp/Models/advertisemnet.dart';
 class EventsAds extends Advertisements{
   EventsAds({required super.adsName, required super.venue, required super.date, required super.fee, required super.organizerName});
 
