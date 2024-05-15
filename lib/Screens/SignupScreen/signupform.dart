@@ -11,10 +11,10 @@ class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
 
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  SignUpFormState createState() => SignUpFormState();
 }
 
-class _SignUpFormState extends ConsumerState<SignUpForm> {
+class SignUpFormState extends ConsumerState<SignUpForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();

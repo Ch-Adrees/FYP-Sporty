@@ -8,9 +8,9 @@ import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
 import 'package:get/get.dart';
 
 import '../../HelperMaterial/constant.dart';
-import '../AdminPanel/Models/academies.dart';
-import '../AdminPanel/Models/advertisemnet.dart';
-import '../AdminPanel/Models/eventsads.dart';
+import '../../Models/academies.dart';
+import '../../Models/advertisemnet.dart';
+import '../../Models/eventsads.dart';
 
 class MyAdsScreen extends StatefulWidget {
   static const String routeName = "/mypost";

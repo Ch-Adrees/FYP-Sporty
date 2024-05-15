@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/Screens/HomeScreen/section_title.dart';
-import 'package:fyp/Screens/HomeScreen/demoproducts.dart';
+import 'package:fyp/Models/product_model.dart';
 import 'package:fyp/Screens/HomeScreen/productcard.dart';
 import 'package:fyp/Screens/AllProducts/products_page.dart';
 

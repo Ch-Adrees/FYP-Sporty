@@ -1,55 +1,36 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fyp/Features/Product/product_controller.dart';
-import 'package:fyp/Features/provi_wid.dart';
+
+import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
+import 'package:fyp/Models/catagory_model.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-class UploadProductsForm extends StatefulWidget {
+
+class UploadProductsForm extends ConsumerStatefulWidget {
   const UploadProductsForm({super.key});
 
   @override
   UploadProductsFormState createState() => UploadProductsFormState();
 }
 
-class UploadProductsFormState extends State<UploadProductsForm> {
+class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
   var controller = Get.put(ProductController());
   final _formkey = GlobalKey<FormState>();
+  bool isLoading = false;
+  TextEditingController productCodeController = TextEditingController();
+  TextEditingController productTitleController = TextEditingController();
+  TextEditingController productDescriptionController = TextEditingController();
+  TextEditingController productPriceController = TextEditingController();
+  String? selectedCategory;
   final List<String> errors = [];
-  String? productCode,
-      productTitle,
-      productDescription,
-      productQuantity,
-      productPrice,
-      productCategory;
-
+  
   List<File> productImages = [];
   Color? productColors;
-  Future<void> pickImage() async {
-    try {
-      final ImagePicker picker = ImagePicker();
-      final pickedfile = await picker.pickMultiImage(
-          imageQuality: 100, maxHeight: 1000, maxWidth: 1000);
-
-      List<XFile> image = pickedfile;
-      setState(() {
-        if (image.isNotEmpty) {
-          for (var i = 0; i < image.length; i++) {
-            productImages.add(File(image[i].path));
-          }
-        } else {
-          ProviderWidgets.showFlutterToast(
-              context, 'Image picking cancelled or failed');
-        }
-      });
-    } catch (e) {
-        ProviderWidgets.showFlutterToast(context, 'Error picking image');
-      
-    }
-  }
-
   void addError({String? error}) {
     if (!errors.contains(error)) {
       setState(() {
@@ -74,17 +55,17 @@ class UploadProductsFormState extends State<UploadProductsForm> {
         children: [
           const SizedBox(height: 20),
           TextFormField(
-            onSaved: (newValue) => productCode = newValue,
-            controller: controller.productCodeController,
+        controller: productCodeController,
+        onSaved: (newValue) => productCodeController.text = newValue!,
             onChanged: (value) {
               if (value.isNotEmpty) {
-                removeError(error: kProductCodeNullError);
+                removeError(error: kProductPriceNullError);
               }
               return;
             },
             validator: (value) {
               if (value!.isEmpty) {
-                addError(error: kProductCodeNullError);
+                addError(error: kProductPriceNullError);
                 return "";
               }
               return null;
@@ -98,17 +79,17 @@ class UploadProductsFormState extends State<UploadProductsForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
-            controller: controller.productTitleController,
-            onSaved: (newValue) => productTitle = newValue,
+            controller:productTitleController,
+            onSaved: (newValue) => productTitleController.text = newValue!,
             onChanged: (value) {
               if (value.isNotEmpty) {
-                removeError(error: kProductTitleNullError);
+                removeError(error: kProductPriceNullError);
               }
               return;
             },
             validator: (value) {
               if (value!.isEmpty) {
-                addError(error: kProductTitleNullError);
+                addError(error: kProductPriceNullError);
                 return "";
               }
               return null;
@@ -124,18 +105,17 @@ class UploadProductsFormState extends State<UploadProductsForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
-            //keyboardType: TextInputType.phone,
-            onSaved: (newValue) => productDescription = newValue,
-            controller: controller.productDescriptionController,
+            controller:productDescriptionController ,
+            onSaved: (newValue) => productDescriptionController.text = newValue!,
             onChanged: (value) {
               if (value.isNotEmpty) {
-                removeError(error: kProductDescriptionNullError);
+                removeError(error: kProductPriceNullError);
               }
               return;
             },
             validator: (value) {
               if (value!.isEmpty) {
-                addError(error: kProductDescriptionNullError);
+                addError(error: kProductPriceNullError);
                 return "";
               }
               return null;
@@ -151,64 +131,9 @@ class UploadProductsFormState extends State<UploadProductsForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
-            //keyboardType: TextInputType.phone,
-            onSaved: (newValue) => productCategory = newValue,
-            controller: controller.productCategoryController,
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                removeError(error: kProductCategoryNullError);
-              }
-              return;
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                addError(error: kProductCategoryNullError);
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              labelText: "Product Category",
-              hintText: "Enter Product Category",
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSuffixIcons(svgIcon: "assets/icons/Phone.svg"),
-            ),
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
             keyboardType: TextInputType.phone,
-            controller: controller.productQuantityController,
-            onSaved: (newValue) => productQuantity = newValue,
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                removeError(error: kProductQuantityNullError);
-              }
-              return;
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                addError(error: kProductQuantityNullError);
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              labelText: "Product Quantity",
-              hintText: "Enter no. of items",
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon:
-                  CustomSuffixIcons(svgIcon: "assets/icons/Location point.svg"),
-            ),
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            keyboardType: TextInputType.phone,
-            controller: controller.productPriceController,
-            onSaved: (newValue) => productPrice = newValue,
+            controller: productPriceController,
+            onSaved: (newValue) =>productPriceController.text = newValue!,
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: kProductPriceNullError);
@@ -228,13 +153,49 @@ class UploadProductsFormState extends State<UploadProductsForm> {
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon:
-                  CustomSuffixIcons(svgIcon: "assets/icons/Location point.svg"),
+              suffixIcon: Icon(
+                Icons.money,
+                color: Colors.black38,
+              ),
             ),
           ),
           const SizedBox(
             height: 20,
           ),
+          SizedBox(
+            child: DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                  label: Text(
+                "Select Category",
+                style: TextStyle(color: Colors.black.withOpacity(0.8)),
+              )),
+              isDense: true,
+              borderRadius: BorderRadius.circular(60),
+              value: selectedCategory,
+              hint: const Text(
+                'Select Product Category',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+              icon: const Icon(Icons.arrow_drop_down),
+              iconSize: 30,
+              isExpanded: false,
+              elevation: 16,
+              style: const TextStyle(color: Colors.black),
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedCategory = newValue!;
+                });
+              },
+              items: listOfCategories
+                  .map<DropdownMenuItem<String>>((Category category) {
+                return DropdownMenuItem<String>(
+                  value: category.categoryName,
+                  child: Text(category.categoryName),
+                );
+              }).toList(),
+            ),
+          ),
+          const SizedBox(height: 20),
           Container(
             width: 500,
             height: 120,
@@ -268,34 +229,47 @@ class UploadProductsFormState extends State<UploadProductsForm> {
               ),
             ),
           ),
-
           const SizedBox(
             height: 20,
           ),
           ElevatedButton(
-            onPressed: () {
-              pickImage();
+            onPressed: () async {
+              productImages = await ref
+                  .watch(productProvider.notifier)
+                  .pickImagesFromGallery();
+              setState(() {});
               controller.productImageController;
             },
             child: const Text("Select Images"),
           ),
           FormError(errors: errors),
-          const SizedBox(height: 30),
-          // controller.isLoading
-          //    ? const CircularProgressIndicator(color: kPrimaryColor)
+          const SizedBox(height: 15),
           ElevatedButton(
             onPressed: () async {
-              if (_formkey.currentState!.validate()) {
-                _formkey.currentState!.save();
-                //controller.isLoading = true;
-                await controller.uploadImages();
-                await controller.uploadProduct();
-                //Get.back();
-                //Navigator.pushNamed(context, SellerHomeScreen.routeName);
-                //Navigator.pushNamed(context, SellerHomeScreen.routeName);
-              }
+              setState(() {
+                isLoading = true;
+                const CircularProgressIndicator(
+                  color: kPrimaryColor,
+                );
+              });
+              await ref
+                  .read(productProvider.notifier)
+                  .uploadImagesToDatabase(productImages, context);
+              // if (_formkey.currentState!.validate()) {
+              //   _formkey.currentState!.save();
+              //   await controller.uploadImages();
+              //  // await controller.uploadProduct();
+              // }
+              setState(() {
+                isLoading = false; // Set loading state to false after upload
+              });
+              setState(() {});
             },
-            child: const Text("Upload"),
+            child: isLoading
+                ? const CircularProgressIndicator(
+                    color: Colors.white,
+                  )
+                : const Text("Upload"),
           ),
         ],
       ),

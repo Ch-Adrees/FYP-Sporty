@@ -55,6 +55,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 height: 55,
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: TextFormField(
+                  
                   decoration: const InputDecoration(
                       hintText: "Categorized your items",
                       hintStyle: TextStyle(

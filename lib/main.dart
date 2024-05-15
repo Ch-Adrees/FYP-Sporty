@@ -2,8 +2,12 @@
 import 'package:double_tap_to_exit/double_tap_to_exit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fyp/Features/internet_connection.dart';
+import 'package:fyp/HelperMaterial/constant.dart';
+import 'package:fyp/Screens/HomeScreen/home_screen.dart';
 import 'package:fyp/Screens/SignInScreen/sigin.dart';
 import 'package:fyp/Screens/SignupScreen/signup.dart';
+
 import 'package:fyp/Screens/wrapper_screen.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +23,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
- runApp (const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -27,15 +31,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Sporty App',
-        theme: AppTheme.lightTheme(context),
-        home: const WrappeScreen(),
-        // initialRoute: OnBoardScreen.routeName,
-        // routes: listOfRoutes,
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Sporty App',
+      theme: AppTheme.lightTheme(context),
+      home:const  InternetConnection(),
+      // initialRoute: OnBoardScreen.routeName,
+      // routes: listOfRoutes,
     );
   }
+
+  
 }

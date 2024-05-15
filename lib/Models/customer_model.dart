@@ -16,7 +16,8 @@ class CustomerModel extends UserModel {
           userId: userId,
           username: username,
         );
-@override
+  @override
+  // ignore: unnecessary_overrides
   Map<String, dynamic> userToMap() {
     return super.userToMap();
   }
