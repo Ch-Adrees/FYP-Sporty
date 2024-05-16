@@ -16,9 +16,7 @@ final authControllerProvider = StateProvider((ref) {
 });
 
 final authServicesProvider = StateProvider((ref) {
-  final customerNotifier = ref.watch(customerProvider.notifier);
-  final sellerNotifier = ref.watch(sellerProvider.notifier);
-  return AuthServices(sellerNotifier, customerNotifier);
+  return AuthServices();
 });
 
 // Here will be the Customer Provider

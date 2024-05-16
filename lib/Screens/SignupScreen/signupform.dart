@@ -5,8 +5,6 @@ import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
 
-
-
 class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
 
@@ -18,7 +16,7 @@ class SignUpFormState extends ConsumerState<SignUpForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -213,25 +211,25 @@ class SignUpFormState extends ConsumerState<SignUpForm> {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
+              isLoading = true;
+              setState(() {});
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 ref.read(authControllerProvider).registerUser(
                     email: _emailController.text,
                     password: _passwordController.text,
                     userType: selectedRole!,
-                    context: context); 
-                // switch (selectedRole) {
-                //   case "Seller":
-                //     Navigator.pushNamed(context, SellerHomeScreen.routeName);
-                //   case "customer":
-                //     Navigator.pushNamed(context, HomeScreen.routeName);
-                //   case "admin":
-                //     Navigator.pushNamed(context, AdminPage.routeName);
-                //   default:
-                // }
+                    context: context);
               }
+              isLoading = false;
+              setState(() {
+              });
             },
-            child: const Text("Sign Up"),
+            child: isLoading
+                ? const CircularProgressIndicator(
+                    color: Colors.white,
+                  )
+                : const Text("Sign Up"),
           ),
         ],
       ),

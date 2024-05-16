@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
       title: 'Sporty App',
       theme: AppTheme.lightTheme(context),
       home:const  InternetConnection(),
-      // initialRoute: OnBoardScreen.routeName,
-      // routes: listOfRoutes,
+     // initialRoute: OnBoardScreen.routeName,
+     // routes: listOfRoutes,
     );
   }
 
