@@ -1,15 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fyp/Features/Product/product_controller.dart';
-
 import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/Models/catagory_model.dart';
-import 'package:get/get.dart';
+import 'package:fyp/Models/product_model.dart';
 
 class UploadProductsForm extends ConsumerStatefulWidget {
   const UploadProductsForm({super.key});
@@ -19,7 +16,6 @@ class UploadProductsForm extends ConsumerStatefulWidget {
 }
 
 class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
-  var controller = Get.put(ProductController());
   final _formkey = GlobalKey<FormState>();
   bool isLoading = false;
   TextEditingController productCodeController = TextEditingController();
@@ -28,9 +24,10 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
   TextEditingController productPriceController = TextEditingController();
   String? selectedCategory;
   final List<String> errors = [];
-  
+  late List<String> imagesUrls = [];
   List<File> productImages = [];
   Color? productColors;
+  List<Color> colors = [];
   void addError({String? error}) {
     if (!errors.contains(error)) {
       setState(() {
@@ -55,8 +52,8 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
         children: [
           const SizedBox(height: 20),
           TextFormField(
-        controller: productCodeController,
-        onSaved: (newValue) => productCodeController.text = newValue!,
+            controller: productCodeController,
+            onSaved: (newValue) => productCodeController.text = newValue!,
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: kProductPriceNullError);
@@ -79,7 +76,7 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
-            controller:productTitleController,
+            controller: productTitleController,
             onSaved: (newValue) => productTitleController.text = newValue!,
             onChanged: (value) {
               if (value.isNotEmpty) {
@@ -105,8 +102,9 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
-            controller:productDescriptionController ,
-            onSaved: (newValue) => productDescriptionController.text = newValue!,
+            controller: productDescriptionController,
+            onSaved: (newValue) =>
+                productDescriptionController.text = newValue!,
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: kProductPriceNullError);
@@ -133,7 +131,7 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
           TextFormField(
             keyboardType: TextInputType.phone,
             controller: productPriceController,
-            onSaved: (newValue) =>productPriceController.text = newValue!,
+            onSaved: (newValue) => productPriceController.text = newValue!,
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: kProductPriceNullError);
@@ -238,7 +236,6 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
                   .watch(productProvider.notifier)
                   .pickImagesFromGallery();
               setState(() {});
-              controller.productImageController;
             },
             child: const Text("Select Images"),
           ),
@@ -252,15 +249,32 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
                   color: kPrimaryColor,
                 );
               });
-              await ref
-                  .read(productProvider.notifier)
-                  .uploadImagesToDatabase(productImages, context);
-              // if (_formkey.currentState!.validate()) {
-              //   _formkey.currentState!.save();
-              //   await controller.uploadImages();
-              //  // await controller.uploadProduct();
-              // }
+
+              if (_formkey.currentState!.validate()) {
+                _formkey.currentState!.save();
+
+                imagesUrls = await ref
+                    .read(productProvider.notifier)
+                    .uploadImagesToDatabase(productImages, context);
+                String sellerId =
+                    ref.read(authServicesProvider).getUserId();
+                Products product = Products(
+                    productId: int.parse(productCodeController.text),
+                    productCategory: selectedCategory!,
+                    images: imagesUrls,
+                    colors: colors,
+                    title: productTitleController.text,
+                    price: double.parse(productPriceController.text),
+                    sellerId: sellerId,
+                    description: productDescriptionController.text);
+                if (context.mounted) {
+                  await ref
+                      .read(productProvider.notifier)
+                      .uploadProductToFirebase(product, context);
+                }
+              }
               setState(() {
+                _formkey.currentState?.reset();
                 isLoading = false; // Set loading state to false after upload
               });
               setState(() {});

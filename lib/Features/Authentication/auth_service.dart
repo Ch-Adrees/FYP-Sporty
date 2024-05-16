@@ -15,10 +15,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final CustomerNotifier customerNotifier;
-
-  final SellerNotifier sellerNotifier;
-  AuthServices(this.sellerNotifier, this.customerNotifier);
+  final CustomerNotifier customerNotifier = CustomerNotifier();
+  final SellerNotifier sellerNotifier = SellerNotifier();
 
   Future<void> registerUser(
       {required String email,
@@ -83,10 +81,12 @@ class AuthServices {
         }
       } //is ki if k baad jo karn ha kro
       if (context.mounted) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return const SignInScreen();
-        }));
+        Future.delayed(Durations.short2, () {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return const SignInScreen();
+          }));
+        });
       }
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {
@@ -96,6 +96,11 @@ class AuthServices {
     }
   }
 
+  String getUserId() {
+    String userIdForOtherPurposes = _auth.currentUser!.uid;
+    return userIdForOtherPurposes;
+  }
+
 //Login function
   Future<String?> loginUser(
       {required String email,
@@ -103,7 +108,7 @@ class AuthServices {
       required BuildContext context}) async {
     String? userType;
     try {
-      ProviderWidgets.showLoadingDialog(context);
+      
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       DocumentSnapshot<Map<String, dynamic>> user = await _firestore
@@ -116,17 +121,15 @@ class AuthServices {
         if (userType != null) {
           SharedPreferences sharedPreferences =
               await SharedPreferences.getInstance();
-          if (context.mounted) {
-            ProviderWidgets.showFlutterToast(context, userType);
-          }
           sharedPreferences.setString('email', userData['email']);
           sharedPreferences.setString('userType', userType);
           sharedPreferences.setBool('isLoggedIn', true);
+          sharedPreferences.setString('userId', user.id);
         }
-
         if (context.mounted) {
-          Navigator.of(context).pop();
           if (userType != null) {
+            ProviderWidgets.showFlutterToast(
+                    context, "Login Successful");
             switch (userType) {
               case 'customer':
                 Navigator.pushReplacement(context,
@@ -160,15 +163,15 @@ class AuthServices {
     try {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
-      bool? loginStatus = sharedPreferences.getBool('isLoggedIn')??false ;
-      String? userType =  sharedPreferences.getString('userType');
-     if (loginStatus == false) {
+      bool? loginStatus = sharedPreferences.getBool('isLoggedIn') ?? false;
+      String? userType = sharedPreferences.getString('userType');
+      if (loginStatus == false) {
         if (context.mounted) {
           ProviderWidgets.showFlutterToast(context, loginStatus.toString());
           Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) {
-                  return const SignInScreen();
-                }));
+              MaterialPageRoute(builder: (context) {
+            return const SignInScreen();
+          }));
         }
       } else {
         Future.delayed(const Duration(seconds: 1), () {

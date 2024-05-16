@@ -3,7 +3,6 @@ import 'package:fyp/Screens/HomeScreen/section_title.dart';
 import 'package:fyp/Models/product_model.dart';
 import 'package:fyp/Screens/HomeScreen/productcard.dart';
 import 'package:fyp/Screens/AllProducts/products_page.dart';
-
 import '../DetailProduct/Components/selected_detailed_product.dart';
 import '../DetailProduct/detailed_product.dart';
 
@@ -27,7 +26,7 @@ class Product extends StatelessWidget {
         child: Row(
           children: [
             ...List.generate(demoProducts.length, (index) {
-              if (demoProducts[index].isPopular) {
+              if (demoProducts[index].isPopular!) {
                 return Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: ProductCard(
