@@ -37,11 +37,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
           IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
         ],
         title: const Text(
-          "Categories",
+          'Categories',
           style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontSize: 22.0,
             color: kPrimaryColor,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
@@ -57,7 +57,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 child: TextFormField(
                   
                   decoration: const InputDecoration(
-                      hintText: "Categorized your items",
+                      hintText: "Search by Category",
                       hintStyle: TextStyle(
                         fontStyle: FontStyle.italic,
                         color: Colors.black38, // specify your desired color
@@ -149,8 +149,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               );
                             })))
                     : const Text(
-                        "No result Found",
-                        style: TextStyle(fontSize: 24),
+                        "No Result Found",
+                        style: TextStyle(fontSize: 20),
                       )),
           ],
         ),

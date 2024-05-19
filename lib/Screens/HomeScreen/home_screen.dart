@@ -18,11 +18,11 @@ class HomeScreen extends StatelessWidget {
               children: [
                 SizedBox(height: 15),
                 HomeHeader(),
-                SizedBox(height: 25),
+                SizedBox(height: 20),
                 AdsSlider(),
-                SizedBox(height: 25),
+                SizedBox(height: 20),
                 Category(),
-                SizedBox(height: 25),
+                SizedBox(height: 20),
                 Product(),
 
 

@@ -15,11 +15,11 @@ class Category extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categories = [
-      {"icon": "assets/icons/Flash Icon.svg", "text": "Cricket"},
-      {"icon": "assets/icons/Bill Icon.svg", "text": "Football"},
-      {"icon": "assets/icons/Game Icon.svg", "text": "Hockey"},
-      {"icon": "assets/icons/Gift Icon.svg", "text": "Badminton"},
-      {"icon": "assets/icons/Discover.svg", "text": "Tennis"},
+      {"icon": "assets/icons/cricket-sport-icon.svg", "text": "Cricket"},
+      {"icon": "assets/icons/ball-football-icon.svg", "text": "Football"},
+      {"icon": "assets/icons/hockey-icon.svg", "text": "Hockey"},
+      {"icon": "assets/icons/swimming-icon.svg", "text": "Swimming"},
+      {"icon": "assets/icons/tennis-icon.svg", "text": "Tennis"},
     ];
     return Column(children: [
       Padding(
@@ -32,7 +32,7 @@ class Category extends StatelessWidget {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,

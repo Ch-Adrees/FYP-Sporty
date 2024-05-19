@@ -1,10 +1,5 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, sized_box_for_whitespace, unused_import
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fyp/Screens/HomeScreen/home_screen.dart';
-import 'package:fyp/Screens/MyAdsScreen/postform.dart';
-import 'package:get/get.dart';
-
 import '../../HelperMaterial/constant.dart';
 import '../../Models/academies.dart';
 import '../../Models/advertisemnet.dart';
@@ -12,98 +7,19 @@ import '../../Models/eventsads.dart';
 
 class AllAdsScreen extends StatefulWidget {
   static const String routeName = "/allpost";
-  final Post? newPost;
 
-  const AllAdsScreen({this.newPost});
+  const AllAdsScreen({super.key});
 
   @override
   State<AllAdsScreen> createState() => _AllAdsScreenState();
 }
 
 class _AllAdsScreenState extends State<AllAdsScreen> {
-  Advertisements? adsType;
-  List<Advertisements> selectedList = listOfEventsAds;
   Color academyButtonColor = Colors.white;
   Color eventButtonColor = kPrimaryColor;
+  String selectedButton = 'Event';
 
-  // Dummy data for testing - replace it with your actual data
-  List<EventsAds> eventAdsList = listOfEventsAds;
-  List<AcademiesAds> academiesAdsList = listOfAcademiesAds;
 
-  // This function builds a card for each post
-  Widget buildPostCard(Advertisements ad) {
-    return Card(
-      elevation: 3,
-      margin: const EdgeInsets.all(10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 150,
-            height: 150,
-            child: Image.asset(
-              'assets/images/avatar.png', // Use a default image or ad-specific image property
-              width: 150,
-              height: 150,
-              fit: BoxFit.cover,
-            ),
-          ),
-          SizedBox(width: 8,),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    ad.adsName,
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  Text('Venue: ${ad.venue}'),
-                  Text('Date: ${ad.date}'),
-                  Text('Phone: 1234567890'), // Assuming a default phone number for now
-                  const SizedBox(height: 8),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Organizer: ${ad.organizerName}'),
-                      Text('Fee: ${ad.fee}'), 
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // This function builds the list of cards based on the selected category
-  Widget buildPostList() {
-    List<Advertisements> adsList =
-        selectedList == listOfEventsAds ? eventAdsList : academiesAdsList;
-
-    return ListView.builder(
-      itemCount: adsList.length,
-      itemBuilder: (context, index) {
-        return buildPostCard(adsList[index]);
-      },
-    );
-  }
-
-  Widget buildNavigationLine(BuildContext context, Color color) {
-    return AnimatedContainer(
-      duration: kAnimationDuration,
-      height: 5,
-      width: 130,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +52,7 @@ class _AllAdsScreenState extends State<AllAdsScreen> {
                           setState(() {
                             academyButtonColor = Colors.white;
                             eventButtonColor = kPrimaryColor;
-                            selectedList = listOfEventsAds;
+                            selectedButton = 'Event';
                           });
                         },
                         style: TextButton.styleFrom(
@@ -163,7 +79,7 @@ class _AllAdsScreenState extends State<AllAdsScreen> {
                           setState(() {
                             academyButtonColor = kPrimaryColor;
                             eventButtonColor = Colors.white;
-                            selectedList = listOfAcademiesAds;
+                            selectedButton = 'Academy';
                           });
                         },
                         style: TextButton.styleFrom(
@@ -193,4 +109,114 @@ class _AllAdsScreenState extends State<AllAdsScreen> {
       ),
     );
   }
+
+  Widget buildPostList() {
+    return StreamBuilder<List<Advertisements>>(
+      stream: getAdsFromFirebase(selectedButton),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator(
+            color: kPrimaryColor,));
+        }
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(
+              child: Text('No Approved Ad found.'));
+        }
+
+        List<Advertisements> adsList = snapshot.data!;
+        return ListView.builder(
+          itemCount: adsList.length,
+          itemBuilder: (context, index) {
+            Advertisements ad = adsList[index];
+            return buildPostCard(ad);
+          },
+        );
+      },
+    );
+  }
+  // This function builds a card for each post
+  Widget buildPostCard(Advertisements ad) {
+    return Card(
+      elevation: 3,
+      color: Colors.white24,
+      margin: const EdgeInsets.all(10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 150,
+            height: 150,
+            child: ad.image.isNotEmpty
+                ? Image.network(
+              ad.image,
+              width: 150,
+              height: 150,
+              fit: BoxFit.contain,
+            )
+                : Image.asset(
+              'assets/icons/image-not-found-icon.svg',
+              width: 150,
+              height: 150,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    ad.adsName,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  Text('Venue: ${ad.venue}'),
+                  Text('Phone: ${ad.phoneNo}'),
+                  const SizedBox(height: 8),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Organizer: ${ad.organizerName}'),
+                      Text('Fee: ${ad.fee}'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  //vList<Advertisements> adsList
+
+
+  Widget buildNavigationLine(BuildContext context, Color color) {
+    return AnimatedContainer(
+      duration: kAnimationDuration,
+      height: 5,
+      width: 130,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    );
+  }
+
 }
+Stream<List<Advertisements>> getAdsFromFirebase(String selectedButton) {
+  return FirebaseFirestore.instance
+      .collection('Ads')
+      //.where('isApproved', isEqualTo: 'Confirmed')
+      .where('category', isEqualTo: selectedButton)
+      .snapshots()
+      .map((snapshot) =>
+      snapshot.docs.map((doc) => Advertisements.fromJson(doc.data() as Map<String, dynamic>)).toList());
+}
+
+
+

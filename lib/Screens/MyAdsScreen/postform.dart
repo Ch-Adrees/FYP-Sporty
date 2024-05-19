@@ -1,68 +1,55 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, no_leading_underscores_for_local_identifiers, prefer_const_constructors, avoid_print, avoid_unnecessary_containers
-
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fyp/Features/Advertisement/ads_notifire.dart';
+import 'package:fyp/Features/providers.dart';
+import 'package:fyp/Models/advertisemnet.dart';
 import 'package:fyp/Screens/HomeScreen/home_screen.dart';
 import 'package:fyp/Screens/MyAdsScreen/myads.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../HelperMaterial/constant.dart';
+import '../../HelperMaterial/errors.dart';
+import '../../HelperMaterial/suffixicons.dart';
 
-class Post {
-  final String title;
-  final String venue;
-  final String date;
-  final String fee;
-  final String organizerName;
-  final String phoneNumber;
-  final String category;
-  final String image;
-
-  Post(
-      {required this.title,
-      required this.venue,
-      required this.date,
-      required this.fee,
-      required this.organizerName,
-      required this.phoneNumber,
-      required this.category,
-      required this.image});
-}
-
-class PostAdScreen extends StatefulWidget {
+class PostAdScreen extends ConsumerStatefulWidget {
   static const String routeName = "/postads";
 
   @override
   _PostAdScreenState createState() => _PostAdScreenState();
 }
 
-class _PostAdScreenState extends State<PostAdScreen> {
+class _PostAdScreenState extends ConsumerState<PostAdScreen> {
+  final _formkey = GlobalKey<FormState>();
+  bool isLoading = false;
+
   // Variables to hold form data
-  TextEditingController titleController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
-  TextEditingController numberController = TextEditingController();
-  TextEditingController textController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  XFile? _pickedImage;
+  TextEditingController AdnameController = TextEditingController();
+  TextEditingController AdvenueController = TextEditingController();
+  TextEditingController AdfeeController = TextEditingController();
+  TextEditingController AdorganizerController = TextEditingController();
+  TextEditingController AdphoneController = TextEditingController();
+  TextEditingController AdCategoryController = TextEditingController();
+  File? AdImage;
+  String? imageUrl;
+  final List<String> errors = [];
+  String? selectedCategory;
 
-  String selectedCity = 'Select City';
-  String selectedCategory = 'Select Category';
+  void addError({String? error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error!);
+      });
+    }
+  }
 
-  Future<void> _pickImage() async {
-    try {
-      final ImagePicker _picker = ImagePicker();
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-
-      if (image != null) {
-        setState(() {
-          _pickedImage = image;
-        });
-      } else {
-        print('Image picking cancelled or failed.');
-      }
-    } catch (e) {
-      print('Error picking image: $e');
+  void removeError({String? error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
     }
   }
 
@@ -70,199 +57,295 @@ class _PostAdScreenState extends State<PostAdScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.popAndPushNamed(context, HomeScreen.routeName);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
         title: const Text(
-          'Post Ads',
+          'Psot Ads',
           //textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 22.0,
+            fontSize: 26.0,
             color: kPrimaryColor,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text('Post Your Ads Here'),
-              SizedBox(
-                height: 25,
-              ),
-              TextField(
-                controller: titleController,
-                decoration: InputDecoration(labelText: 'Ad Name'),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: cityController,
-                // maxLines: 4,
-                decoration: InputDecoration(labelText: 'Venue'),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: dateController,
-                keyboardType: TextInputType.datetime,
-                decoration: InputDecoration(labelText: 'Date'),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: numberController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Fee'),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: textController,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(labelText: 'Organizer Name'),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: phoneController,
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(labelText: 'Phone Number'),
-              ),
-              SizedBox(height: 16),
-              DropdownButton<String>(
-                value: selectedCategory,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedCategory = newValue!;
-                  });
-                },
-                items: <String>[
-                  'Select Category',
-                  'Event',
-                  'Academy',
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: TextStyle(color: Color(0xFFCC5656)),
-                    ),
-                  );
-                }).toList(),
-              ),
-              SizedBox(height: 16),
-              GestureDetector(
-                onTap: _pickImage,
-                child: Container(
-                  width: 120,
+      body: Form(
+        key: _formkey,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  'Post Your Ads Here \n to boost your Event',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                TextFormField(
+                  controller: AdnameController,
+                  onSaved: (newValue) => AdnameController.text = newValue!,
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      removeError(error: kAdTitleNullError);
+                    }
+                    return;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      addError(error: kAdTitleNullError);
+                      return "";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    label: Text("Ad Title"),
+                    hintText: "Enter Ad Title",
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    suffixIcon:
+                    CustomSuffixIcons(svgIcon: "assets/icons/User.svg"),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: AdvenueController,
+                  onSaved: (newValue) => AdvenueController.text = newValue!,
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      removeError(error: kAdVenueNullError);
+                    }
+                    return;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      addError(error: kAdVenueNullError);
+                      return "";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    label: Text("Ad Venue"),
+                    hintText: "Enter Ad Venue",
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    suffixIcon:
+                    CustomSuffixIcons(svgIcon: "assets/icons/User.svg"),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  keyboardType: TextInputType.phone,
+                  controller: AdfeeController,
+                  onSaved: (newValue) => AdfeeController.text = newValue!,
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      removeError(error: kAdFeeNullError);
+                    }
+                    return;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      addError(error: kAdFeeNullError);
+                      return "";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    label: Text("Fee"),
+                    hintText: "Enter Fee",
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    suffixIcon:
+                    CustomSuffixIcons(svgIcon: "assets/icons/User.svg"),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: AdorganizerController,
+                  onSaved: (newValue) => AdorganizerController.text = newValue!,
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      removeError(error: kAdOrganizerNameNullError);
+                    }
+                    return;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      addError(error: kAdOrganizerNameNullError);
+                      return "";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    label: Text("Organizer Name"),
+                    hintText: "Enter Organizer Name",
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    suffixIcon:
+                    CustomSuffixIcons(svgIcon: "assets/icons/User.svg"),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: AdphoneController,
+                  onSaved: (newValue) => AdphoneController.text = newValue!,
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      removeError(error: kAdPhoneNumberNullError);
+                    }
+                    return;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      addError(error: kAdPhoneNumberNullError);
+                      return "";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    label: Text("Phone Number"),
+                    hintText: "Enter Phone Number",
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    suffixIcon:
+                    CustomSuffixIcons(svgIcon: "assets/icons/User.svg"),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                      label: Text(
+                        "Select Category",
+                        style: TextStyle(color: Colors.black.withOpacity(0.8)),
+                      )),
+                  borderRadius: BorderRadius.circular(40),
+                  value: selectedCategory,
+                  onSaved: (newValue) => selectedCategory = newValue!,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedCategory = newValue!;
+                    });
+                  },
+                  items: <String>[
+                    'Select Category',
+                    'Event',
+                    'Academy',
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                      ),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  width: 500,
                   height: 120,
+                  padding: const EdgeInsets.fromLTRB(10, 15, 15, 10),
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     border: Border.all(color: kPrimaryColor, width: 2.0),
                     borderRadius: BorderRadius.circular(15.0),
                   ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      if (_pickedImage != null)
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: Image.file(
-                            File(_pickedImage!.path),
-                            height: 120,
-                            width: 120,
-                            fit: BoxFit.cover,
-                          ),
+                  child: Center(
+                    child: SizedBox(
+                      width: 300.0,
+                      child: AdImage == null
+                          ? const Center(
+                        child: Icon(Icons.image,
+                            size: 40, color: kPrimaryColor),
+                      )
+                          : GridView.builder(
+                        itemCount: 1,
+                        gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
                         ),
-                      if (_pickedImage == null)
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.image,
-                              size: 40,
-                              color: kPrimaryColor,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Upload Image',
-                              style: TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                    ],
+                        itemBuilder: (BuildContext context, int index) {
+                          return Center(
+                              child: //kIsWeb
+                              // ? Image.network(AdImage!.path)
+                              Image.file(AdImage!));
+                        },
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () {
-                  _postAd();
-                },
-                child: Text('Post Ad'),
-              ),
-              SizedBox(height: 8),
-              TextButton(
-                onPressed: () {
-                  _cancelPostAd();
-                },
-                child: Text('Cancel'),
-              ),
-            ],
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    AdImage = await ref
+                        .watch(adProvider.notifier)
+                        .pickImagesFromGallery();
+                    setState(() {});
+                    // controller.productImageController;
+                  },
+                  child: const Text("Select Image"),
+                ),
+                FormError(errors: errors),
+                const SizedBox(height: 15),
+                ElevatedButton(
+                  onPressed: () async {
+                    setState(() {
+                      isLoading = true;
+                      const CircularProgressIndicator(
+                        color: kPrimaryColor,
+                      );
+                    });
+                    if (_formkey.currentState!.validate()) {
+                      _formkey.currentState!.save();
+
+                      imageUrl = (await ref
+                          .read(adProvider.notifier)
+                          .uploadAdImage(AdImage, context));
+                      String userID = ref.read(authServicesProvider)
+                          .getUserId();
+                      String uniqueAdId = DateTime.now().millisecondsSinceEpoch.toString();
+                      Advertisements ads = Advertisements(
+                        adID: uniqueAdId,
+                        adsName: AdnameController.text,
+                        venue: AdvenueController.text,
+                        fee: int.parse(AdfeeController.text),
+                        organizerName: AdorganizerController.text,
+                        phoneNo: AdphoneController.text,
+                        category: selectedCategory!,
+                        userId: userID,
+                        image: imageUrl!,
+                        isApproved: 'Pending',
+                        isDeleted: false,
+                      );
+                      if (context.mounted) {
+                        await ref
+                            .read(adProvider.notifier)
+                            .uploadAdsToFirebase(ads, context);
+                      }
+                    }
+                    setState(() {
+                      _formkey.currentState?.reset();
+                      isLoading = false; // Set loading state to false after upload
+                    });
+                    setState(() {});
+                    isLoading
+                        ? const CircularProgressIndicator(
+                      color: Colors.white,
+                    )
+                        : const Text("Send Request");
+                  }, child: const Text("Send Request"),
+
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
-  }
-
-  void _postAd() {
-    // Validate the form fields before posting
-    if (_validateForm()) {
-      // Create a Post object with the collected data
-      var newPost = Post(
-        title: titleController.text,
-        phoneNumber: phoneController.text,
-        category: selectedCategory,
-        image: _pickedImage != null ? _pickedImage!.path : '',
-        venue: cityController.text,
-        date: dateController.text,
-        fee: numberController.text,
-        organizerName: textController.text,
-      );
-
-      // Navigate to MyAdsScreen and pass the newPost data
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MyAdsScreen(
-                  newPost: newPost,
-                )),
-      );
-    }
-  }
-
-  // Function to validate the form fields
-  bool _validateForm() {
-    return true;
-  }
-
-  void _cancelPostAd() {
-    // Clear the form fields
-    titleController.clear();
-    cityController.clear();
-    phoneController.clear();
-    // Navigator.pop(context);
-    Navigator.popAndPushNamed(context, HomeScreen.routeName);
-
-    // Reset the selected city and category
-    setState(() {
-      selectedCity = 'Select City';
-      selectedCategory = 'Select Category';
-    });
-
-    // Reset the picked image
-    setState(() {
-      _pickedImage = null;
-    });
   }
 }

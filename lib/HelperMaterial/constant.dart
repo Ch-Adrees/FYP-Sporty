@@ -43,6 +43,13 @@ const String kProductDescriptionNullError = "Please Enter Product Description";
 const String kProductCategoryNullError = "Please Enter Product Category";
 const String kProductQuantityNullError = "Please Enter Product Quantity";
 const String kProductPriceNullError = "Please Enter Product Price";
+const String kAdTitleNullError = "Please Enter Ad Title";
+const String kAdVenueNullError = "Please Enter Ad Venue";
+const String kAdDateNullError = "Please Enter Ad Date";
+const String kAdFeeNullError = "Please Enter Ad Fee";
+const String kAdOrganizerNameNullError = "Please Enter Ad's Organizer Name";
+const String kAdPhoneNumberNullError = "Please Enter Phone Number";
+
 List<Color> listOfColors = [
   Colors.blue.shade100,
   Colors.amber.shade200.withOpacity(0.5),

@@ -18,6 +18,14 @@ class DetailBanner extends StatelessWidget {
       decoration: BoxDecoration(
         color: kPrimaryColor,
         borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.8), // Shadow color
+            spreadRadius: 4, // Spread radius
+            blurRadius: 6.0, // Blur radius
+            offset: const Offset(0, 4), // Offset in x and y directions
+          ),
+        ],
       ),
       child: Column(
         children: [
@@ -68,7 +76,7 @@ class DetailBanner extends StatelessWidget {
             height: 10,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
                 child: Align(

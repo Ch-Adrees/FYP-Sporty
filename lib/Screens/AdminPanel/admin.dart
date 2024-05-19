@@ -1,5 +1,6 @@
-// ignore_for_file: unused_import, body_might_complete_normally_nullable
 
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/AdminPanel/Components/HeaderComponents/image_container.dart';
@@ -8,6 +9,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fyp/Models/advertisemnet.dart';
 import 'package:fyp/Models/eventsads.dart';
 import 'package:fyp/Models/academies.dart';
+
+import '../../Features/provi_wid.dart';
+import 'package:fyp/Features/Advertisement/ads_notifire.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
@@ -18,10 +22,34 @@ class AdminPage extends StatefulWidget {
 }
 
 class _AdminPageState extends State<AdminPage> {
-  Advertisements? adsType;
-  List<Advertisements> selectedList = listOfEventsAds;
+  List<Advertisements> _ads = [];
   Color academyButtonColor = Colors.white;
   Color eventButtonColor = kPrimaryColor;
+  String selectedButton = 'Event';
+
+
+  Future<void> updateAdApprovalStatus(String docId, String approveStatus) async {
+    try {
+      await FirebaseFirestore.instance.collection('Ads').doc(docId).update({'isApproved': approveStatus});
+      print('Updated document $docId with status $approveStatus');
+      ProviderWidgets.showFlutterToast(context, 'Ad $approveStatus');
+    } catch (e) {
+      print('Error updating document: $e');
+      if (e is FirebaseException && e.code == 'not-found') {
+        print('Document with ID $docId and $approveStatus not found');
+        // Handle the document not found error, e.g., show a notification to the user
+      }
+    }
+  }
+
+  void approveAdStatus(String docId, String approveStatus, Advertisements ad) async {
+    await updateAdApprovalStatus(docId, approveStatus);
+    setState(() {
+      //_ads.remove(ad);
+      _ads.removeWhere((element) => element.adID == docId);
+    });
+  }
+
   // This function built the animated line below the tab bars
   Widget buildNavigationLine(BuildContext context, Color color) {
     return AnimatedContainer(
@@ -41,9 +69,13 @@ class _AdminPageState extends State<AdminPage> {
         appBar: AppBar(
           toolbarHeight: 50,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             "Sporty",
-            style: Theme.of(context).textTheme.titleLarge,
+            style: TextStyle(
+              fontSize: 26.0,
+              color: kPrimaryColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           leading: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -62,194 +94,396 @@ class _AdminPageState extends State<AdminPage> {
         ),
         body: SafeArea(
             child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
-              child: Container(
-                height: 140,
-                decoration: BoxDecoration(
-                  gradient: kPrimaryGradientColor,
-                  //color: kPrimaryColor.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(25.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.8), // Shadow color
-                      spreadRadius: 4, // Spread radius
-                      blurRadius: 6.0, // Blur radius
-                      offset:
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
+                  child: Container(
+                    height: 140,
+                    decoration: BoxDecoration(
+                      color: kPrimaryColor,
+                      //color: kPrimaryColor.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(25.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.8), // Shadow color
+                          spreadRadius: 4, // Spread radius
+                          blurRadius: 6.0, // Blur radius
+                          offset:
                           const Offset(0, 4), // Offset in x and y directions
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    // Image Container used in the header section for the Profile picture of the Admin
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(15, 0, 12, 0),
-                      child: ImageContainer(),
-                    ),
-                    Container(
-                      width: 4,
-                      height: 145,
-                      decoration: BoxDecoration(
-                        color: kPrimaryLightColor,
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
+                    child: Row(
+                      children: [
+                        // Image Container used in the header section for the Profile picture of the Admin
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(15, 0, 12, 0),
+                          child: ImageContainer(),
+                        ),
+                        Container(
+                          width: 2,
+                          height: 145,
+                          decoration: BoxDecoration(
+                            color: kPrimaryLightColor,
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
 
-                    const Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 35,
-                          ),
-                          Text(
-                            'Hi Admin!',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 2.0),
-                            child: AutoSizeText(
-                              'Muhammad Hanan Haider',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              SizedBox(
+                                height: 35,
+                              ),
+                              Text(
+                                'Hi Admin!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Padding(
-                                padding: EdgeInsets.all(7.0),
-                                child: Text(
-                                  '20011598-086',
+                                padding: EdgeInsets.only(right: 2.0),
+                                child: AutoSizeText(
+                                  'Muhammad Hanan Haider',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 15,
+                                    fontSize: 18,
                                     fontStyle: FontStyle.italic,
                                   ),
                                 ),
                               ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(7.0),
+                                    child: Text(
+                                      '20011598-086',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                // Each Column contains the
-                Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SizedBox(
-                      height: 35,
-                      child: TextButton(
-                        onPressed: () {
-                          {
-                            setState(() {
-                              academyButtonColor = Colors.white;
-                              eventButtonColor = kPrimaryColor;
-                              if (selectedList.isEmpty ||
-                                  selectedList == listOfAcademiesAds) {
-                                selectedList = listOfEventsAds;
+                    // Each Column contains the
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 35,
+                          child: TextButton(
+                            onPressed: () {
+                              {
+                                setState(() {
+                                  academyButtonColor = Colors.white;
+                                  eventButtonColor = kPrimaryColor;
+                                  selectedButton = "Event";
+                                });
                               }
-                            });
-                          }
-                        },
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets
-                              .zero, // Optional, removes default padding
-                          textStyle: const TextStyle(
-                            fontSize: 20,
-                          ), // Set the font size
-                        ),
-                        child: const Text(
-                          'Events',
-                          style: TextStyle(color: kTextColor),
-                        ),
-                      ),
-                    ),
-                    buildNavigationLine(context, eventButtonColor),
-                  ],
-                ),
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 35,
-                      child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            academyButtonColor = kPrimaryColor;
-                            eventButtonColor = Colors.white;
-                            if (selectedList.isEmpty ||
-                                selectedList == listOfEventsAds) {
-                              selectedList = listOfAcademiesAds;
-                            }
-                          });
-                        },
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets
-                              .zero, // Optional, removes default padding
-                          textStyle: const TextStyle(
-                              fontSize: 20), // Set the font size
-                        ),
-                        child: const Text(
-                          'Academies',
-                          style: TextStyle(
-                            color: kTextColor,
+                            },
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets
+                                  .zero, // Optional, removes default padding
+                              textStyle: const TextStyle(
+                                fontSize: 20,
+                              ), // Set the font size
+                            ),
+                            child: const Text(
+                              'Events',
+                              style: TextStyle(color: kTextColor),
+                            ),
                           ),
                         ),
-                      ),
+                        buildNavigationLine(context, eventButtonColor),
+                      ],
                     ),
-                    buildNavigationLine(context, academyButtonColor),
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 35,
+                          child: TextButton(
+                            onPressed: () {
+                              setState(() {
+                                academyButtonColor = kPrimaryColor;
+                                eventButtonColor = Colors.white;
+                                selectedButton = "Academy";
+                              });
+                            },
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets
+                                  .zero, // Optional, removes default padding
+                              textStyle: const TextStyle(
+                                  fontSize: 20), // Set the font size
+                            ),
+                            child: const Text(
+                              'Academies',
+                              style: TextStyle(
+                                color: kTextColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        buildNavigationLine(context, academyButtonColor),
+                      ],
+                    ),
                   ],
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 2,
+                  color: Colors.black,
+                ),
+                Expanded(
+                    child: buildPostList(),
+                ),
               ],
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                'Requests',
-                style: TextStyle(color: Colors.black38),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              height: 1,
-              color: Colors.black38,
-            ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 10,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (_, int index) {
-                   // return  RequestCards();
-                  }),
+            )));
+  }
+
+  Widget buildPostList() {
+    return StreamBuilder<List<Advertisements>>(
+      stream: getAdsFromFirebase(selectedButton),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator(
+            color: kPrimaryColor,));
+        }
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(
+              child: Text('No Ad found.'));
+        }
+
+        List<Advertisements> adsList = snapshot.data!;
+        //_ads = adsList.map((data) => Advertisements.fromJson(data as Map<String, dynamic>)).toList();
+        //_ads = adsList.map((data) => Advertisements.fromJson(data)).toList();
+        return ListView.builder(
+          itemCount: adsList.length,
+          itemBuilder: (context, index) {
+            Advertisements ad = adsList[index];
+            return buildRequestCards(ad.adID, ad);
+          },
+        );
+      },
+    );
+
+  }
+
+  Widget buildRequestCards(String docId, Advertisements ad) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+        width: double.infinity,
+        height: 210,
+        decoration: BoxDecoration(
+          //color: kPrimaryLightColor,
+          gradient: kPrimaryGradientColor,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.8), // Shadow color
+              spreadRadius: 4, // Spread radius
+              blurRadius: 5.0, // Blur radius
+              offset:
+              const Offset(0, 3), // Offset in x and y directions
             ),
           ],
-        )));
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 100,
+                height: 170,
+                child: ad.image.isNotEmpty
+                    ? Image.network(
+                  ad.image,
+                  width: 150,
+                  height: 150,
+                  fit: BoxFit.contain,
+                )
+                    : Image.asset(
+                  'assets/icons/image-not-found-icon.svg',
+                  width: 150,
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
+              ),
+
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 10,),
+                Flexible(
+                  child: AutoSizeText(
+                    ad.adsName,
+                    style: const  TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      //decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                  const Text(
+                  'Name:',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                    const SizedBox(width: 5),
+                    Text(ad.organizerName),
+                    //cardTextAnswer(context, ad.organizerName),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const Text(
+                      'Venue:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(ad.venue),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const Text(
+                      'PhoneNo:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(ad.phoneNo),
+                  ],
+                ),
+                const SizedBox(height: 7,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const SizedBox(width: 15),
+                    const Text(
+                      'Fee:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Text('${ad.fee}'),
+                  ],
+                ),
+                const SizedBox(height: 10,),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(150, 0, 0, 0),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 45,
+                        width: 45,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                        child: Center(
+                          child: IconButton (
+                              onPressed: () {
+                                setState(() {
+                                  String approveStatus = 'Declined';
+                                  approveAdStatus(docId, approveStatus, ad);
+                                });
+                              }, icon: const Icon(Icons.close)),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        height: 45,
+                        width: 45,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.green,
+                        ),
+                        child: Center(
+                          child: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  String approveStatus = 'Confirmed';
+                                  approveAdStatus(docId, approveStatus, ad);
+                                });
+
+                              }, icon: const Icon(Icons.check)),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],),
+          ],
+        ),
+      ), );
   }
+
 }
+
+Stream<List<Advertisements>> getAdsFromFirebase(String selectedButton) {
+  return FirebaseFirestore.instance
+      .collection('Ads')
+      .where('category', isEqualTo: selectedButton)
+      .snapshots()
+      .map((snapshot) =>
+       snapshot.docs.map((doc) => Advertisements.fromJson(doc.data() as Map<String, dynamic>)).toList());
+
+}
+

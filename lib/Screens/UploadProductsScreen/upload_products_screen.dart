@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/UploadProductsScreen/upload_products_form.dart';
 
+import '../SellerHomeScreen/seller_home_screen.dart';
+
 class UploadProducts extends StatelessWidget {
   const UploadProducts({super.key});
   static String routeName = "/upload_products";
@@ -10,6 +12,10 @@ class UploadProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {Navigator.pushNamed(context, SellerHomeScreen.routeName);},
+          icon: const Icon(Icons.arrow_back),
+        ),
         title: const Text(
           'Upload Product',
           //textAlign: TextAlign.center,

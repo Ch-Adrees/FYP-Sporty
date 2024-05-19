@@ -9,6 +9,9 @@ import 'package:fyp/Screens/SignInScreen/sigin.dart';
 import 'package:fyp/Screens/SignupScreen/signup.dart';
 
 import 'package:fyp/Screens/wrapper_screen.dart';
+import 'Screens/AdminPanel/admin.dart';
+import 'Screens/MyAdsScreen/myads.dart';
+import 'Screens/MyAdsScreen/postform.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
@@ -35,8 +38,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Sporty App',
       theme: AppTheme.lightTheme(context),
-      home:const  InternetConnection(),
-     // initialRoute: OnBoardScreen.routeName,
+      home: const InternetConnection(),
+     // initialRoute: InternetConnection.routeName,
      // routes: listOfRoutes,
     );
   }

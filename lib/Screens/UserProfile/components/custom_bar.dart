@@ -36,7 +36,7 @@ class CustomBottomNavBar extends StatelessWidget {
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           IconButton(
             icon: SvgPicture.asset(
-              "assets\icons\home Icon.svg",
+              "assets/icons/home Icon.svg",
               color: MenuState.home == selectedMenu
                   ? kPrimaryColor
                   : inActiveIconColor,
@@ -45,7 +45,7 @@ class CustomBottomNavBar extends StatelessWidget {
           ),
           IconButton(
             icon: SvgPicture.asset(
-              "assets\icons\post.svg",
+              "assets/icons/post.svg",
               color: MenuState.post == selectedMenu
                   ? kPrimaryColor
                   : inActiveIconColor,
@@ -54,7 +54,7 @@ class CustomBottomNavBar extends StatelessWidget {
           ),
           IconButton(
             icon: SvgPicture.asset(
-              "assets\icons\Cart Icon.svg",
+              "assets/icons/Cart Icon.svg",
               color: MenuState.cart == selectedMenu
                   ? kPrimaryColor
                   : inActiveIconColor,
@@ -63,7 +63,7 @@ class CustomBottomNavBar extends StatelessWidget {
           ),
           IconButton(
             icon: SvgPicture.asset(
-              "assets\icons\User Icon.svg",
+              "assets/icons/User Icon.svg",
               color: MenuState.profile == selectedMenu
                   ? kPrimaryColor
                   : inActiveIconColor,

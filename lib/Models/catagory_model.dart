@@ -16,5 +16,4 @@ List<Category> listOfCategories = [
   Category(categoryName: 'Running'),
   Category(categoryName: 'athletic'),
   Category(categoryName: 'jumping'),
-  Category(categoryName: 'Etc'),
 ];

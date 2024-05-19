@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../HelperMaterial/constant.dart';
+
 class ProviderWidgets {
   static void showLoadingDialog(BuildContext context) {
     showDialog(
@@ -19,9 +21,9 @@ class ProviderWidgets {
     Fluttertoast.showToast(
         msg: message.toString(),
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red.shade400,
+        backgroundColor: kPrimaryColor,
         textColor: Colors.white,
         fontSize: 12.0
     );

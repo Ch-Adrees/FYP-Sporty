@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use, prefer_const_constructors
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,8 +5,8 @@ import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Models/advertisemnet.dart';
 
 class RequestCards extends StatelessWidget {
-  const RequestCards({super.key, required this.ads, });
-  final Advertisements ads ;
+  const RequestCards({super.key, required this.ad});
+  final Advertisements ad;
 
   Widget cardText(BuildContext context, String? value) {
     return Text(
@@ -38,7 +36,7 @@ class RequestCards extends StatelessWidget {
         width: double.infinity,
         height: 210,
         decoration: BoxDecoration(
-// color: kPrimaryLightColor,
+          //color: kPrimaryLightColor,
          gradient: kPrimaryGradientColor,
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
@@ -51,55 +49,66 @@ class RequestCards extends StatelessWidget {
             ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        // child: Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+
               child: Row(
                 children: [
-                  InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Container(
-                        height: 55,
-                        width: 55,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.cyanAccent.withOpacity(0.2),
-                        ),
-                        child: Center(
-                          child: SvgPicture.asset(
-                            'assets/icons/man-waiter-icon.svg', // Replace with your SVG path
-                            width: 35,
-                            height: 35,
-                            fit: BoxFit.cover,
-                            color: Colors.black45,
-                          ),
-                        ),
-                      ),
+              Padding(
+              padding: const EdgeInsets.all(8.0),
+                  // InkWell(
+                  //   onTap: () {},
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(top: 8.0),
+                  //     child: Container(
+                  //       height: 55,
+                  //       width: 55,
+                  //       decoration: BoxDecoration(
+                  //         shape: BoxShape.circle,
+                  //         color: Colors.cyanAccent.withOpacity(0.2),
+                  //       ),
+                  //       child: Center(
+                  //         child: SvgPicture.asset(
+                  //           'assets/icons/man-waiter-icon.svg', // Replace with your SVG path
+                  //           width: 35,
+                  //           height: 35,
+                  //           fit: BoxFit.cover,
+                  //           color: Colors.black45,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  child: SizedBox(
+                    width: 100,
+                    height: 170,
+                    child: Image.asset(
+                      'assets/icons/image-not-found-icon.svg',
+                      width: 150,
+                      height: 150,
+                      fit: BoxFit.contain,
                     ),
                   ),
-                  const SizedBox(
-                    width: 7,
-                  ),
-                    Flexible(
-                    child: AutoSizeText(
-                      '$ads.adsName',
-                      style: const  TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  )
-                ],
+
               ),
-            ),
+                  const SizedBox(
+                    width: 10,
+                  ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 10,),
+                Flexible(
+                  child: AutoSizeText(
+                    ad.adsName,
+                    style: const  TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      //decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
                 const SizedBox(
                   height: 5,
                 ),
@@ -107,55 +116,39 @@ class RequestCards extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     cardText(context, 'Name:'),
-                    const SizedBox(width: 4),
-                    cardTextAnswer(context, '$ads.organizerName'),
+                    const SizedBox(width: 5),
+                    cardTextAnswer(context, ad.organizerName),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     cardText(context, 'Venue:'),
-                    const SizedBox(width: 4),
-                    cardTextAnswer(context, '$ads.venue'),
+                    const SizedBox(width: 5),
+                    cardTextAnswer(context, ad.venue),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    cardText(context, 'Date:'),
-                    const SizedBox(width: 4),
-                    cardTextAnswer(context, '$ads.date'),
+                    cardText(context, 'Phone No:'),
+                    const SizedBox(width: 5),
+                    cardTextAnswer(context, ad.phoneNo),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     cardText(context, 'Fee:'),
-                    const SizedBox(width: 4),
-                    cardTextAnswer(context, '2000'),
+                    const SizedBox(width: 5),
+                    cardTextAnswer(context, ad.fee as String?),
                   ],
                 ),
                 SizedBox(height: 10,),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  padding: const EdgeInsets.fromLTRB(150, 0, 0, 0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                        height: 45,
-                        width: 45,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.green,
-                        ),
-                        child: Center(
-                          child: IconButton(
-                              onPressed: () {}, icon: const Icon(Icons.check)),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
                       Container(
                         height: 45,
                         width: 45,
@@ -168,14 +161,27 @@ class RequestCards extends StatelessWidget {
                               onPressed: () {}, icon: const Icon(Icons.close)),
                         ),
                       ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Container(
+                        height: 45,
+                        width: 45,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.green,
+                        ),
+                        child: Center(
+                          child: IconButton(
+                              onPressed: () {}, icon: const Icon(Icons.check)),
+                        ),
+                      ),
                     ],
                   ),
                 )
+                ],),
               ],
             ),
-          ],
-        ),
-      ),
-    );
+      ), );
   }
 }
