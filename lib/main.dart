@@ -1,22 +1,12 @@
-// ignore_for_file: unused_import
-import 'package:double_tap_to_exit/double_tap_to_exit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fyp/Features/internet_connection.dart';
-import 'package:fyp/HelperMaterial/constant.dart';
-import 'package:fyp/Screens/HomeScreen/home_screen.dart';
 import 'package:fyp/Screens/SignInScreen/sigin.dart';
-import 'package:fyp/Screens/SignupScreen/signup.dart';
-
-import 'package:fyp/Screens/wrapper_screen.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
-import 'Screens/CategoryScreen/catagory_screen.dart';
-import 'Screens/onBoardingScreen/onboardscreen.dart';
 import 'HelperMaterial/routes.dart';
-import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
-import 'package:fyp/Screens/UploadProductsScreen/upload_products_screen.dart';
+import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,8 +16,47 @@ Future<void> main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late List<ConnectivityResult> result;
+  late StreamSubscription<List<ConnectivityResult>> subscription;
+
+  var isConnected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    startStreaming();
+  }
+
+  startStreaming() {
+    subscription = Connectivity().onConnectivityChanged.listen((event) {
+      checkInternet();
+    });
+  }
+
+  checkInternet() async {
+    result = await (Connectivity().checkConnectivity());
+    if (result.contains(ConnectivityResult.none)) {
+      isConnected = false;
+      showMyDialog();
+    } else {
+      isConnected = true;
+    }
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +64,37 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Sporty App',
       theme: AppTheme.lightTheme(context),
-      home:const  InternetConnection(),
-     // initialRoute: OnBoardScreen.routeName,
-     // routes: listOfRoutes,
+      //home:const  InternetConnection(),
+      initialRoute: SignInScreen.routeName,
+      routes: listOfRoutes,
     );
   }
 
-  
+  Future<void> showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Connection Lost'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('disconnected from Internet!'),
+                Text('Please Retry to connect again'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  checkInternet();
+                },
+                child: const Text("Retry")),
+          ],
+        );
+      },
+    );
+  }
 }

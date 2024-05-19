@@ -27,12 +27,10 @@ class ProductNotifier extends StateNotifier<List<Products>> {
     List<File> files = [];
     ImagePicker imagePicker = ImagePicker();
     List<XFile> selectedImages = await imagePicker.pickMultiImage();
+
     files = getFiles(selectedImages);
-    if (selectedImages.isNotEmpty) {
-      return files;
-    } else {
-      return files;
-    }
+
+    return files;
   }
 
   Future<List<String>> uploadImagesToDatabase(
@@ -74,5 +72,50 @@ class ProductNotifier extends StateNotifier<List<Products>> {
         ProviderWidgets.showFlutterToast(context, e.toString());
       }
     }
+  }
+
+  Future<List<Products>> getallProductsFromFirebase(
+      BuildContext context) async {
+    // List<Products> productsList = [];
+    try {
+      QuerySnapshot listofAllProducts =
+          await _firestore.collection('products').where('isDeleted').get();
+
+      for (var product in listofAllProducts.docs) {
+        state.add(Products.fromJson(product.data() as Map<String, dynamic>));
+      }
+    } on FirebaseException catch (e) {
+      if (context.mounted) {
+        ProviderWidgets.showFlutterToast(context, e.message);
+      }
+    }
+    return state;
+  }
+
+  Future<List<Products>> getOwnProduct(BuildContext context) async {
+    String? uId = await auth.getUserId();
+    ProviderWidgets.showFlutterToast(context, uId);
+    List<Products> ownProducts = [];
+    try {
+      QuerySnapshot snapshot = await _firestore
+          .collection('products')
+          .where('isDeleted', isEqualTo: false)
+          .where('sellerId', isEqualTo: uId)
+          .get();
+      for (var document in snapshot.docs) {
+        ownProducts
+            .add(Products.fromJson(document.data() as Map<String, dynamic>));
+      }
+      if (ownProducts.isEmpty) {
+        ProviderWidgets.showFlutterToast(context, "no");
+      } else {
+        ProviderWidgets.showFlutterToast(context, "yes");
+      }
+    } on FirebaseException catch (e) {
+      if (context.mounted) {
+        ProviderWidgets.showToast(context, "Error:${e.message}");
+      }
+    }
+    return ownProducts;
   }
 }

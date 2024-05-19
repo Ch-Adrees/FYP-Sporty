@@ -1,7 +1,7 @@
 import 'myorderscreen.dart';
 
-class DummyOrderData {
-  static List<OrderItem> orderItems = [
+
+   List<OrderItem> orderItems = [
     OrderItem(
       productName: 'Product A',
       productImage: 'assets/images/product_a.jpg',
@@ -20,4 +20,4 @@ class DummyOrderData {
     ),
     // Add more order items as needed
   ];
-}
+

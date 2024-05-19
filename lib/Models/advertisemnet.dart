@@ -16,6 +16,7 @@ class Advertisements{
     required this.date,
     required this.fee,
     required this.organizerName,
+    
 
 });
 
