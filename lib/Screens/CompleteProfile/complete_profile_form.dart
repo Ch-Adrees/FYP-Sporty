@@ -1,41 +1,41 @@
-
-
 import 'package:flutter/material.dart';
-//import 'package:image_picker_plus/image_picker_plus.dart';
-import 'package:image_picker/image_picker.dart';
-//import 'package:flutter/cupertino.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
-import 'package:fyp/Screens/SellerHomeScreen/seller_home_screen.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   const CompleteProfileForm({super.key});
 
   @override
   CompleteProfileFormState createState() => CompleteProfileFormState();
-
 }
-class CompleteProfileFormState extends State<CompleteProfileForm>{
+
+class CompleteProfileFormState extends State<CompleteProfileForm> {
   final _formkey = GlobalKey<FormState>();
-  final List<String> errors =[];
-  String? firstName, lastName, shopName, phoneNo, address;
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController phoneNoController = TextEditingController();
+  TextEditingController shopNameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController shopAddressController = TextEditingController();
+
+  final List<String> errors = [];
   //File? _image;
-  void addError({String? error}){
-    if(!errors.contains(error)){
+  void addError({String? error}) {
+    if (!errors.contains(error)) {
       setState(() {
         errors.add(error!);
       });
     }
   }
-  void removeError({String? error}){
-    if(errors.contains(error)){
+
+  void removeError({String? error}) {
+    if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -45,15 +45,15 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
         children: [
           const SizedBox(height: 20),
           TextFormField(
-            onSaved: (newValue) => firstName = newValue,
-            onChanged: (value){
-              if(value.isNotEmpty){
+            onSaved: (newValue) => firstNameController.text = newValue!,
+            onChanged: (value) {
+              if (value.isNotEmpty) {
                 removeError(error: kNameNullError);
               }
               return;
             },
-            validator: (value){
-              if(value!.isEmpty){
+            validator: (value) {
+              if (value!.isEmpty) {
                 addError(error: kNameNullError);
                 return "";
               }
@@ -68,15 +68,15 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
           ),
           const SizedBox(height: 20),
           TextFormField(
-            onSaved: (newValue) => lastName = newValue,
-            onChanged: (value){
-              if(value.isNotEmpty){
+            onSaved: (newValue) => lastNameController.text = newValue!,
+            onChanged: (value) {
+              if (value.isNotEmpty) {
                 removeError(error: kNameNullError);
               }
               return;
             },
-            validator: (value){
-              if(value!.isEmpty){
+            validator: (value) {
+              if (value!.isEmpty) {
                 addError(error: kNameNullError);
                 return "";
               }
@@ -94,7 +94,7 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
           const SizedBox(height: 20),
           TextFormField(
             keyboardType: TextInputType.phone,
-            onSaved: (newValue) => phoneNo = newValue,
+            onSaved: (newValue) => phoneNoController.text = newValue!,
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: kPhoneNumberNullError);
@@ -119,7 +119,7 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
           ),
           const SizedBox(height: 20),
           TextFormField(
-            onSaved: (newValue) => shopName = newValue,
+            onSaved: (newValue) => shopNameController.text = newValue!,
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: kShopNameNullError);
@@ -139,12 +139,41 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSuffixIcons(svgIcon: "assets/icons/Location point.svg"),
+              suffixIcon: IconTheme(
+                data: IconThemeData(
+                  color: Colors.black45,
+                ),
+                child: CustomSuffixIcons(svgIcon: "assets/icons/Shop Icon.svg"),
+              ),
             ),
           ),
           const SizedBox(height: 20),
           TextFormField(
-            onSaved: (newValue) => address = newValue,
+            onSaved: (newValue) => shopAddressController.text = newValue!,
+            onChanged: (value) {
+              if (value.isNotEmpty) {
+                removeError(error: kNameNullError);
+              }
+              return;
+            },
+            validator: (value) {
+              if (value!.isEmpty) {
+                addError(error: kNameNullError);
+                return "";
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              label: Text("Shop address"),
+              hintText: "Enter your Shop address",
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              suffixIcon:
+                  CustomSuffixIcons(svgIcon: "assets/icons/Location point.svg"),
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextFormField(
+            onSaved: (newValue) => addressController.text = newValue!,
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: kAddressNullError);
@@ -159,34 +188,22 @@ class CompleteProfileFormState extends State<CompleteProfileForm>{
               return null;
             },
             decoration: const InputDecoration(
-              labelText: "Address",
+              labelText: "Adrees",
               hintText: "Enter your address",
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSuffixIcons(svgIcon: "assets/icons/Location point.svg"),
+              suffixIcon:
+                  CustomSuffixIcons(svgIcon: "assets/icons/Location point.svg"),
             ),
           ),
-
-
-          const SizedBox(height: 20,),
-          ElevatedButton(
-            onPressed: () async {
-              // final pickedImage =
-              await ImagePicker().pickImage(source: ImageSource.gallery);
-            },
-            child: const Text("Select Image"),
+          const SizedBox(
+            height: 20,
           ),
-         const SizedBox(height: 30),
-         FormError(errors: errors),
           const SizedBox(height: 30),
+          FormError(errors: errors),
           ElevatedButton(
             onPressed: () {
               if (_formkey.currentState!.validate()) {
                 _formkey.currentState!.save();
-                Navigator.pushNamed(context, SellerHomeScreen.routeName);
-                //Navigator.pushNamed(context, SellerHomeScreen.routeName);
-
               }
             },
             child: const Text("Continue"),

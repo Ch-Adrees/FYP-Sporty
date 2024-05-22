@@ -10,7 +10,7 @@ class SellerNotifier extends StateNotifier<SellerModel> {
   SellerNotifier()
       : super(SellerModel(
             shopName: "",
-            shopAdress: "",
+            shopAddress: "",
             nameOfUser: "",
             phoneNumber: "",
             address: "",
@@ -31,6 +31,7 @@ class SellerNotifier extends StateNotifier<SellerModel> {
       }
     }
   }
+  
 
   
 }

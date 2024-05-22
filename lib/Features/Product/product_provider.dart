@@ -94,7 +94,6 @@ class ProductNotifier extends StateNotifier<List<Products>> {
 
   Future<List<Products>> getOwnProduct(BuildContext context) async {
     String? uId = await auth.getUserId();
-    ProviderWidgets.showFlutterToast(context, uId);
     List<Products> ownProducts = [];
     try {
       QuerySnapshot snapshot = await _firestore
@@ -105,11 +104,6 @@ class ProductNotifier extends StateNotifier<List<Products>> {
       for (var document in snapshot.docs) {
         ownProducts
             .add(Products.fromJson(document.data() as Map<String, dynamic>));
-      }
-      if (ownProducts.isEmpty) {
-        ProviderWidgets.showFlutterToast(context, "no");
-      } else {
-        ProviderWidgets.showFlutterToast(context, "yes");
       }
     } on FirebaseException catch (e) {
       if (context.mounted) {

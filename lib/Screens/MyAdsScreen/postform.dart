@@ -307,8 +307,8 @@ class _PostAdScreenState extends ConsumerState<PostAdScreen> {
                           .read(adProvider.notifier)
                           .uploadAdImage(AdImage, context));
                       // String? userID = ref.read(authServicesProvider).authenticatedId();
-                      String? userID =
-                      await ref.read(authServicesProvider).authenticatedId();
+                      String userID =
+                      await ref.read(authServicesProvider).getUserId();
                       String uniqueAdId = DateTime.now().millisecondsSinceEpoch.toString();
                       Advertisements ads = Advertisements(
                         adID: uniqueAdId,

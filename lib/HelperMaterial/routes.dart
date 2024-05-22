@@ -1,9 +1,6 @@
-// ignore_for_file: avoid_web_libraries_in_flutter, unused_import
-
-
-
 import 'package:flutter/material.dart';
 import 'package:fyp/Screens/Cart%20Screen/cart_screen.dart';
+import 'package:fyp/Screens/MyAdsScreen/allads.dart';
 import 'package:fyp/Screens/MyAdsScreen/myads.dart';
 import 'package:fyp/Screens/MyOrder/myorderscreen.dart';
 import 'package:fyp/Screens/OrderCheckout/checkout.dart';
@@ -33,7 +30,7 @@ import '../Screens/wrapper_screen.dart';
 
 final Map<String, WidgetBuilder> listOfRoutes = {
   NewOrderScreen.routeName:(context)=>const NewOrderScreen(),
-  SellerAllProducts.routeName:(context) => const SellerAllProducts(products: [],),
+  SellerAllProducts.routeName:(context) =>const SellerAllProducts(products: [],),
   NavBarScreen.routeName: (context) => const NavBarScreen(),
   OnBoardScreen.routeName: (context) => const OnBoardScreen(),
   SignInScreen.routeName: (context) => const SignInScreen(),
@@ -55,6 +52,7 @@ final Map<String, WidgetBuilder> listOfRoutes = {
   SuccessScreen.routeName: (context) => const SuccessScreen(),
   MyOrder.routeName: (context) => const MyOrder(),
   MyAdsScreen.routeName: (context) => const MyAdsScreen(),
+  AllAdsScreen.routeName: (context) => const AllAdsScreen(),
   CheckoutScreen.routeName: (context) => const CheckoutScreen(
         fullName: '',
         mobileNumber: '',

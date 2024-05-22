@@ -7,6 +7,8 @@ import 'package:fyp/Screens/wrapper_screen.dart';
 import 'Screens/AdminPanel/admin.dart';
 import 'Screens/MyAdsScreen/myads.dart';
 import 'Screens/MyAdsScreen/postform.dart';
+import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
+
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
@@ -70,8 +72,11 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Sporty App',
       theme: AppTheme.lightTheme(context),
+
       //home:const MyAdsScreen(),
       initialRoute: SignInScreen.routeName,
+      //home:const  InternetConnection(),
+      //initialRoute: CompleteProfile.routeName,
       routes: listOfRoutes,
     );
   }

@@ -8,6 +8,7 @@ import 'package:fyp/Models/customer_model.dart';
 import 'package:fyp/Models/seller_model.dart';
 import 'package:fyp/Models/user_model.dart';
 import 'package:fyp/Screens/AdminPanel/admin.dart';
+
 import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
 
 import 'package:fyp/Screens/SellerHomeScreen/seller_home_screen.dart';
@@ -48,7 +49,6 @@ class AuthServices {
               await customerNotifier.createCustomer(
                   user as CustomerModel, _firestore, context);
               if (context.mounted) {
-                Navigator.of(context).pop();
                 ProviderWidgets.showFlutterToast(
                     context, "Customer has Been Registered Successfuly");
               }
@@ -58,7 +58,7 @@ class AuthServices {
             {
               UserModel user = SellerModel(
                   shopName: "",
-                  shopAdress: "",
+                  shopAddress: "",
                   nameOfUser: "",
                   phoneNumber: "",
                   address: "",
@@ -66,10 +66,10 @@ class AuthServices {
                   userId: userCredential.user!.uid,
                   username: email);
 
-              await sellerNotifier.createSeller(user as SellerModel, context);
+              await sellerNotifier.createSeller(user as SellerModel , context);
               if (context.mounted) {
                 ProviderWidgets.showFlutterToast(
-                    context, "Seller has Been Registered Successfuly");
+                    context, "Registration Successful!");
               }
             }
             break;
@@ -104,20 +104,24 @@ class AuthServices {
     }
   }
 
-  Future<String?> getUserId() async {
+  Future<String> getUserId() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? uId = sharedPreferences.getString('userId');
+    if (uId == null) {
+      uId = _auth.currentUser!.uid;
+      return uId;
+    }
     return uId;
   }
 
-  Future<String> authenticatedId() async {
-    String? authenticatedId = await getUserId();
-    if (authenticatedId == null) {
-      authenticatedId = _auth.currentUser!.uid;
-      return authenticatedId;
-    }
-    return authenticatedId;
+
+  Future<void>completeProfileScreen()async
+  {
+    String? userId=await getUserId();
+    // DocumentSnapshot user= await _firestore.collection("seller").doc()
+
   }
+
 
 //Login function
   Future<String?> loginUser(

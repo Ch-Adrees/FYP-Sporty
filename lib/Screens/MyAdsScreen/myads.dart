@@ -104,7 +104,40 @@ class _MyAdsScreenState extends ConsumerState<MyAdsScreen> {
               ],
             ),
             Expanded(
-              child: buildPostList(),
+              child: FutureBuilder<String>(
+                future: ref.read(authServicesProvider).getUserId(),
+                builder: (context, snapshot){
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator(
+                      color: kPrimaryColor,));
+                  }
+                  else{
+                    String? userId = snapshot.data;
+                    return StreamBuilder<List<Advertisements>>(
+                      stream: getAdsFromFirebase(selectedButton, userId!),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(child: CircularProgressIndicator(
+                            color: kPrimaryColor,));
+                        }
+                        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                          return const Center(
+                              child: Text('No Ad found.'));
+                        }
+
+                        List<Advertisements> adsList = snapshot.data!;
+                        return ListView.builder(
+                          itemCount: adsList.length,
+                          itemBuilder: (context, index) {
+                            Advertisements ad = adsList[index];
+                            return buildPostCard(ad);
+                          },
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),
@@ -112,8 +145,8 @@ class _MyAdsScreenState extends ConsumerState<MyAdsScreen> {
     );
   }
 
-  Widget buildPostList()  {
-    String userId = ref.read(authServicesProvider).authenticatedId();
+  Future<Widget> buildPostList() async {
+    String userId = await ref.read(authServicesProvider).getUserId();
     return StreamBuilder<List<Advertisements>>(
       stream: getAdsFromFirebase(selectedButton, userId),
       builder: (context, snapshot) {

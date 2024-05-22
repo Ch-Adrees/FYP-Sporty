@@ -121,6 +121,7 @@ Stream<List<Advertisements>> getAdsFromFirebase() {
   return FirebaseFirestore.instance
       .collection('Ads')
       .limit(3)
+      .where('isApproved', isEqualTo: 'Confirmed')
       .snapshots()
       .map((snapshot) =>
       snapshot.docs.map((doc) => Advertisements.fromJson(doc.data() as Map<String, dynamic>)).toList());

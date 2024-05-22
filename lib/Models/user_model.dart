@@ -1,5 +1,4 @@
-
-class UserModel {
+abstract class UserModel {
   final String nameOfUser;
   final String phoneNumber;
   final String address;
@@ -22,26 +21,16 @@ class UserModel {
     String? address,
     String? profilePic,
     String? userId,
-    String? userType,
-  }) {
-    return UserModel(
-      nameOfUser: nameOfUser ?? this.nameOfUser,
-      username: username ?? this.username,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      address: address ?? this.address,
-      profilePic: profilePic ?? this.profilePic,
-      userId: userId ?? this.userId,
-    );
-  }
-  Map<String,dynamic> userToMap()
-  {
-     return {
+
+  });
+  Map<String, dynamic> userToMap() {
+    return {
       'nameOfUser': nameOfUser,
-      'phoneNumber':phoneNumber,
+      'phoneNumber': phoneNumber,
       'address': address,
-      'profilePic':profilePic,
+      'profilePic': profilePic,
       'userId': userId,
-      'username':username,
+      'username': username,
     };
   }
 }
