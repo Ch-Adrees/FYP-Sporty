@@ -7,8 +7,10 @@ import 'package:fyp/Screens/HomeScreen/icon_with_count.dart';
 import 'package:fyp/Screens/SellerHomeScreen/detail_banner.dart';
 import 'package:fyp/Screens/HomeScreen/section_title.dart';
 import 'package:fyp/Screens/SellerHomeScreen/new_order_screen.dart';
+import 'package:fyp/Screens/SellerHomeScreen/seller_all_product_screen.dart';
+import 'package:fyp/Screens/SellerHomeScreen/seller_product_card.dart';
+
 import 'package:fyp/Screens/UploadProductsScreen/upload_products_screen.dart';
-import 'package:fyp/Screens/AllProducts/products_page.dart';
 
 import '../../Models/product_model.dart';
 
@@ -27,11 +29,10 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   void getOwnProducts() async {
     List<Products> tempProducts =
         await ref.read(productProvider.notifier).getOwnProduct(context);
-    
-      setState(() {
-        ownProdcts = tempProducts;
-      });
-   
+
+    setState(() {
+      ownProdcts = tempProducts;
+    });
   }
 
   @override
@@ -78,14 +79,17 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               SectionTitle(
                   title: "Products",
                   press: () {
-                    Navigator.pushNamed(context, ProductPage.routeName);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return SellerAllProducts(products: ownProdcts);
+                    }));
                   }),
               const SizedBox(height: 5),
               ListView.builder(
                   shrinkWrap: true,
-                  itemCount: ownProdcts.length,
+                  itemCount: ownProdcts.length < 5 ? ownProdcts.length : 5,
                   itemBuilder: (context, index) {
-                    return const Text("Hanan Bhutta");
+                    return SellerProductCard(product: ownProdcts[index]);
                   }),
             ],
           ),
@@ -156,6 +160,27 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                       }));
                     },
                     icon: const Icon(Icons.shopping_cart_checkout),
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Expanded(
+                child: Container(
+                  height: 60.0,
+                  decoration: const BoxDecoration(
+                    color: kPrimaryColor,
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const NewOrderScreen();
+                      }));
+                    },
+                    icon: const Icon(Icons.person_3),
                     color: Colors.white,
                   ),
                 ),

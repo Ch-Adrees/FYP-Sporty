@@ -21,4 +21,10 @@ class CustomerModel extends UserModel {
   Map<String, dynamic> userToMap() {
     return super.userToMap();
   }
+  
+  @override
+  UserModel copyWith({String? nameOfUser, String? username, String? phoneNumber, String? address, String? profilePic, String? userId, String? userType}) {
+    // TODO: implement copyWith
+    throw UnimplementedError();
+  }
 }

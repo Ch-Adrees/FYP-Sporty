@@ -4,6 +4,7 @@ import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
+import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -220,10 +221,12 @@ class SignUpFormState extends ConsumerState<SignUpForm> {
                     password: _passwordController.text,
                     userType: selectedRole!,
                     context: context);
+                if (selectedRole == 'seller') {
+                  Navigator.pushNamed(context, CompleteProfile.routeName);
+                }
               }
               isLoading = false;
-              setState(() {
-              });
+              setState(() {});
             },
             child: isLoading
                 ? const CircularProgressIndicator(

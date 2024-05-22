@@ -31,7 +31,7 @@ import 'package:fyp/Screens/CategoryScreen/catagory_screen.dart';
 
 final Map<String, WidgetBuilder> listOfRoutes = {
   NewOrderScreen.routeName:(context)=>const NewOrderScreen(),
-  SellerAllProducts.routeName:(context) => const SellerAllProducts(products: [],),
+  SellerAllProducts.routeName:(context) =>const SellerAllProducts(products: [],),
   NavBarScreen.routeName: (context) => const NavBarScreen(),
   OnBoardScreen.routeName: (context) => const OnBoardScreen(),
   SignInScreen.routeName: (context) => const SignInScreen(),

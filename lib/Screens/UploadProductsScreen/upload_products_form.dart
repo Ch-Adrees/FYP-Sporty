@@ -263,7 +263,7 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
                     .read(productProvider.notifier)
                     .uploadImagesToDatabase(productImages, context);
                 String? sellerId =
-                    await ref.read(authServicesProvider).authenticatedId();
+                    await ref.read(authServicesProvider).getUserId();
                 Products product = Products(
                     productId: int.parse(productCodeController.text),
                     productCategory: selectedCategory!,
@@ -271,7 +271,7 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
                     colors: colors,
                     title: productTitleController.text,
                     price: double.parse(productPriceController.text),
-                    sellerId: sellerId,
+                    sellerId: sellerId!,
                     isDeleted: false,
                     description: productDescriptionController.text);
                 if (context.mounted) {
