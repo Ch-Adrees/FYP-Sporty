@@ -19,7 +19,7 @@ class Body extends StatelessWidget {
             icon: "assets/icons/User Icon.svg",
             text: "Edit Profile",
             press: () {
-              Navigator.pushReplacementNamed(
+              Navigator.pushNamed(
                   context, EditProfileScreen.routeName);
             },
           ),
@@ -27,21 +27,21 @@ class Body extends StatelessWidget {
             icon: "assets/icons/Cart Icon.svg",
             text: "My Orders",
             press: () {
-              Navigator.pushReplacementNamed(context, MyOrder.routeName);
+              Navigator.pushNamed(context, MyOrder.routeName);
             },
           ),
           ProfileMenu(
             icon: "assets/icons/Heart Icon.svg",
             text: "My Post",
             press: () {
-              Navigator.pushReplacementNamed(context, MyAdsScreen.routeName);
+              Navigator.pushNamed(context, MyAdsScreen.routeName);
             },
           ),
           ProfileMenu(
             icon: "assets/icons/Bill Icon.svg",
             text: "My Wallet",
             press: () {
-              Navigator.pushReplacementNamed(context, WalletScreen.routeName);
+              Navigator.pushNamed(context, WalletScreen.routeName);
             },
           ),
           ProfileMenu(

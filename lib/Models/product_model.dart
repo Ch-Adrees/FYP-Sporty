@@ -9,8 +9,10 @@ class Products {
   final bool? isFavourite, isPopular;
   final String sellerId;
   final String productCategory;
+  final bool isDeleted;
 
   Products({
+    required this.isDeleted,
     required this.productId,
     required this.productCategory,
     required this.images,
@@ -32,10 +34,29 @@ class Products {
       'colors': colors,
       'rating': rating,
       'price': price,
+      'productCategory':productCategory,
       'isFavourite': isFavourite,
       'isPopular': isPopular,
       'sellerId': sellerId,
+      'isDeleted':isDeleted
     };
+  }
+
+  factory Products.fromJson(Map<String, dynamic> json) {
+    return Products(
+      productId: json['productId'],
+      title: json['title'],
+      description: json['description'],
+      images: List<String>.from(json['images']),
+      colors: (json['colors'] as List).map((color) => Color(color)).toList(),
+      rating: json['rating'].toDouble(),
+      price: json['price'].toDouble(),
+      isFavourite: json['isFavourite'] ?? false,
+      isPopular: json['isPopular'] ?? false,
+      sellerId: json['sellerId'],
+      productCategory: json['productCategory'],
+      isDeleted: json['isDeleted']
+    );
   }
 }
 
@@ -45,6 +66,7 @@ const String description =
 List<Products> demoProducts = [
   Products(
     productId: 1,
+    isDeleted: false,
     productCategory: "Cricket",
     sellerId: "12",
     images: [
@@ -67,8 +89,8 @@ List<Products> demoProducts = [
     isPopular: true,
   ),
   Products(
-        productCategory: "Cricket",
-
+    productCategory: "Cricket",
+     isDeleted: false,
     productId: 2,
     sellerId: "12",
     images: [
@@ -86,9 +108,10 @@ List<Products> demoProducts = [
     rating: 4.1,
     isPopular: true,
   ),
-  Products(    productCategory: "Cricket",
-
+  Products(
+    productCategory: "Cricket",
     sellerId: "12",
+     isDeleted: false,
     productId: 3,
     images: [
       "assets/images/glap.png",
@@ -107,9 +130,9 @@ List<Products> demoProducts = [
     isPopular: true,
   ),
   Products(
-        productCategory: "Cricket",
-
+    productCategory: "Cricket",
     sellerId: "12",
+     isDeleted: false,
     productId: 4,
     images: [
       "assets/images/wireless headset.png",
@@ -127,9 +150,9 @@ List<Products> demoProducts = [
     isFavourite: true,
   ),
   Products(
-        productCategory: "Cricket",
-
+    productCategory: "Cricket",
     sellerId: "12",
+     isDeleted: false,
     productId: 1,
     images: [
       "assets/images/ps4_console_white_1.png",
@@ -151,9 +174,9 @@ List<Products> demoProducts = [
     isPopular: true,
   ),
   Products(
-        productCategory: "Cricket",
-
+    productCategory: "Cricket",
     sellerId: "12",
+     isDeleted: false,
     productId: 2,
     images: [
       "assets/images/Image Popular Product 2.png",
@@ -171,9 +194,9 @@ List<Products> demoProducts = [
     isPopular: true,
   ),
   Products(
-        productCategory: "Cricket",
-
+    productCategory: "Cricket",
     sellerId: "12",
+     isDeleted: false,
     productId: 3,
     images: [
       "assets/images/glap.png",
@@ -192,9 +215,9 @@ List<Products> demoProducts = [
     isPopular: true,
   ),
   Products(
-        productCategory: "Cricket",
-
+    productCategory: "Cricket",
     sellerId: "12",
+     isDeleted: false,
     productId: 4,
     images: [
       "assets/images/wireless headset.png",
@@ -211,170 +234,5 @@ List<Products> demoProducts = [
     rating: 4.1,
     isFavourite: true,
   ),
-  Products(
-        productCategory: "Cricket",
-
-    sellerId: "12",
-    productId: 1,
-    images: [
-      "assets/images/ps4_console_white_1.png",
-      "assets/images/ps4_console_white_2.png",
-      "assets/images/ps4_console_white_3.png",
-      "assets/images/ps4_console_white_4.png",
-    ],
-    colors: [
-      const Color(0xFFF6625E),
-      const Color(0xFF836DB8),
-      const Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Wireless Controller for PS4™",
-    price: 64.99,
-    description: description,
-    rating: 4.8,
-    isFavourite: true,
-    isPopular: true,
-  ),
-  Products(
-        productCategory: "Cricket",
-
-    sellerId: "12",
-    productId: 2,
-    images: [
-      "assets/images/Image Popular Product 2.png",
-    ],
-    colors: [
-      const Color(0xFFF6625E),
-      const Color(0xFF836DB8),
-      const Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Nike Sport White - Man Pant",
-    price: 50.5,
-    description: description,
-    rating: 4.1,
-    isPopular: true,
-  ),
-  Products(
-        productCategory: "Cricket",
-
-    sellerId: "12",
-    productId: 3,
-    images: [
-      "assets/images/glap.png",
-    ],
-    colors: [
-      const Color(0xFFF6625E),
-      const Color(0xFF836DB8),
-      const Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Gloves XC Omega - Polygon",
-    price: 36.55,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-    isPopular: true,
-  ),
-  Products(
-        productCategory: "Cricket",
-
-    sellerId: "12",
-    productId: 4,
-    images: [
-      "assets/images/wireless headset.png",
-    ],
-    colors: [
-      const Color(0xFFF6625E),
-      const Color(0xFF836DB8),
-      const Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Logitech Head",
-    price: 20.20,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-  ),
-  Products(    productCategory: "Cricket",
-
-    sellerId: "12",
-    productId: 1,
-    images: [
-      "assets/images/ps4_console_white_1.png",
-      "assets/images/ps4_console_white_2.png",
-      "assets/images/ps4_console_white_3.png",
-      "assets/images/ps4_console_white_4.png",
-    ],
-    colors: [
-      const Color(0xFFF6625E),
-      const Color(0xFF836DB8),
-      const Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Wireless Controller for PS4™",
-    price: 64.99,
-    description: description,
-    rating: 4.8,
-    isFavourite: true,
-    isPopular: true,
-  ),
-  Products(    productCategory: "Cricket",
-
-    sellerId: "12",
-    productId: 2,
-    images: [
-      "assets/images/Image Popular Product 2.png",
-    ],
-    colors: [
-      const Color(0xFFF6625E),
-      const Color(0xFF836DB8),
-      const Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Nike Sport White - Man Pant",
-    price: 50.5,
-    description: description,
-    rating: 4.1,
-    isPopular: true,
-  ),
-  Products(    productCategory: "Cricket",
-
-    sellerId: "12",
-    productId: 3,
-    images: [
-      "assets/images/glap.png",
-    ],
-    colors: [
-      const Color(0xFFF6625E),
-      const Color(0xFF836DB8),
-      const Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Gloves XC Omega - Polygon",
-    price: 36.55,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-    isPopular: true,
-  ),
-  Products(    productCategory: "Cricket",
-
-    sellerId: "12",
-    productId: 4,
-    images: [
-      "assets/images/wireless headset.png",
-    ],
-    colors: [
-      const Color(0xFFF6625E),
-      const Color(0xFF836DB8),
-      const Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Logitech Head",
-    price: 20.20,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-  ),
+ 
 ];

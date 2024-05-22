@@ -22,7 +22,7 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
   TextEditingController productTitleController = TextEditingController();
   TextEditingController productDescriptionController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
-  String? selectedCategory;
+   String? selectedCategory;
   final List<String> errors = [];
   late List<String> imagesUrls = [];
   List<File> productImages = [];
@@ -44,9 +44,17 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
     }
   }
 
+  void clearForm() {
+    productCodeController.clear();
+    productTitleController.clear();
+    productDescriptionController.clear();
+    productPriceController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
+      //autovalidateMode: AutovalidateMode.always,
       key: _formkey,
       child: Column(
         children: [
@@ -249,15 +257,13 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
                   color: kPrimaryColor,
                 );
               });
-
               if (_formkey.currentState!.validate()) {
                 _formkey.currentState!.save();
-
                 imagesUrls = await ref
                     .read(productProvider.notifier)
                     .uploadImagesToDatabase(productImages, context);
-                String sellerId =
-                    ref.read(authServicesProvider).getUserId();
+                String? sellerId =
+                    await ref.read(authServicesProvider).authenticatedId();
                 Products product = Products(
                     productId: int.parse(productCodeController.text),
                     productCategory: selectedCategory!,
@@ -266,18 +272,21 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
                     title: productTitleController.text,
                     price: double.parse(productPriceController.text),
                     sellerId: sellerId,
+                    isDeleted: false,
                     description: productDescriptionController.text);
                 if (context.mounted) {
                   await ref
                       .read(productProvider.notifier)
                       .uploadProductToFirebase(product, context);
                 }
+                productImages = [];
+                isLoading = false;
+                selectedCategory = null;
               }
+              clearForm();
               setState(() {
-                _formkey.currentState?.reset();
-                isLoading = false; // Set loading state to false after upload
+                // Set loading state to false after upload
               });
-              setState(() {});
             },
             child: isLoading
                 ? const CircularProgressIndicator(

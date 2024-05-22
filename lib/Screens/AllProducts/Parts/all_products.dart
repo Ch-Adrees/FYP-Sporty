@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:fyp/Models/product_model.dart';
 import 'package:fyp/Screens/HomeScreen/productcard.dart';
 import 'package:fyp/Screens/DetailProduct/Components/selected_detailed_product.dart';
 import 'package:fyp/Screens/DetailProduct/detailed_product.dart';
 
-class AllProducts extends StatelessWidget {
+class AllProducts extends ConsumerWidget {
   const AllProducts({super.key});
 
-  @override
-  Widget build(BuildContext context) {
+@override
+  Widget build(BuildContext context, WidgetRef ref){
+    
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: GridView.builder(

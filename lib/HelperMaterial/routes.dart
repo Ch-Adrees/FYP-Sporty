@@ -1,11 +1,15 @@
 // ignore_for_file: avoid_web_libraries_in_flutter, unused_import
 
+
+
 import 'package:flutter/material.dart';
 import 'package:fyp/Screens/Cart%20Screen/cart_screen.dart';
 import 'package:fyp/Screens/MyAdsScreen/myads.dart';
 import 'package:fyp/Screens/MyOrder/myorderscreen.dart';
 import 'package:fyp/Screens/OrderCheckout/checkout.dart';
 import 'package:fyp/Screens/OrderCheckout/modals/shipping_address.dart';
+import 'package:fyp/Screens/SellerHomeScreen/new_order_screen.dart';
+import 'package:fyp/Screens/SellerHomeScreen/seller_all_product_screen.dart';
 import 'package:fyp/Screens/Success%20Screen/success_screen.dart';
 //import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
 import 'package:fyp/Screens/UserProfile/edit_profile_screen.dart';
@@ -25,7 +29,11 @@ import 'package:fyp/Screens/AdminPanel/admin.dart';
 import 'package:fyp/Screens/DetailProduct/detailed_product.dart';
 import 'package:fyp/Screens/CategoryScreen/catagory_screen.dart';
 
+import '../Screens/wrapper_screen.dart';
+
 final Map<String, WidgetBuilder> listOfRoutes = {
+  NewOrderScreen.routeName:(context)=>const NewOrderScreen(),
+  SellerAllProducts.routeName:(context) => const SellerAllProducts(products: [],),
   NavBarScreen.routeName: (context) => const NavBarScreen(),
   OnBoardScreen.routeName: (context) => const OnBoardScreen(),
   SignInScreen.routeName: (context) => const SignInScreen(),
@@ -38,14 +46,15 @@ final Map<String, WidgetBuilder> listOfRoutes = {
   UploadProducts.routeName: (context) => const UploadProducts(),
   ProductPage.routeName: (context) => const ProductPage(),
   AdminPage.routeName: (context) => const AdminPage(),
-  // ProfileScreen.routeName:(context) =>  ProfileScreen(name: 'ali',email: 'abc@gmail.com',),
   EditProfileScreen.routeName: (context) => EditProfileScreen(),
   WalletScreen.routeName: (context) => const WalletScreen(),
   SingleProductScreen.routeName: (context) => const SingleProductScreen(),
   CategoryScreen.routeName: (context) => const CategoryScreen(),
   MyCartScreen.routeName: (context) => const MyCartScreen(),
-  ShippingAndPaymentScreen.routeName: (context) =>
-      const ShippingAndPaymentScreen(),
+  ShippingAndPaymentScreen.routeName: (context) => const ShippingAndPaymentScreen(),
+  SuccessScreen.routeName: (context) => const SuccessScreen(),
+  MyOrder.routeName: (context) => const MyOrder(),
+  MyAdsScreen.routeName: (context) => const MyAdsScreen(),
   CheckoutScreen.routeName: (context) => const CheckoutScreen(
         fullName: '',
         mobileNumber: '',
@@ -57,7 +66,4 @@ final Map<String, WidgetBuilder> listOfRoutes = {
         selectedPaymentMethodImage: '',
         products: [],
       ),
-  SuccessScreen.routeName: (context) => const SuccessScreen(),
-  MyOrder.routeName: (context) => const MyOrder(),
-  MyAdsScreen.routeName: (context) => const MyAdsScreen(),
 };

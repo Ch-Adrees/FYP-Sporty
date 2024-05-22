@@ -29,10 +29,13 @@ class WrappeScreen extends ConsumerWidget {
             width: 70,
             height: 70,
             decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/Spinner-3.gif"),
-                    fit: BoxFit.cover)),
+              image: DecorationImage(
+                image: AssetImage("assets/images/Spinner-3.gif"),
+                fit: BoxFit.cover,
+              ), // Semi-transparent white color
+            ),
           )
+
         ],
       )),
     );

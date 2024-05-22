@@ -64,7 +64,7 @@ class _PostAdScreenState extends ConsumerState<PostAdScreen> {
           icon: const Icon(Icons.arrow_back),
         ),
         title: const Text(
-          'Psot Ads',
+          'Post Ads',
           //textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 26.0,
@@ -306,8 +306,9 @@ class _PostAdScreenState extends ConsumerState<PostAdScreen> {
                       imageUrl = (await ref
                           .read(adProvider.notifier)
                           .uploadAdImage(AdImage, context));
-                      String userID = ref.read(authServicesProvider)
-                          .getUserId();
+                      // String? userID = ref.read(authServicesProvider).authenticatedId();
+                      String? userID =
+                      await ref.read(authServicesProvider).authenticatedId();
                       String uniqueAdId = DateTime.now().millisecondsSinceEpoch.toString();
                       Advertisements ads = Advertisements(
                         adID: uniqueAdId,

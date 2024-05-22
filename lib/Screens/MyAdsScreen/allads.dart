@@ -211,7 +211,7 @@ class _AllAdsScreenState extends State<AllAdsScreen> {
 Stream<List<Advertisements>> getAdsFromFirebase(String selectedButton) {
   return FirebaseFirestore.instance
       .collection('Ads')
-      //.where('isApproved', isEqualTo: 'Confirmed')
+      .where('isApproved', isEqualTo: 'Confirmed')
       .where('category', isEqualTo: selectedButton)
       .snapshots()
       .map((snapshot) =>

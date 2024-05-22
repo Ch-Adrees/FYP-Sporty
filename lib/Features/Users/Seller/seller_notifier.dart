@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fyp/Features/provi_wid.dart';
+
 import 'package:fyp/Models/seller_model.dart';
 
 class SellerNotifier extends StateNotifier<SellerModel> {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   SellerNotifier()
       : super(SellerModel(
             shopName: "",
@@ -15,7 +17,8 @@ class SellerNotifier extends StateNotifier<SellerModel> {
             profilePic: "",
             userId: "",
             username: ""));
-  Future<void> createSeller(SellerModel seller,FirebaseFirestore firestore,BuildContext context) async {
+
+  Future<void> createSeller(SellerModel seller, BuildContext context) async {
     try {
       state = seller;
       await firestore
@@ -27,6 +30,7 @@ class SellerNotifier extends StateNotifier<SellerModel> {
         ProviderWidgets.showToast(context, "Error:${e.message}");
       }
     }
-
   }
+
+  
 }

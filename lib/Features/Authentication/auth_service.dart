@@ -7,7 +7,9 @@ import 'package:fyp/Features/provi_wid.dart';
 import 'package:fyp/Models/customer_model.dart';
 import 'package:fyp/Models/seller_model.dart';
 import 'package:fyp/Models/user_model.dart';
+import 'package:fyp/Screens/AdminPanel/admin.dart';
 import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
+
 import 'package:fyp/Screens/SellerHomeScreen/seller_home_screen.dart';
 import 'package:fyp/Screens/SignInScreen/sigin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,13 +20,14 @@ class AuthServices {
   final CustomerNotifier customerNotifier = CustomerNotifier();
   final SellerNotifier sellerNotifier = SellerNotifier();
 
+  String? uId;
   Future<void> registerUser(
       {required String email,
       required String password,
       required String userType,
       required BuildContext context}) async {
     try {
-      if (context.mounted) ProviderWidgets.showLoadingDialog(context);
+      // if (context.mounted) ProviderWidgets.showLoadingDialog(context);
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       await _firestore
@@ -63,15 +66,20 @@ class AuthServices {
                   userId: userCredential.user!.uid,
                   username: email);
 
-              await sellerNotifier.createSeller(
-                  user as SellerModel, _firestore, context);
+              await sellerNotifier.createSeller(user as SellerModel, context);
               if (context.mounted) {
-                Navigator.of(context).pop();
                 ProviderWidgets.showFlutterToast(
                     context, "Seller has Been Registered Successfuly");
               }
             }
             break;
+          case "Admin":
+            if (context.mounted) {
+              ProviderWidgets.showFlutterToast(
+                  context, "Admin has been registered successfully");
+            }
+            break;
+
           default:
             {
               Navigator.of(context).pop();
@@ -96,9 +104,19 @@ class AuthServices {
     }
   }
 
-  String getUserId() {
-    String userIdForOtherPurposes = _auth.currentUser!.uid;
-    return userIdForOtherPurposes;
+  Future<String?> getUserId() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? uId = sharedPreferences.getString('userId');
+    return uId;
+  }
+
+  Future<String> authenticatedId() async {
+    String? authenticatedId = await getUserId();
+    if (authenticatedId == null) {
+      authenticatedId = _auth.currentUser!.uid;
+      return authenticatedId;
+    }
+    return authenticatedId;
   }
 
 //Login function
@@ -108,7 +126,6 @@ class AuthServices {
       required BuildContext context}) async {
     String? userType;
     try {
-      
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       DocumentSnapshot<Map<String, dynamic>> user = await _firestore
@@ -124,12 +141,11 @@ class AuthServices {
           sharedPreferences.setString('email', userData['email']);
           sharedPreferences.setString('userType', userType);
           sharedPreferences.setBool('isLoggedIn', true);
-          sharedPreferences.setString('userId', user.id);
+          sharedPreferences.setString('userId', _auth.currentUser!.uid);
         }
         if (context.mounted) {
           if (userType != null) {
-            ProviderWidgets.showFlutterToast(
-                    context, "Login Successful");
+            ProviderWidgets.showFlutterToast(context, "Login Successful");
             switch (userType) {
               case 'customer':
                 Navigator.pushReplacement(context,
@@ -141,6 +157,12 @@ class AuthServices {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
                   return const SellerHomeScreen();
+                }));
+                break;
+              case 'Admin':
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return const AdminPage();
                 }));
                 break;
               default:
@@ -165,6 +187,7 @@ class AuthServices {
           await SharedPreferences.getInstance();
       bool? loginStatus = sharedPreferences.getBool('isLoggedIn') ?? false;
       String? userType = sharedPreferences.getString('userType');
+      uId = sharedPreferences.getString('userId');
       if (loginStatus == false) {
         if (context.mounted) {
           ProviderWidgets.showFlutterToast(context, loginStatus.toString());

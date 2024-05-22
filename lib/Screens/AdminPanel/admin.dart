@@ -13,6 +13,8 @@ import 'package:fyp/Models/academies.dart';
 import '../../Features/provi_wid.dart';
 import 'package:fyp/Features/Advertisement/ads_notifire.dart';
 
+import '../SignInScreen/sigin.dart';
+
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
   static String routeName = "/admin_home";
@@ -22,7 +24,6 @@ class AdminPage extends StatefulWidget {
 }
 
 class _AdminPageState extends State<AdminPage> {
-  List<Advertisements> _ads = [];
   Color academyButtonColor = Colors.white;
   Color eventButtonColor = kPrimaryColor;
   String selectedButton = 'Event';
@@ -31,26 +32,13 @@ class _AdminPageState extends State<AdminPage> {
   Future<void> updateAdApprovalStatus(String docId, String approveStatus) async {
     try {
       await FirebaseFirestore.instance.collection('Ads').doc(docId).update({'isApproved': approveStatus});
-      print('Updated document $docId with status $approveStatus');
       ProviderWidgets.showFlutterToast(context, 'Ad $approveStatus');
     } catch (e) {
-      print('Error updating document: $e');
-      if (e is FirebaseException && e.code == 'not-found') {
-        print('Document with ID $docId and $approveStatus not found');
-        // Handle the document not found error, e.g., show a notification to the user
-      }
+      ProviderWidgets.showFlutterToast(context, 'Error Updating Ad Status: $e');
     }
   }
 
-  void approveAdStatus(String docId, String approveStatus, Advertisements ad) async {
-    await updateAdApprovalStatus(docId, approveStatus);
-    setState(() {
-      //_ads.remove(ad);
-      _ads.removeWhere((element) => element.adID == docId);
-    });
-  }
-
-  // This function built the animated line below the tab bars
+  //This function built the animated line below the tab bars
   Widget buildNavigationLine(BuildContext context, Color color) {
     return AnimatedContainer(
       duration: kAnimationDuration,
@@ -85,7 +73,7 @@ class _AdminPageState extends State<AdminPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 2),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {Navigator.pushNamed(context, SignInScreen.routeName);},
                 icon: const Icon(Icons.person),
                 color: kPrimaryColor,
               ),
@@ -270,26 +258,28 @@ class _AdminPageState extends State<AdminPage> {
   }
 
   Widget buildPostList() {
-    return StreamBuilder<List<Advertisements>>(
+    return StreamBuilder<QuerySnapshot>(
       stream: getAdsFromFirebase(selectedButton),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator(
             color: kPrimaryColor,));
         }
-        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return const Center(
-              child: Text('No Ad found.'));
+              child: Text('No Ad found.', style: TextStyle(fontSize: 20),));
         }
 
-        List<Advertisements> adsList = snapshot.data!;
-        //_ads = adsList.map((data) => Advertisements.fromJson(data as Map<String, dynamic>)).toList();
-        //_ads = adsList.map((data) => Advertisements.fromJson(data)).toList();
+        List<Advertisements> adsList = snapshot.data!.docs.map((docSnapshot) {
+          return Advertisements.fromJson(docSnapshot.data() as Map<String, dynamic>);
+        }).toList();
         return ListView.builder(
           itemCount: adsList.length,
           itemBuilder: (context, index) {
+            DocumentSnapshot documentSnapshot = snapshot.data!.docs[index];
+            String docId = documentSnapshot.id;
             Advertisements ad = adsList[index];
-            return buildRequestCards(ad.adID, ad);
+            return buildRequestCards(docId, ad);
           },
         );
       },
@@ -440,7 +430,7 @@ class _AdminPageState extends State<AdminPage> {
                               onPressed: () {
                                 setState(() {
                                   String approveStatus = 'Declined';
-                                  approveAdStatus(docId, approveStatus, ad);
+                                  updateAdApprovalStatus(docId, approveStatus);
                                 });
                               }, icon: const Icon(Icons.close)),
                         ),
@@ -460,7 +450,7 @@ class _AdminPageState extends State<AdminPage> {
                               onPressed: () {
                                 setState(() {
                                   String approveStatus = 'Confirmed';
-                                  approveAdStatus(docId, approveStatus, ad);
+                                  updateAdApprovalStatus(docId, approveStatus);
                                 });
 
                               }, icon: const Icon(Icons.check)),
@@ -477,13 +467,12 @@ class _AdminPageState extends State<AdminPage> {
 
 }
 
-Stream<List<Advertisements>> getAdsFromFirebase(String selectedButton) {
+Stream<QuerySnapshot> getAdsFromFirebase(String selectedButton) {
   return FirebaseFirestore.instance
       .collection('Ads')
+  .where('isApproved', isEqualTo: 'Pending')
       .where('category', isEqualTo: selectedButton)
-      .snapshots()
-      .map((snapshot) =>
-       snapshot.docs.map((doc) => Advertisements.fromJson(doc.data() as Map<String, dynamic>)).toList());
+      .snapshots();
 
 }
 

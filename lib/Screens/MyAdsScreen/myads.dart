@@ -8,7 +8,7 @@ import '../../Models/advertisemnet.dart';
 import '../../Models/eventsads.dart';
 
 class MyAdsScreen extends ConsumerStatefulWidget {
-  static const String routeName = "/allpost";
+  static const String routeName = "/mypost";
 
   const MyAdsScreen({super.key});
 
@@ -112,10 +112,10 @@ class _MyAdsScreenState extends ConsumerState<MyAdsScreen> {
     );
   }
 
-  Widget buildPostList() {
-    String userID = ref.read(authServicesProvider).getUserId();
+  Widget buildPostList()  {
+    String userId = ref.read(authServicesProvider).authenticatedId();
     return StreamBuilder<List<Advertisements>>(
-      stream: getAdsFromFirebase(selectedButton, userID),
+      stream: getAdsFromFirebase(selectedButton, userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator(
@@ -211,7 +211,9 @@ class _MyAdsScreenState extends ConsumerState<MyAdsScreen> {
     );
   }
 
+
 }
+
 Stream<List<Advertisements>> getAdsFromFirebase(String selectedButton, String userId) {
   return FirebaseFirestore.instance
       .collection('Ads')

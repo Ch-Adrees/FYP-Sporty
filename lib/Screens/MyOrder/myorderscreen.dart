@@ -22,7 +22,7 @@ class MyOrder extends StatelessWidget {
               fontWeight: FontWeight.bold,
             )),
       ),
-      body: OrderBody(orderItems: DummyOrderData.orderItems),
+      body: OrderBody(orderItems: orderItems),
     );
   }
 }
@@ -82,7 +82,7 @@ class MyCardClass extends StatelessWidget {
       default:
         statusColor = Colors.grey;
     }
-
+    
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       color: const Color.fromARGB(255, 242, 153, 153).withOpacity(0.3),
