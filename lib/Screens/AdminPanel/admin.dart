@@ -4,11 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/AdminPanel/Components/HeaderComponents/image_container.dart';
-import 'package:fyp/Screens/AdminPanel/Components/request_card.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fyp/Models/advertisemnet.dart';
-import 'package:fyp/Models/eventsads.dart';
-import 'package:fyp/Models/academies.dart';
 
 import '../../Features/provi_wid.dart';
 import 'package:fyp/Features/Advertisement/ads_notifire.dart';

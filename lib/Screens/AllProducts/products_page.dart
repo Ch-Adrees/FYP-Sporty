@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/AllProducts/Parts/search_bar.dart';
 import 'package:fyp/Screens/AllProducts/Parts/all_products.dart';
+
+import '../../Models/product_model.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -40,9 +43,9 @@ class _ProductPageState extends State<ProductPage> {
         title: const Text(
           'Products',
           style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
+            fontSize: 22.0,
             color: kPrimaryColor,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
@@ -57,3 +60,4 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 }
+

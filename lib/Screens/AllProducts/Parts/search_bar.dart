@@ -8,13 +8,13 @@ class ProductSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: TextFormField(
           decoration: InputDecoration(
-            hintText:"Enter to search Product",
+            hintText:"Search Products",
             hintStyle: TextStyle(
               fontStyle: FontStyle.italic,
-              fontSize: 14,
+              fontSize: 16,
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 15),
             suffixIcon: IconButton(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,14 +26,23 @@ class AllProducts extends ConsumerWidget {
           itemBuilder: (_, int index) => ProductCard(
               aspectRatio: 1.2,
               product: demoProducts[index],
-              onPress: () {
-                Navigator.pushNamed(
-                  context,
-                  SingleProductScreen.routeName,
-                  arguments:
-                      SelectedDetailedProduct(product: demoProducts[index]),
-                );
-              })),
+              // onPress: () {
+              //   Navigator.pushNamed(
+              //     context,
+              //     SingleProductScreen.routeName,
+              //     arguments:
+              //         SelectedDetailedProduct(product: demoProducts[index]),
+              //   );
+              // }
+  )),
     );
   }
+}
+
+Stream<List<Products>> getProductsFromFirebase() {
+  return FirebaseFirestore.instance
+      .collection('products')
+      .snapshots()
+      .map((snapshot) =>
+      snapshot.docs.map((doc) => Products.fromJson(doc.data() as Map<String, dynamic>)).toList());
 }

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../Features/providers.dart';
 import '../../HelperMaterial/constant.dart';
-import '../../Models/academies.dart';
 import '../../Models/advertisemnet.dart';
-import '../../Models/eventsads.dart';
 
 class MyAdsScreen extends ConsumerStatefulWidget {
   static const String routeName = "/mypost";

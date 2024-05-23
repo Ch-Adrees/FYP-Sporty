@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../HelperMaterial/constant.dart';
-import '../../Models/academies.dart';
 import '../../Models/advertisemnet.dart';
-import '../../Models/eventsads.dart';
 
 class AllAdsScreen extends StatefulWidget {
   static const String routeName = "/allpost";

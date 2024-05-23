@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class Products {
@@ -7,9 +9,9 @@ class Products {
   final List<Color> colors;
   final double rating, price;
   final bool? isFavourite, isPopular;
-  final String sellerId;
-  final String productCategory;
-  final bool isDeleted;
+  final String? sellerId;
+  final String? productCategory;
+  final bool? isDeleted;
 
   Products({
     required this.isDeleted,
@@ -42,22 +44,39 @@ class Products {
     };
   }
 
+  // factory Products.fromJson(Map<String, dynamic> json) {
+  //   return Products(
+  //     productId: json['productId'],
+  //     title: json['title'],
+  //     description: json['description'],
+  //     images: (json['images'] as List).cast<String>().toList(),
+  //       colors: (json['colors'] as List).map((color) => Color(color)).toList(),
+  //     rating: json['rating'].toDouble(),
+  //     price: json['price'].toDouble(),
+  //     isFavourite: json['isFavourite'] ?? false,
+  //     isPopular: json['isPopular'] ?? false,
+  //     sellerId: json['sellerId'],
+  //     productCategory: json['productCategory'],
+  //     isDeleted: json['isDeleted']
+  //   );
+  // }
   factory Products.fromJson(Map<String, dynamic> json) {
     return Products(
-      productId: json['productId'],
-      title: json['title'],
-      description: json['description'],
-      images: List<String>.from(json['images']),
-      colors: (json['colors'] as List).map((color) => Color(color)).toList(),
-      rating: json['rating'].toDouble(),
-      price: json['price'].toDouble(),
-      isFavourite: json['isFavourite'] ?? false,
-      isPopular: json['isPopular'] ?? false,
-      sellerId: json['sellerId'],
-      productCategory: json['productCategory'],
-      isDeleted: json['isDeleted']
+      productId: json['productId'] as int,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      images: (json['images'] as List).cast<String>().toList(), // Cast to List<String>
+      colors: (json['colors'] as List).where((color) => color!= null).map((color) => Color(int.parse(color))).toList(),
+      rating: json['rating'], // Use nullable num for rating
+      price: json['price'], // Use nullable num for price
+      isFavourite: json['isFavourite'] as bool?, // Nullable boolean
+      isPopular: json['isPopular'] as bool?, // Nullable boolean
+      sellerId: json['sellerId'] as String?,
+      productCategory: json['productCategory'] as String?,
+      isDeleted: json['isDeleted'] as bool?, // Nullable boolean
     );
   }
+
 }
 
 const String description =
@@ -82,7 +101,7 @@ List<Products> demoProducts = [
       Colors.white,
     ],
     title: "Wireless Controller for PS4™",
-    price: 64.99,
+    price: 64,
     description: description,
     rating: 4.8,
     isFavourite: true,
@@ -103,7 +122,7 @@ List<Products> demoProducts = [
       Colors.white,
     ],
     title: "Nike Sport White - Man Pant",
-    price: 50.5,
+    price: 50,
     description: description,
     rating: 4.1,
     isPopular: true,
@@ -123,7 +142,7 @@ List<Products> demoProducts = [
       Colors.white,
     ],
     title: "Gloves XC Omega - Polygon",
-    price: 36.55,
+    price: 36,
     description: description,
     rating: 4.1,
     isFavourite: true,
@@ -144,7 +163,7 @@ List<Products> demoProducts = [
       Colors.white,
     ],
     title: "Logitech Head",
-    price: 20.20,
+    price: 20,
     description: description,
     rating: 4.1,
     isFavourite: true,
@@ -167,7 +186,7 @@ List<Products> demoProducts = [
       Colors.white,
     ],
     title: "Wireless Controller for PS4™",
-    price: 64.99,
+    price: 64,
     description: description,
     rating: 4.8,
     isFavourite: true,
@@ -188,7 +207,7 @@ List<Products> demoProducts = [
       Colors.white,
     ],
     title: "Nike Sport White - Man Pant",
-    price: 50.5,
+    price: 50,
     description: description,
     rating: 4.1,
     isPopular: true,
@@ -208,7 +227,7 @@ List<Products> demoProducts = [
       Colors.white,
     ],
     title: "Gloves XC Omega - Polygon",
-    price: 36.55,
+    price: 36,
     description: description,
     rating: 4.1,
     isFavourite: true,
@@ -229,7 +248,7 @@ List<Products> demoProducts = [
       Colors.white,
     ],
     title: "Logitech Head",
-    price: 20.20,
+    price: 20,
     description: description,
     rating: 4.1,
     isFavourite: true,

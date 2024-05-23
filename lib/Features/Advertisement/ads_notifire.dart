@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fyp/Models/advertisemnet.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../Models/eventsads.dart';
 import '../provi_wid.dart';
 
 class AdsNotifier extends StateNotifier<List<Advertisements>> {

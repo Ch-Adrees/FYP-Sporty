@@ -26,10 +26,13 @@ class CategoryCard extends StatelessWidget {
               color: Colors.black12,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: SvgPicture.asset(icon),
+            child: SvgPicture.asset(icon,colorFilter: const ColorFilter.mode(
+              kPrimaryColor,
+              BlendMode.srcIn,
+            ),),
           ),
           const SizedBox(height: 4),
-          Text(text, style: const TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor),)
+          Text(text, style: const TextStyle(fontWeight: FontWeight.bold),)
         ],
       ),
     );
