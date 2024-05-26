@@ -4,45 +4,55 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:fyp/Models/product_model.dart';
 import 'package:fyp/Screens/HomeScreen/productcard.dart';
-import 'package:fyp/Screens/DetailProduct/Components/selected_detailed_product.dart';
-import 'package:fyp/Screens/DetailProduct/detailed_product.dart';
+
+import '../../../HelperMaterial/constant.dart';
 
 class AllProducts extends ConsumerWidget {
   const AllProducts({super.key});
 
-@override
-  Widget build(BuildContext context, WidgetRef ref){
-    
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: GridView.builder(
-          shrinkWrap: true, // Set shrinkWrap 6to true
-          itemCount: demoProducts.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisExtent: 235,
-              mainAxisSpacing: 10),
-          itemBuilder: (_, int index) => ProductCard(
-              aspectRatio: 1.2,
-              product: demoProducts[index],
-              // onPress: () {
-              //   Navigator.pushNamed(
-              //     context,
-              //     SingleProductScreen.routeName,
-              //     arguments:
-              //         SelectedDetailedProduct(product: demoProducts[index]),
-              //   );
-              // }
-  )),
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: StreamBuilder<List<Products>>(
+          stream: getProductsFromFirebase(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: kPrimaryColor,
+              ));
+            }
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('No Product found.'));
+            }
+      
+            List<Products> prodList = snapshot.data!;
+            return GridView.builder(
+              shrinkWrap: true,
+              itemCount: prodList.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisExtent: 238,
+                  mainAxisSpacing: 10),
+              itemBuilder: (context, index) {
+                Products product = prodList[index];
+                return ProductCard(product: product);
+
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 }
 
 Stream<List<Products>> getProductsFromFirebase() {
-  return FirebaseFirestore.instance
-      .collection('products')
-      .snapshots()
-      .map((snapshot) =>
-      snapshot.docs.map((doc) => Products.fromJson(doc.data() as Map<String, dynamic>)).toList());
+  return FirebaseFirestore.instance.collection('products').snapshots().map(
+      (snapshot) => snapshot.docs
+          .map((doc) => Products.fromJson(doc.data() as Map<String, dynamic>))
+          .toList());
 }

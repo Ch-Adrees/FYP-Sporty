@@ -3,34 +3,61 @@ import 'package:fyp/Screens/DetailProduct/Components/product_color_circle.dart';
 import 'package:fyp/Models/product_model.dart';
 
 import '../../../HelperMaterial/constant.dart';
-class ProductColors extends StatelessWidget {
+class ProductColors extends StatefulWidget {
   const ProductColors({super.key, required this.product});
+
   final Products product;
 
   @override
+  _ProductColorsState createState() => _ProductColorsState();
+}
+
+class _ProductColorsState extends State<ProductColors> {
+  int selectedColor=3;
+  int productQuantity = 0;
+  @override
   Widget build(BuildContext context) {
-    int selectedColor=3;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
           ...List.generate(
-            product.colors.length,
+            widget.product.colors.length,
                 (index) => ColorDot(
-              color: product.colors[index],
+              color: widget.product.colors[index],
               isSelected: index == selectedColor,
             ),
           ),
           const Spacer(),
           RoundedIconBtn(
             icon: Icons.remove,
-            press: () {},
+            press: () {
+              setState(() {
+                if(productQuantity>0){
+                  productQuantity--;}},
+              );},
           ),
-          const SizedBox(width: 20),
+          const SizedBox(width: 10),
+          Container(
+            width: 40,
+            height: 40,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              border: Border.all(color: kPrimaryColor),
+              //borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              productQuantity.toString(),
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
+          const SizedBox(width: 10),
           RoundedIconBtn(
             icon: Icons.add,
-            showShadow: true,
-            press: () {},
+            press: () {
+              setState(() {
+                productQuantity++;
+              });}
           ),
         ],
       ),

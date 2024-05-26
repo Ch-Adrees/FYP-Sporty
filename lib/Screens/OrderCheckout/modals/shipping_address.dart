@@ -55,6 +55,7 @@ class _ShippingAndPaymentScreenState extends State<ShippingAndPaymentScreen> {
               color: kPrimaryColor,
               fontWeight: FontWeight.bold,
             )),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: SafeArea(
@@ -62,45 +63,6 @@ class _ShippingAndPaymentScreenState extends State<ShippingAndPaymentScreen> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                const SizedBox(height: 10),
-                const Text(
-                  'Select Payment Method',
-                  style: TextStyle(
-                      fontSize: 22.0,
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: paymentMethods.length,
-                  itemBuilder: (context, index) {
-                    final paymentMethod = paymentMethods[index];
-                    return RadioListTile<String>(
-                      value: paymentMethod['name']!,
-                      groupValue:
-                          selectedPaymentMethodName, // Updated variable name
-                      onChanged: (value) {
-                        setState(() {
-                          selectedPaymentMethodName =
-                              value!; // Updated variable name
-                          selectedPaymentMethodImage =
-                              paymentMethod['image']!; // Update image variable
-                        });
-                      },
-                      title: Row(
-                        children: [
-                          Image.asset(
-                            paymentMethod['image']!,
-                            width: 40,
-                            height: 40,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(paymentMethod['name']!),
-                        ],
-                      ),
-                    );
-                  },
-                ),
                 const SizedBox(height: 10),
                 const Text(
                   'Add Shipping Details',
@@ -165,6 +127,44 @@ class _ShippingAndPaymentScreenState extends State<ShippingAndPaymentScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
+                const Text(
+                  'Select Payment Method',
+                  style: TextStyle(
+                      fontSize: 22.0,
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: paymentMethods.length,
+                  itemBuilder: (context, index) {
+                    final paymentMethod = paymentMethods[index];
+                    return RadioListTile<String>(
+                      value: paymentMethod['name']!,
+                      groupValue:
+                      selectedPaymentMethodName, // Updated variable name
+                      onChanged: (value) {
+                        setState(() {
+                          selectedPaymentMethodName =
+                          value!; // Updated variable name
+                          selectedPaymentMethodImage =
+                          paymentMethod['image']!; // Update image variable
+                        });
+                      },
+                      title: Row(
+                        children: [
+                          Image.asset(
+                            paymentMethod['image']!,
+                            width: 40,
+                            height: 40,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(paymentMethod['name']!),
+                        ],
+                      ),
+                    );
+                  },
+                ),
                 ElevatedButton(
                   onPressed: () async {
                     // Navigate to the Checkout Screen and pass data
@@ -189,6 +189,7 @@ class _ShippingAndPaymentScreenState extends State<ShippingAndPaymentScreen> {
                   },
                   child: const Text('Next'),
                 ),
+
               ],
             ),
           ),

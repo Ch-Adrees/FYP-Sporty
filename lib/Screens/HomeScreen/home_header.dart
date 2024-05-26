@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fyp/Screens/HomeScreen/search_field.dart';
 import 'package:fyp/Screens/HomeScreen/icon_with_count.dart';
 
+import '../Cart Screen/cart_screen.dart';
+
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
     Key? key,
@@ -24,7 +26,7 @@ class HomeHeader extends StatelessWidget {
             svgicon: "assets/icons/Cart Icon.svg",
             count: 0, // add from the no of items in cart
             press:
-                () { // Navigator.pushNamed(context, CartScreen.routeName),
+                () { Navigator.pushNamed(context, MyCartScreen.routeName);
                },
           ),
           const SizedBox(width: 8),

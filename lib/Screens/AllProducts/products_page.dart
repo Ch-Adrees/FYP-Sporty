@@ -51,11 +51,13 @@ class _ProductPageState extends State<ProductPage> {
         centerTitle: true,
       ),
       body:const  SafeArea(
-        child: Column(children: [
-          ProductSearchBar(),
-          SizedBox(height: 5),
-          AllProducts(),
-        ]),
+        child: SingleChildScrollView(
+          child: Column(children: [
+            ProductSearchBar(),
+            SizedBox(height: 5),
+            AllProducts(),
+          ]),
+        ),
       ),
     );
   }

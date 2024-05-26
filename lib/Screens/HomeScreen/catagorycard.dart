@@ -23,7 +23,7 @@ class CategoryCard extends StatelessWidget {
             height: 56,
             width: 56,
             decoration: BoxDecoration(
-              color: Colors.black12,
+              color: kSecondaryColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: SvgPicture.asset(icon,colorFilter: const ColorFilter.mode(

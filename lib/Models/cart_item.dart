@@ -5,6 +5,6 @@ class CartItems {
  final  int quantity;
   CartItems({
     required this.cartItems,
-     this.quantity=1,
+     required this.quantity,
   });
 }

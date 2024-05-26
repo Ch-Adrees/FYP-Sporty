@@ -2,12 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fyp/Models/cart_item.dart';
+import 'package:fyp/Models/product_model.dart';
 import 'package:fyp/Screens/Cart%20Screen/models/Cart.dart';
 
 import 'cart_item_card.dart';
 
 class MyBody extends StatefulWidget {
-  const MyBody({super.key});
+  const MyBody({required this.cartProduct, super.key});
+  final List<CartItems> cartProduct;
 
   @override
   State<MyBody> createState() => _MyBodyState();
@@ -17,13 +20,13 @@ class _MyBodyState extends State<MyBody> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: ListView.builder(
-        itemCount: demoCarts.length,
+        itemCount: widget.cartProduct.length,
         itemBuilder: (context, index) => Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0),
+          padding: EdgeInsets.symmetric(vertical: 2.0),
           child: Dismissible(
-              key: Key(demoCarts[index].product.id.toString()),
+              key: Key(widget.cartProduct[index].toString()),
               direction: DismissDirection.endToStart,
               background: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
@@ -41,8 +44,8 @@ class _MyBodyState extends State<MyBody> {
                   demoCarts.removeAt(index);
                 });
               },
-              child: CartitemCard(
-                cart: demoCarts[index],
+              child: CartItemCard(
+                cartProduct: widget.cartProduct[index],
               )),
         ),
       ),

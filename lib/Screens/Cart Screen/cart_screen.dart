@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/Cart%20Screen/components/cart_item_card.dart';
 import 'package:fyp/Screens/OrderCheckout/modals/shipping_address.dart';
+import '../../Models/cart_item.dart';
+import '../../Models/product_model.dart';
+import '../DetailProduct/Components/selected_detailed_product.dart';
+import 'components/body.dart';
 import 'models/Cart.dart';
 
 class MyCartScreen extends StatelessWidget {
@@ -13,44 +17,40 @@ class MyCartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SelectedCartProduct cartProduct =
+    ModalRoute.of(context)!.settings.arguments as SelectedCartProduct;
+    final List<CartItems> cartProducts = cartProduct.cartProduct;
     return Scaffold(
       appBar: buildAppBar(context),
-      body: const MyBody(),
+      body: MyBody(cartProduct: cartProducts),
       bottomNavigationBar: const CheckOutCard(),
     );
   }
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      title: Column(
-        children: [
-          const Text("Your Cart",
-              style: TextStyle(
-                fontSize: 26.0,
-                color: kPrimaryColor,
-                fontWeight: FontWeight.bold,
-              )),
-          Text(
-            "${demoCarts.length} Items",
-            style: Theme.of(context).textTheme.caption,
-          )
-        ],
-      ),
+      title: const Text("Your Cart",
+          style: TextStyle(
+            fontSize: 26.0,
+            color: kPrimaryColor,
+            fontWeight: FontWeight.bold,
+          )),
+      centerTitle: true,
     );
   }
 }
 
-class MyBody extends StatelessWidget {
-  const MyBody({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: demoCarts.length,
-      itemBuilder: (context, index) => CartitemCard(cart: demoCarts[index]),
-    );
-  }
-}
+// class MyBody extends StatelessWidget {
+//   const MyBody({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.builder(
+//       itemCount: demoCarts.length,
+//       itemBuilder: (context, index) => CartItemCard(cart: demoCarts[index]),
+//     );
+//   }
+// }
 
 class CheckOutCard extends StatelessWidget {
   const CheckOutCard({
@@ -62,11 +62,12 @@ class CheckOutCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
+        color: kSecondaryColor.withOpacity(0.3),
+        // borderRadius: const BorderRadius.only(
+        //   topLeft: Radius.circular(30),
+        //   topRight: Radius.circular(30),
+        // ),
+        borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
             offset: const Offset(0, -15),
@@ -94,7 +95,7 @@ class CheckOutCard extends StatelessWidget {
                 const Spacer(),
                 const Text("Add Voucher Code"),
                 const SizedBox(
-                  width: 10,
+                  width: 5,
                 ),
                 const Icon(
                   Icons.arrow_forward_ios,

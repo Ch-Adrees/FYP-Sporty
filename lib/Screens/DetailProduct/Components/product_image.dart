@@ -21,12 +21,15 @@ class _ProductImageState extends State<ProductImage> {
       children: [
         SizedBox(
           width: 238,
+          height: 300,
           child: AspectRatio(
             aspectRatio: 1,
-            child: Image.asset(widget.prod.images[selectedImageIndex]),
+            child: Image.network(
+              widget.prod.images[selectedImageIndex],
+            ),
           ),
         ),
-        // SizedBox(height: 20),
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

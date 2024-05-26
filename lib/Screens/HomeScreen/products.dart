@@ -40,10 +40,6 @@ class _ProductState extends ConsumerState<Product> {
                     color: kPrimaryColor,
                   ));
             }
-            if (snapshot.hasError) {
-              return const Center(
-                  child: Text('Error in fetching Products'));
-            }
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Center(child: Text('No Product found.'));
             }
@@ -53,13 +49,15 @@ class _ProductState extends ConsumerState<Product> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: prodList
-                    .map((product) => ProductCard(product: product))
+                    .map((product) => Padding(
+                  padding: const EdgeInsets.only(left: 7.0, right: 8.0), // Adjust the space as needed
+                  child: ProductCard(product: product),
+                ))
                     .toList(),
               ),
             );
           },
         ),
-
     ]);
   }
 }

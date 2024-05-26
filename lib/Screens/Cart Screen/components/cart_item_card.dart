@@ -5,56 +5,63 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 
+import '../../../Models/cart_item.dart';
+import '../../../Models/product_model.dart';
 import '../models/Cart.dart';
 
-class CartitemCard extends StatelessWidget {
-  const CartitemCard({
-    super.key, required this.cart,
+class CartItemCard extends StatelessWidget {
+  const CartItemCard({
+    super.key, required this.cartProduct,
   });
-final  Cart cart;
+final CartItems cartProduct;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 88,
-          child: AspectRatio(
-            aspectRatio: 0.88,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Color(0xFFF5F6F9),
-                borderRadius: BorderRadius.circular(15),
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Padding(padding: EdgeInsets.all(5),
+        child: Row(
+        children: [
+          SizedBox(
+            width: 88,
+            child: AspectRatio(
+              aspectRatio: 0.88,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  //color: Color(0xFFF5F6F9),
+                  color: kSecondaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              child: Image.asset(cartProduct.cartItems.images[0]),
               ),
-            child: Image.asset(cart.product.images[0]),
             ),
           ),
-        ),
-        SizedBox(
-          width: 20,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-             cart.product.title,
-              style: TextStyle(fontSize: 16, color: Colors.black),
-              maxLines: 2,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text.rich(TextSpan(
-              text: "\$${cart.product.price}",
-              style: TextStyle(
-                  fontWeight: FontWeight.w600, color: kPrimaryColor),
-                  children: [TextSpan(text: " x${cart.numOfItems}",
-                  style: TextStyle(color: kTextColor),
-                  )]
-            ))
-          ],
-        )
-      ],
+          SizedBox(
+            width: 20,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+               cartProduct.cartItems.title,
+                style: TextStyle(fontSize: 16, color: Colors.black),
+                maxLines: 2,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text.rich(TextSpan(
+                text: "\$${cartProduct.cartItems.price}",
+                style: TextStyle(
+                    fontWeight: FontWeight.w600, color: kPrimaryColor),
+                    // children: [TextSpan(text: " x${cart.numOfItems}",
+                    // style: TextStyle(color: kTextColor),
+                    // )]
+              ))
+            ],
+          )
+        ],
+      ),),
     );
   }
 }

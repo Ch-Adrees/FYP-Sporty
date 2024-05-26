@@ -59,7 +59,7 @@ import '../MyAdsScreen/allads.dart';
        width: 350,
        child: Card(
          elevation: 3,
-         color: Colors.white24,
+         color: kSecondaryColor.withOpacity(0.1),
          margin: const EdgeInsets.all(10),
          child: Row(
            crossAxisAlignment: CrossAxisAlignment.start,
