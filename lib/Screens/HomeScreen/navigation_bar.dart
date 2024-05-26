@@ -141,7 +141,6 @@ class _NavBarScreenState extends State<NavBarScreen> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               "assets/icons/User Icon.svg",
-
               colorFilter: const ColorFilter.mode(
                 inActiveIconColor,
                 BlendMode.srcIn,

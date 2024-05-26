@@ -6,9 +6,7 @@ import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/AdminPanel/Components/HeaderComponents/image_container.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fyp/Models/advertisemnet.dart';
-
 import '../../Features/provi_wid.dart';
-import 'package:fyp/Features/Advertisement/ads_notifire.dart';
 
 import '../SignInScreen/sigin.dart';
 

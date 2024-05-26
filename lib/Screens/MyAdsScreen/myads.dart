@@ -11,10 +11,10 @@ class MyAdsScreen extends ConsumerStatefulWidget {
   const MyAdsScreen({super.key});
 
   @override
-  _MyAdsScreenState createState() => _MyAdsScreenState();
+  MyAdsScreenState createState() => MyAdsScreenState();
 }
 
-class _MyAdsScreenState extends ConsumerState<MyAdsScreen> {
+class MyAdsScreenState extends ConsumerState<MyAdsScreen> {
   Color academyButtonColor = Colors.white;
   Color eventButtonColor = kPrimaryColor;
   String selectedButton = 'Event';

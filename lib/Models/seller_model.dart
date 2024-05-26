@@ -1,11 +1,9 @@
 import 'package:fyp/Models/user_model.dart';
 
 class SellerModel extends UserModel {
-
   final String shopName;
   final String shopAddress;
   SellerModel({
-   
     required this.shopName,
     required this.shopAddress,
     required super.nameOfUser,
@@ -16,17 +14,15 @@ class SellerModel extends UserModel {
     required super.username,
   });
 
-@override
-  Map<String,dynamic> userToMap()
-  {
-   Map<String ,dynamic> userMap=super.userToMap();
+  @override
+  Map<String, dynamic> userToMap() {
+    Map<String, dynamic> userMap = super.userToMap();
     userMap['shopName'] = shopName;
     userMap['shopAdress'] = shopAddress;
     return userMap;
-    
   }
-  
-   @override
+
+  @override
   SellerModel copyWith({
     String? nameOfUser,
     String? username,
@@ -48,5 +44,16 @@ class SellerModel extends UserModel {
       shopAddress: shopAddress ?? this.shopAddress,
     );
   }
-  }
 
+  factory SellerModel.fromMap(Map<String, dynamic> map) {
+    return SellerModel(
+        shopName: map['shopName'],
+        shopAddress: map['shopAdress'],
+        nameOfUser: map['nameOfUser'],
+        phoneNumber: map['phoneNumber'],
+        address: map['address'],
+        profilePic: map['profilePic'],
+        userId: map['userId'],
+        username: map['username']);
+  }
+}

@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/AllProducts/Parts/search_bar.dart';
 import 'package:fyp/Screens/AllProducts/Parts/all_products.dart';
-
-import '../../Models/product_model.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
