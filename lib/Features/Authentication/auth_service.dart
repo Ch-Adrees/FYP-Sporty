@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/Features/Users/Customer/customer_notifier.dart';
 import 'package:fyp/Features/Users/Seller/seller_notifier.dart';
@@ -13,6 +16,7 @@ import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
 
 import 'package:fyp/Screens/SellerHomeScreen/seller_home_screen.dart';
 import 'package:fyp/Screens/SignInScreen/sigin.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthServices {
@@ -66,7 +70,7 @@ class AuthServices {
                   userId: userCredential.user!.uid,
                   username: email);
 
-              await sellerNotifier.createSeller(user as SellerModel , context);
+              await sellerNotifier.createSeller(user as SellerModel, context);
               if (context.mounted) {
                 ProviderWidgets.showFlutterToast(
                     context, "Registration Successful!");
@@ -114,14 +118,40 @@ class AuthServices {
     return uId;
   }
 
-
-  Future<void>completeProfileScreen()async
-  {
-    String? userId=await getUserId();
-    // DocumentSnapshot user= await _firestore.collection("seller").doc()
-
+  Future<File?> pickImageFromGallery() async {
+    final ImagePicker picker = ImagePicker();
+    File file;
+    final XFile? img = await picker.pickImage(
+      source: ImageSource.gallery, // alternatively, use ImageSource.gallery
+      maxWidth: 400,
+    );
+    if (img == null) {
+      return null;
+    } else {
+      file = File(img.path);
+      return file;
+    }
   }
 
+  Future<String?> uploadAdImage(File? imageFile, BuildContext context) async {
+    String? imageUrl;
+    try {
+      if (imageFile == null) {
+      } else {
+        Reference storageReference = FirebaseStorage.instance
+            .ref()
+            .child('images/Users/${DateTime.now().millisecondsSinceEpoch}.jpg');
+        await storageReference.putFile(imageFile);
+        imageUrl = await storageReference.getDownloadURL();
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ProviderWidgets.showFlutterToast(context, e.toString());
+      }
+      debugPrint("The error is ${e.toString()}");
+    }
+    return imageUrl;
+  }
 
 //Login function
   Future<String?> loginUser(
@@ -158,9 +188,10 @@ class AuthServices {
                 }));
                 break;
               case 'seller':
+                SellerModel? seller= await sellerNotifier.getSellerbyId(userCredential.user!.uid, context);
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
-                  return const SellerHomeScreen();
+                  return  SellerHomeScreen(seller: seller!,);
                 }));
                 break;
               case 'Admin':
@@ -201,7 +232,7 @@ class AuthServices {
           }));
         }
       } else {
-        Future.delayed(const Duration(seconds: 1), () {
+        Future.delayed(const Duration(seconds: 1), () async {
           if (context.mounted) {
             // ProviderWidgets.showFlutterToast(context, userType);
             switch (userType) {
@@ -212,9 +243,10 @@ class AuthServices {
                 }));
                 break;
               case 'seller':
+              SellerModel? seller= await sellerNotifier.getSellerbyId(uId!, context);
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
-                  return const SellerHomeScreen();
+                  return  SellerHomeScreen(seller: seller!,);
                 }));
 
                 break;

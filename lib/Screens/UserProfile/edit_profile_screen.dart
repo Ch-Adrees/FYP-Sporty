@@ -8,6 +8,8 @@ import '../../HelperMaterial/constant.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const String routeName = '/editprofile';
+  const EditProfileScreen({super.key, required this.imageUrl});
+  final String imageUrl;
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();

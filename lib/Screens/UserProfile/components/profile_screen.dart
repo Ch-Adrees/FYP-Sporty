@@ -11,11 +11,14 @@ import 'package:fyp/Screens/HomeScreen/home_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
-  static const String routeName = '/profile';
+  static String routeName = '/profile';
   String name, email;
-  ProfileScreen({
+  String? shopName;
+  String? profilePicture;
+  ProfileScreen( {
     required this.name,
     required this.email,
+    this.profilePicture
   });
   @override
   Widget build(BuildContext context) {
@@ -46,12 +49,12 @@ class ProfileScreen extends StatelessWidget {
                       child: CircleAvatar(
                         backgroundColor: Colors.grey.withOpacity(0.3),
                         radius: 50,
-                        child: SvgPicture.asset(
+                        child:profilePicture != null? Image.network(profilePicture!) :SvgPicture.asset(
                           "assets/icons/username-icon.svg",
                           color: Colors.black45,
                           height: 80,
                           width: 65,
-                        ),
+                        )
                       ),
                     ),
                   ],
@@ -67,7 +70,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Body(),
+                Body(profilePic: profilePicture!,),
               ],
             ),
           ),

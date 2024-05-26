@@ -1,16 +1,19 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
 
-class CompleteProfileForm extends StatefulWidget {
+class CompleteProfileForm extends ConsumerStatefulWidget {
   const CompleteProfileForm({super.key});
 
   @override
   CompleteProfileFormState createState() => CompleteProfileFormState();
 }
 
-class CompleteProfileFormState extends State<CompleteProfileForm> {
+class CompleteProfileFormState extends ConsumerState<CompleteProfileForm> {
   final _formkey = GlobalKey<FormState>();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -18,6 +21,8 @@ class CompleteProfileFormState extends State<CompleteProfileForm> {
   TextEditingController shopNameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController shopAddressController = TextEditingController();
+  File? file;
+  String? imageUrl;
 
   final List<String> errors = [];
   //File? _image;
@@ -43,6 +48,19 @@ class CompleteProfileFormState extends State<CompleteProfileForm> {
       key: _formkey,
       child: Column(
         children: [
+          CircleAvatar(
+            radius: 50,
+            child: file == null
+                ? Image.asset(fit: BoxFit.cover, "assets/images/avatar.png")
+                : Image.file(file!),
+          ),
+          TextButton(
+              onPressed: () async {
+                file =
+                    await ref.read(authServicesProvider).pickImageFromGallery();
+                setState(() {});
+              },
+              child: const Text("Click here to choose picture")),
           const SizedBox(height: 20),
           TextFormField(
             onSaved: (newValue) => firstNameController.text = newValue!,
@@ -201,9 +219,19 @@ class CompleteProfileFormState extends State<CompleteProfileForm> {
           const SizedBox(height: 30),
           FormError(errors: errors),
           ElevatedButton(
-            onPressed: () {
-              if (_formkey.currentState!.validate()) {
+            onPressed: () async {
+               if (_formkey.currentState!.validate()) {
                 _formkey.currentState!.save();
+               imageUrl= await ref.read(authServicesProvider).uploadAdImage(file, context);
+              await ref.read(sellerProvider.notifier).completeProfileScreen(
+                  context,
+                  imageUrl,
+                  "${firstNameController.text} ${lastNameController.text}",
+                  phoneNoController.text,
+                  shopNameController.text,
+                  shopAddressController.text,
+                  addressController.text,
+                  ref);
               }
             },
             child: const Text("Continue"),

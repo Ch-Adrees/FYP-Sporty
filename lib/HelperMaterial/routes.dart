@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyp/Models/seller_model.dart';
 import 'package:fyp/Screens/Cart%20Screen/cart_screen.dart';
 import 'package:fyp/Screens/MyAdsScreen/allads.dart';
 import 'package:fyp/Screens/MyAdsScreen/myads.dart';
@@ -26,8 +27,6 @@ import 'package:fyp/Screens/AdminPanel/admin.dart';
 import 'package:fyp/Screens/DetailProduct/detailed_product.dart';
 import 'package:fyp/Screens/CategoryScreen/catagory_screen.dart';
 
-import '../Screens/wrapper_screen.dart';
-
 final Map<String, WidgetBuilder> listOfRoutes = {
   NewOrderScreen.routeName:(context)=>const NewOrderScreen(),
   SellerAllProducts.routeName:(context) =>const SellerAllProducts(products: [],),
@@ -39,11 +38,11 @@ final Map<String, WidgetBuilder> listOfRoutes = {
   SignUpScreen.routeName: (context) => const SignUpScreen(),
   HomeScreen.routeName: (context) => const HomeScreen(),
   CompleteProfile.routeName: (context) => const CompleteProfile(),
-  SellerHomeScreen.routeName: (context) => const SellerHomeScreen(),
+  SellerHomeScreen.routeName: (context) =>  SellerHomeScreen(seller: SellerModel(address: "", shopName: '', shopAddress: '', nameOfUser: '', phoneNumber: '', profilePic: '', userId: '', username: ''),),
   UploadProducts.routeName: (context) => const UploadProducts(),
   ProductPage.routeName: (context) => const ProductPage(),
   AdminPage.routeName: (context) => const AdminPage(),
-  EditProfileScreen.routeName: (context) => EditProfileScreen(),
+  EditProfileScreen.routeName: (context) => const EditProfileScreen(imageUrl: "",),
   WalletScreen.routeName: (context) => const WalletScreen(),
   SingleProductScreen.routeName: (context) => const SingleProductScreen(),
   CategoryScreen.routeName: (context) => const CategoryScreen(),

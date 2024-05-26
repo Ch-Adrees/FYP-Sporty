@@ -1,14 +1,12 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fyp/Features/Advertisement/ads_notifire.dart';
+
 import 'package:fyp/Features/providers.dart';
 import 'package:fyp/Models/advertisemnet.dart';
 import 'package:fyp/Screens/HomeScreen/home_screen.dart';
-import 'package:fyp/Screens/MyAdsScreen/myads.dart';
-import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
+
 
 import '../../HelperMaterial/constant.dart';
 import '../../HelperMaterial/errors.dart';
@@ -18,10 +16,10 @@ class PostAdScreen extends ConsumerStatefulWidget {
   static const String routeName = "/postads";
 
   @override
-  _PostAdScreenState createState() => _PostAdScreenState();
+  PostAdScreenState createState() => PostAdScreenState();
 }
 
-class _PostAdScreenState extends ConsumerState<PostAdScreen> {
+class PostAdScreenState extends ConsumerState<PostAdScreen> {
   final _formkey = GlobalKey<FormState>();
   bool isLoading = false;
 

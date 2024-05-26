@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
+import 'package:fyp/Models/seller_model.dart';
 import 'package:fyp/Screens/HomeScreen/icon_with_count.dart';
 import 'package:fyp/Screens/SellerHomeScreen/detail_banner.dart';
 import 'package:fyp/Screens/HomeScreen/section_title.dart';
@@ -11,12 +12,14 @@ import 'package:fyp/Screens/SellerHomeScreen/seller_all_product_screen.dart';
 import 'package:fyp/Screens/SellerHomeScreen/seller_product_card.dart';
 
 import 'package:fyp/Screens/UploadProductsScreen/upload_products_screen.dart';
+import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
 
 import '../../Models/product_model.dart';
 
 class SellerHomeScreen extends ConsumerStatefulWidget {
-  const SellerHomeScreen({super.key});
+  const SellerHomeScreen({super.key, required this.seller});
   static String routeName = "/seller_home_screen";
+  final SellerModel seller;
 
   @override
   ConsumerState<SellerHomeScreen> createState() => _SellerHomeScreenState();
@@ -29,7 +32,6 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   void getOwnProducts() async {
     List<Products> tempProducts =
         await ref.read(productProvider.notifier).getOwnProduct(context);
-
     setState(() {
       ownProdcts = tempProducts;
     });
@@ -74,7 +76,11 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
           child: Column(
             children: [
-              DetailBanner(),
+              DetailBanner(
+                name: widget.seller.nameOfUser,
+                shopName: widget.seller.shopName,
+                profilePicture: widget.seller.profilePic,
+              ),
               const SizedBox(height: 20),
               SectionTitle(
                   title: "Products",
@@ -133,7 +139,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                   ),
                   child: IconButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context,
+                      Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return const UploadProducts();
                       }));
@@ -154,7 +160,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                   ),
                   child: IconButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context,
+                      Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return const NewOrderScreen();
                       }));
@@ -175,9 +181,13 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                   ),
                   child: IconButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context,
+                      Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return const NewOrderScreen();
+                        return ProfileScreen(
+                          name: widget.seller.nameOfUser,
+                          email: widget.seller.username,
+                          profilePicture: widget.seller.profilePic,
+                        );
                       }));
                     },
                     icon: const Icon(Icons.person_3),

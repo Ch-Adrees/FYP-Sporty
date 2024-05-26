@@ -2,7 +2,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fyp/Screens/HomeScreen/ads_detail.dart';
 import 'package:fyp/Screens/HomeScreen/section_title.dart';
 import '../../HelperMaterial/constant.dart';
 import '../../Models/advertisemnet.dart';

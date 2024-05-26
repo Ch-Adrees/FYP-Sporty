@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-
-
 class Advertisements{
 
   final String adsName,venue, adID;
