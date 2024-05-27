@@ -1,9 +1,10 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fyp/Features/provi_wid.dart';
-import 'package:fyp/Features/providers.dart';
 import 'package:fyp/Models/seller_model.dart';
+import 'package:fyp/Screens/SignInScreen/sigin.dart';
 
 class SellerNotifier extends StateNotifier<SellerModel> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -41,9 +42,10 @@ class SellerNotifier extends StateNotifier<SellerModel> {
     String? shopAddress,
     String? address,
     WidgetRef ref,
+    String userId,
   ) async {
     try {
-      String userId = await ref.read(authServicesProvider).getUserId();
+      // String userId = await ref.read(authServicesProvider).getUserId();//this will be null after
       SellerModel? seller = await getSellerbyId(userId, context);
       SellerModel newSeller = seller!.copyWith(
           nameOfUser: name,
@@ -54,10 +56,14 @@ class SellerNotifier extends StateNotifier<SellerModel> {
           shopAddress: shopAddress);
       await firestore
           .collection('sellers')
-          .doc(userId)
+          .doc(seller.userId)
           .set(newSeller.userToMap());
       SetOptions(merge: true);
       ProviderWidgets.showFlutterToast(context, "Profile has been updated.");
+      Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return const SignInScreen();
+            }));
     } catch (e) {
       ProviderWidgets.showFlutterToast(
           context, "Error in completing profile: ${e.toString()}");
@@ -67,10 +73,8 @@ class SellerNotifier extends StateNotifier<SellerModel> {
   Future<SellerModel?> getSellerbyId(
       String userId, BuildContext context) async {
     try {
-      DocumentSnapshot snapshot = await firestore
-          .collection('sellers')
-          .doc(userId)
-          .get();
+      DocumentSnapshot snapshot =
+          await firestore.collection('sellers').doc(userId).get();
       if (snapshot.exists) {
         // Assuming only one document matches the query
         var data = snapshot.data() as Map<String, dynamic>;
@@ -80,8 +84,8 @@ class SellerNotifier extends StateNotifier<SellerModel> {
         throw Exception("Seller does not exist");
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error fetching seller: ${e.toString()}")));
+      ProviderWidgets.showFlutterToast(
+          context, "Error fethching the seller record ${e.toString()}");
       return null;
     }
   }

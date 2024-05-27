@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
-
 import '../CompleteProfile/complete_profile_form.dart';
 
 class DetailBanner extends StatelessWidget {

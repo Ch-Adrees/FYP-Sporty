@@ -1,6 +1,5 @@
+import 'package:fyp/Models/cart.dart';
 import 'package:fyp/Models/product_model.dart';
-
-import '../../../Models/cart_item.dart';
 
 class SelectedDetailedProduct{
   final Products product;
@@ -8,6 +7,6 @@ class SelectedDetailedProduct{
 }
 
 class SelectedCartProduct{
-  final List<CartItems> cartProduct;
+  final List<CartModel> cartProduct;
   const SelectedCartProduct({required this.cartProduct});
 }

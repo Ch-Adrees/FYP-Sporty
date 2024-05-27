@@ -3,9 +3,9 @@ import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/CompleteProfile/complete_profile_form.dart';
 
 class CompleteProfile extends StatelessWidget {
-  const CompleteProfile({super.key});
+  const CompleteProfile({super.key,required this.userId});
   static String routeName = "/complete_profile";
-  
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +22,18 @@ class CompleteProfile extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: const SafeArea(
+      body:  SafeArea(
         child: SizedBox(
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding:const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(children: [
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
-                CompleteProfileForm(),
-                SizedBox(height: 30),
+                CompleteProfileForm(userId: userId,),
+              const  SizedBox(height: 30),
               ]),
             ),
           ),

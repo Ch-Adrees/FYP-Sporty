@@ -7,13 +7,15 @@ import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
 
 class CompleteProfileForm extends ConsumerStatefulWidget {
-  const CompleteProfileForm({super.key});
+  const CompleteProfileForm({required this.userId, super.key});
+  final String userId;
 
   @override
   CompleteProfileFormState createState() => CompleteProfileFormState();
 }
 
 class CompleteProfileFormState extends ConsumerState<CompleteProfileForm> {
+  bool isLoading = false;
   final _formkey = GlobalKey<FormState>();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -220,21 +222,32 @@ class CompleteProfileFormState extends ConsumerState<CompleteProfileForm> {
           FormError(errors: errors),
           ElevatedButton(
             onPressed: () async {
-               if (_formkey.currentState!.validate()) {
+              if (_formkey.currentState!.validate()) {
                 _formkey.currentState!.save();
-               imageUrl= await ref.read(authServicesProvider).uploadAdImage(file, context);
-              await ref.read(sellerProvider.notifier).completeProfileScreen(
-                  context,
-                  imageUrl,
-                  "${firstNameController.text} ${lastNameController.text}",
-                  phoneNoController.text,
-                  shopNameController.text,
-                  shopAddressController.text,
-                  addressController.text,
-                  ref);
+                isLoading = true;
+                setState(() {
+                  
+                });
+                imageUrl = await ref
+                    .read(authServicesProvider)
+                    .uploadAdImage(file, context);
+                await ref.read(sellerProvider.notifier).completeProfileScreen(
+                    context,
+                    imageUrl,
+                    "${firstNameController.text} ${lastNameController.text}",
+                    phoneNoController.text,
+                    shopNameController.text,
+                    shopAddressController.text,
+                    addressController.text,
+                    ref,
+                    widget.userId);
+                isLoading = false;
+                setState(() {
+                  
+                });
               }
             },
-            child: const Text("Continue"),
+            child:isLoading?const CircularProgressIndicator(color: Colors.white,): const Text("Continue"),
           ),
         ],
       ),

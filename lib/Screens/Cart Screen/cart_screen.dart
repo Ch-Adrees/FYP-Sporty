@@ -1,28 +1,21 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
-import 'package:fyp/Screens/Cart%20Screen/components/cart_item_card.dart';
+import 'package:fyp/Models/cart.dart';
 import 'package:fyp/Screens/OrderCheckout/modals/shipping_address.dart';
-import '../../Models/cart_item.dart';
-import '../../Models/product_model.dart';
-import '../DetailProduct/Components/selected_detailed_product.dart';
 import 'components/body.dart';
 import 'models/Cart.dart';
 
-class MyCartScreen extends StatelessWidget {
+class MyCartScreen extends ConsumerWidget {
   static String routeName = "/mycartscreen";
-
-  const MyCartScreen({super.key});
+  const MyCartScreen({super.key, required this.listofCartedtems});
+  final List<CartModel> listofCartedtems;
 
   @override
-  Widget build(BuildContext context) {
-    final SelectedCartProduct cartProduct =
-    ModalRoute.of(context)!.settings.arguments as SelectedCartProduct;
-    final List<CartItems> cartProducts = cartProduct.cartProduct;
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: buildAppBar(context),
-      body: MyBody(cartProduct: cartProducts),
+      body: MyBody(cartedProductList: listofCartedtems),
       bottomNavigationBar: const CheckOutCard(),
     );
   }
@@ -40,18 +33,6 @@ class MyCartScreen extends StatelessWidget {
   }
 }
 
-// class MyBody extends StatelessWidget {
-//   const MyBody({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       itemCount: demoCarts.length,
-//       itemBuilder: (context, index) => CartItemCard(cart: demoCarts[index]),
-//     );
-//   }
-// }
-
 class CheckOutCard extends StatelessWidget {
   const CheckOutCard({
     Key? key,
@@ -63,10 +44,6 @@ class CheckOutCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
       decoration: BoxDecoration(
         color: kSecondaryColor.withOpacity(0.3),
-        // borderRadius: const BorderRadius.only(
-        //   topLeft: Radius.circular(30),
-        //   topRight: Radius.circular(30),
-        // ),
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(

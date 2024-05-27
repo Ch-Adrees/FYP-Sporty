@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fyp/Screens/SignInScreen/sigin.dart';
+import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
       theme: AppTheme.lightTheme(context),
 
       //home:const MyAdsScreen(),
-      initialRoute: SignInScreen.routeName,
+      initialRoute: NavBarScreen.routeName,
       //home:const  InternetConnection(),
       //initialRoute: CompleteProfile.routeName,
       routes: listOfRoutes,

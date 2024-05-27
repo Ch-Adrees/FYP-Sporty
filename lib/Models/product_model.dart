@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class Products {
@@ -30,7 +32,7 @@ class Products {
       'productId': productId,
       'title': title,
       'description': description,
-      'images': images,
+      'images': jsonEncode(images),
       'colors': colors,
       'rating': rating,
       'price': price,
@@ -42,28 +44,13 @@ class Products {
     };
   }
 
-  // factory Products.fromJson(Map<String, dynamic> json) {
-  //   return Products(
-  //     productId: json['productId'],
-  //     title: json['title'],
-  //     description: json['description'],
-  //     images: (json['images'] as List).cast<String>().toList(),
-  //       colors: (json['colors'] as List).map((color) => Color(color)).toList(),
-  //     rating: json['rating'].toDouble(),
-  //     price: json['price'].toDouble(),
-  //     isFavourite: json['isFavourite'] ?? false,
-  //     isPopular: json['isPopular'] ?? false,
-  //     sellerId: json['sellerId'],
-  //     productCategory: json['productCategory'],
-  //     isDeleted: json['isDeleted']
-  //   );
-  // }
+
   factory Products.fromJson(Map<String, dynamic> json) {
     return Products(
       productId: json['productId'] as int,
       title: json['title'] as String,
       description: json['description'] as String,
-      images: (json['images'] as List).cast<String>().toList(), // Cast to List<String>
+       images:List<String>.from(json['images']),// Cast to List<String>
       colors: (json['colors'] as List).where((color) => color!= null).map((color) => Color(int.parse(color))).toList(),
       rating: json['rating'], // Use nullable num for rating
       price: json['price'], // Use nullable num for price

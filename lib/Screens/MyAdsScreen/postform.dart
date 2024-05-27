@@ -15,6 +15,8 @@ import '../../HelperMaterial/suffixicons.dart';
 class PostAdScreen extends ConsumerStatefulWidget {
   static const String routeName = "/postads";
 
+  const PostAdScreen({super.key});
+
   @override
   PostAdScreenState createState() => PostAdScreenState();
 }

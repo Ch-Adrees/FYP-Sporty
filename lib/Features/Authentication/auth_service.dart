@@ -11,6 +11,7 @@ import 'package:fyp/Models/customer_model.dart';
 import 'package:fyp/Models/seller_model.dart';
 import 'package:fyp/Models/user_model.dart';
 import 'package:fyp/Screens/AdminPanel/admin.dart';
+import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
 
 import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
 
@@ -74,6 +75,13 @@ class AuthServices {
               if (context.mounted) {
                 ProviderWidgets.showFlutterToast(
                     context, "Registration Successful!");
+                Future.delayed(const Duration(seconds: 3), () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return CompleteProfile(
+                      userId: user.userId,
+                    );
+                  }));
+                });
               }
             }
             break;
@@ -86,19 +94,20 @@ class AuthServices {
 
           default:
             {
-              Navigator.of(context).pop();
               ProviderWidgets.showFlutterToast(context, "Invalid User Type :");
             }
             break;
         }
       } //is ki if k baad jo karn ha kro
       if (context.mounted) {
-        Future.delayed(Durations.short2, () {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return const SignInScreen();
-          }));
-        });
+        if (userType == "customer") {
+          Future.delayed(Durations.short2, () {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return const SignInScreen();
+            }));
+          });
+        }
       }
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {
@@ -188,10 +197,13 @@ class AuthServices {
                 }));
                 break;
               case 'seller':
-                SellerModel? seller= await sellerNotifier.getSellerbyId(userCredential.user!.uid, context);
+                SellerModel? seller = await sellerNotifier.getSellerbyId(
+                    userCredential.user!.uid, context);
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
-                  return  SellerHomeScreen(seller: seller!,);
+                  return SellerHomeScreen(
+                    seller: seller!,
+                  );
                 }));
                 break;
               case 'Admin':
@@ -243,10 +255,13 @@ class AuthServices {
                 }));
                 break;
               case 'seller':
-              SellerModel? seller= await sellerNotifier.getSellerbyId(uId!, context);
+                SellerModel? seller =
+                    await sellerNotifier.getSellerbyId(uId!, context);
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
-                  return  SellerHomeScreen(seller: seller!,);
+                  return SellerHomeScreen(
+                    seller: seller!,
+                  );
                 }));
 
                 break;

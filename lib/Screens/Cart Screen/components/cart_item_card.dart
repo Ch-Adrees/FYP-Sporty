@@ -1,24 +1,21 @@
 
 
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
+import 'package:fyp/Models/cart.dart';
 
-import '../../../Models/cart_item.dart';
-import '../../../Models/product_model.dart';
-import '../models/Cart.dart';
+
 
 class CartItemCard extends StatelessWidget {
   const CartItemCard({
     super.key, required this.cartProduct,
   });
-final CartItems cartProduct;
+final CartModel cartProduct;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      child: Padding(padding: EdgeInsets.all(5),
+      child: Padding(padding:const EdgeInsets.all(5),
         child: Row(
         children: [
           SizedBox(
@@ -26,37 +23,34 @@ final CartItems cartProduct;
             child: AspectRatio(
               aspectRatio: 0.88,
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  //color: Color(0xFFF5F6F9),
                   color: kSecondaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(15),
                 ),
-              child: Image.asset(cartProduct.cartItems.images[0]),
+              child: Image.asset(cartProduct.product.images[0]),
               ),
             ),
           ),
-          SizedBox(
+         const SizedBox(
             width: 20,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-               cartProduct.cartItems.title,
-                style: TextStyle(fontSize: 16, color: Colors.black),
+               cartProduct.product.title,
+                style: const TextStyle(fontSize: 16, color: Colors.black),
                 maxLines: 2,
               ),
               const SizedBox(
                 height: 10,
               ),
               Text.rich(TextSpan(
-                text: "\$${cartProduct.cartItems.price}",
-                style: TextStyle(
+                text: "\$${cartProduct.product.price}",
+                style: const TextStyle(
                     fontWeight: FontWeight.w600, color: kPrimaryColor),
-                    // children: [TextSpan(text: " x${cart.numOfItems}",
-                    // style: TextStyle(color: kTextColor),
-                    // )]
+                    
               ))
             ],
           )

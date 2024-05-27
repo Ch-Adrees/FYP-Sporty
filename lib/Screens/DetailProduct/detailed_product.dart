@@ -1,34 +1,34 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fyp/Features/provi_wid.dart';
+import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
-import 'package:fyp/Models/cart_item.dart';
-import 'package:fyp/Screens/DetailProduct/Components/product_colors.dart';
+import 'package:fyp/Models/cart.dart';
 import 'package:fyp/Screens/DetailProduct/Components/product_data.dart';
 import 'package:fyp/Screens/DetailProduct/Components/rounded_containers.dart';
-import '../../Models/product_model.dart';
-import '../../Models/seller_model.dart';
 import '../Cart Screen/cart_screen.dart';
 import 'Components/product_color_circle.dart';
 import 'Components/product_image.dart';
 import 'Components/selected_detailed_product.dart';
 
-class SingleProductScreen extends StatefulWidget {
+class SingleProductScreen extends ConsumerStatefulWidget {
   const SingleProductScreen({super.key});
 
   static String routeName = "/details";
 
   @override
-  State<SingleProductScreen> createState() => _SingleProductScreenState();
+  ConsumerState<SingleProductScreen> createState() =>
+      _SingleProductScreenState();
 }
 
-class _SingleProductScreenState extends State<SingleProductScreen> {
+class _SingleProductScreenState extends ConsumerState<SingleProductScreen> {
+  void addItemTCart(CartModel cartItem, BuildContext context) {
+    ref.read(cartProvider.notifier).addItemToCart(cartItem, context);
+  }
 
   @override
   Widget build(BuildContext context) {
-    int productQuantity = 0;
-    late List<Products> cartProducts;
+    int productQuantity = 1;
     final SelectedDetailedProduct selectedProduct =
         ModalRoute.of(context)!.settings.arguments as SelectedDetailedProduct;
     final product = selectedProduct.product;
@@ -167,13 +167,15 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child: ElevatedButton(
               onPressed: () {
-                // addProductToCart(product, productQuantity);
-                // cartProducts.add(product);
-                // Navigator.pushNamed(context, MyCartScreen.routeName,
-                //     arguments: SelectedCartProduct(product: cartProducts));
-                // print("Selected Product is: $cartProducts");
-                // ProviderWidgets.showFlutterToast(
-                //     context, "Product Added to Cart");
+                CartModel cartItem =
+                    CartModel(product: product, quantity: productQuantity);
+                addItemTCart(cartItem, context);
+                var list = ref.read(cartProvider);
+                // ProviderWidgets.showFlutterToast(context, "Added Successfully");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return  MyCartScreen(listofCartedtems: list);
+                }));
               },
               child: const Text("Add To Cart"),
             ),
