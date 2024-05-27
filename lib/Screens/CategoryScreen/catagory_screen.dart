@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Models/catagory_model.dart';
+import 'package:fyp/Screens/Cart%20Screen/cart_screen.dart';
 //import 'package:fyp/Models/catagory_model.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -26,13 +27,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.arrow_back),
-        ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {Navigator.pushNamed(context, MyCartScreen.routeName);},
               icon: const Icon(Icons.shopping_cart_checkout_outlined)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
         ],
