@@ -71,10 +71,6 @@ class ProductData extends StatelessWidget {
                 )
               ),
               const SizedBox(height: 5,),
-              Text(
-                product.description,
-                maxLines: 3,
-              ),
             ],
           ),
         ),

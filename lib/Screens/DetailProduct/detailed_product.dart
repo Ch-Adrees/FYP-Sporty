@@ -1,17 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fyp/Features/provi_wid.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
-import 'package:fyp/Models/cart_item.dart';
-import 'package:fyp/Screens/DetailProduct/Components/product_colors.dart';
 import 'package:fyp/Screens/DetailProduct/Components/product_data.dart';
 import 'package:fyp/Screens/DetailProduct/Components/rounded_containers.dart';
 import '../../Models/product_model.dart';
-import '../../Models/seller_model.dart';
-import '../Cart Screen/cart_screen.dart';
 import 'Components/product_color_circle.dart';
 import 'Components/product_image.dart';
+import 'Components/rating_service.dart';
 import 'Components/selected_detailed_product.dart';
 
 class SingleProductScreen extends StatefulWidget {
@@ -28,6 +25,18 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
   @override
   Widget build(BuildContext context) {
     int productQuantity = 0;
+    double currentRating = 0;
+
+    void submitRating(String productId, double rating) async {
+      RatingService ratingService = RatingService();
+      try {
+        print('Rating submitted: $rating : $productId');
+        await ratingService.updateAdApprovalStatus(productId, rating);
+        print('Rating submitted: $rating');
+      } catch (e) {
+        print('Error submitting rating: $e');
+      }
+    }
     late List<Products> cartProducts;
     final SelectedDetailedProduct selectedProduct =
         ModalRoute.of(context)!.settings.arguments as SelectedDetailedProduct;
@@ -108,6 +117,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                         padding: const EdgeInsets.all(15.0),
                         child: Text(
                           product.description,
+                          maxLines: 3,
                         ),
                       ),
                       const SizedBox(
@@ -150,6 +160,38 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                                 });
                               }),
                         ],
+                      ),
+                      const SizedBox(height: 10,),
+                      //RatingBar.builder(itemBuilder: itemBuilder, onRatingUpdate: onRatingUpdate)4
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RatingBar.builder(
+                          initialRating: 0,
+                          minRating: 0,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          itemSize: 35,
+                          onRatingUpdate: (rating) {
+                            setState(() {
+                              currentRating = rating;
+                            });
+
+                            submitRating(product.productId.toString(), rating);
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Rating: $currentRating',
+                          style: const TextStyle(fontSize: 14),
+                        ),
                       ),
                     ],
                   ),

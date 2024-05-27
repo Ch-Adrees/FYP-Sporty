@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fyp/Features/providers.dart';
 import 'package:fyp/Models/advertisemnet.dart';
 import 'package:fyp/Screens/HomeScreen/home_screen.dart';
+import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
 
 
 import '../../HelperMaterial/constant.dart';
@@ -80,13 +81,8 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
-                  'Post Your Ads Here \n to boost your Event',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16),
-                ),
                 const SizedBox(
-                  height: 25,
+                  height: 15,
                 ),
                 TextFormField(
                   controller: AdnameController,
@@ -134,7 +130,7 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                     hintText: "Enter Ad Venue",
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     suffixIcon:
-                    CustomSuffixIcons(svgIcon: "assets/icons/User.svg"),
+                    CustomSuffixIcons(svgIcon: "assets/icons/Location point.svg"),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -157,10 +153,10 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                   },
                   decoration: const InputDecoration(
                     label: Text("Fee"),
-                    hintText: "Enter Fee",
+                    hintText: "Enter Fee (Rs.)",
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     suffixIcon:
-                    CustomSuffixIcons(svgIcon: "assets/icons/User.svg"),
+                    CustomSuffixIcons(svgIcon: "assets/icons/PKR.svg"),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -190,6 +186,7 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
+                  keyboardType: TextInputType.phone,
                   controller: AdphoneController,
                   onSaved: (newValue) => AdphoneController.text = newValue!,
                   onChanged: (value) {
@@ -210,36 +207,47 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                     hintText: "Enter Phone Number",
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     suffixIcon:
-                    CustomSuffixIcons(svgIcon: "assets/icons/User.svg"),
+                    CustomSuffixIcons(svgIcon: "assets/icons/Phone.svg"),
                   ),
                 ),
                 const SizedBox(height: 16),
-                DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                      label: Text(
-                        "Select Category",
-                        style: TextStyle(color: Colors.black.withOpacity(0.8)),
-                      )),
-                  borderRadius: BorderRadius.circular(40),
-                  value: selectedCategory,
-                  onSaved: (newValue) => selectedCategory = newValue!,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedCategory = newValue!;
-                    });
-                  },
-                  items: <String>[
-                    'Select Category',
-                    'Event',
-                    'Academy',
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                      ),
-                    );
-                  }).toList(),
+                Container(
+                  padding: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(35),
+                  ),
+                  child: DropdownButton<String>(
+                    padding: const EdgeInsets.fromLTRB(10, 5, 0.0, 0.0),
+                    borderRadius: BorderRadius.circular(50),
+                    value: selectedCategory,
+                    hint: const Text('Select'),
+
+                    icon: const Icon(Icons.arrow_drop_down),
+                    underline: Container(
+                      height: 0,
+                    ),
+                    iconSize: 30,
+                    isExpanded: true,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.black),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedCategory = newValue!;
+                      });
+                    },
+                    items: <String>['Select', 'Event', 'Academy']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    //decoration: InputDecoration(
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Container(
@@ -326,6 +334,7 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                             .read(adProvider.notifier)
                             .uploadAdsToFirebase(ads, context);
                       }
+                      Navigator.pushNamed(context, NavBarScreen.routeName);
                     }
                     setState(() {
                       _formkey.currentState?.reset();

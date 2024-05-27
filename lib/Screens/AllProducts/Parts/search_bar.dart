@@ -23,6 +23,9 @@ class ProductSearchBar extends StatelessWidget {
               {},
             ),
           ),
+          onChanged:(value){
+
+          },
         ),
       );
   }

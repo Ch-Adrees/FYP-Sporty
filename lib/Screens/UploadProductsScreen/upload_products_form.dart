@@ -264,8 +264,10 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
                     .uploadImagesToDatabase(productImages, context);
                 String sellerId =
                     await ref.read(authServicesProvider).getUserId();
+                int uniqueProductId = DateTime.now().millisecondsSinceEpoch;
                 Products product = Products(
-                    productId: int.parse(productCodeController.text),
+                  productId: uniqueProductId,
+                    productCode: int.parse(productCodeController.text),
                     productCategory: selectedCategory!,
                     images: imagesUrls,
                     colors: colors,
