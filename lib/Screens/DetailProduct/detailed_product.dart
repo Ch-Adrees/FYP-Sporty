@@ -1,10 +1,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fyp/Features/provi_wid.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/DetailProduct/Components/product_data.dart';
+import 'package:fyp/Screens/DetailProduct/Components/product_quantity.dart';
 import 'package:fyp/Screens/DetailProduct/Components/rounded_containers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Models/product_model.dart';
 import 'Components/product_color_circle.dart';
 import 'Components/product_image.dart';
@@ -22,21 +26,57 @@ class SingleProductScreen extends StatefulWidget {
 
 class _SingleProductScreenState extends State<SingleProductScreen> {
 
+  int productQuantity = 0;
+  double currentRating = 0;
   @override
-  Widget build(BuildContext context) {
-    int productQuantity = 0;
-    double currentRating = 0;
+  void initState() {
+    super.initState();
+  }
 
-    void submitRating(String productId, double rating) async {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+      _loadUserRating();
+  }
+
+  void submitRating(int productId, double rating) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double? storedRating = prefs.getDouble('rating_$productId');
+    if(storedRating == null) {
       RatingService ratingService = RatingService();
       try {
-        print('Rating submitted: $rating : $productId');
-        await ratingService.updateAdApprovalStatus(productId, rating);
-        print('Rating submitted: $rating');
+        await ratingService.addRating(productId, rating);
+        ProviderWidgets.showFlutterToast(context, 'Rating Updated');
       } catch (e) {
-        print('Error submitting rating: $e');
+        ProviderWidgets.showFlutterToast(
+            context, 'Error in Updating Rating: $e');
       }
     }
+    await prefs.setDouble('rating_$productId', rating);
+    setState(() {
+      currentRating = rating;
+    });
+  }
+
+  void _loadUserRating() async {
+    final SelectedDetailedProduct selectedProduct =
+    ModalRoute.of(context)!.settings.arguments as SelectedDetailedProduct;
+    final product = selectedProduct.product;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double? rating = prefs.getDouble('rating_${product.productId}');
+    if (rating != null) {
+      setState(() {
+        currentRating = rating;
+      });
+    }
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+
     late List<Products> cartProducts;
     final SelectedDetailedProduct selectedProduct =
         ModalRoute.of(context)!.settings.arguments as SelectedDetailedProduct;
@@ -123,50 +163,12 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        children: [
-                          RoundedIconBtn(
-                            icon: Icons.remove,
-                            press: () {
-                              setState(
-                                () {
-                                  if (productQuantity > 0) {
-                                    productQuantity--;
-                                  }
-                                },
-                              );
-                            },
-                          ),
-                          const SizedBox(width: 10),
-                          Container(
-                            width: 40,
-                            height: 40,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: kPrimaryColor),
-                              //borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              productQuantity.toString(),
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          RoundedIconBtn(
-                              icon: Icons.add,
-                              press: () {
-                                setState(() {
-                                  productQuantity++;
-                                });
-                              }),
-                        ],
-                      ),
+                      ProductQuantity(product: product),
                       const SizedBox(height: 10,),
-                      //RatingBar.builder(itemBuilder: itemBuilder, onRatingUpdate: onRatingUpdate)4
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: RatingBar.builder(
-                          initialRating: 0,
+                          initialRating: currentRating,
                           minRating: 0,
                           direction: Axis.horizontal,
                           allowHalfRating: true,
@@ -177,20 +179,13 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                             color: Colors.amber,
                           ),
                           itemSize: 35,
+                          tapOnlyMode: true,
                           onRatingUpdate: (rating) {
                             setState(() {
-                              currentRating = rating;
+                              ProviderWidgets.showFlutterToast(context, "Rating already Given");
                             });
-
-                            submitRating(product.productId.toString(), rating);
+                            submitRating(product.productId, rating);
                           },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Rating: $currentRating',
-                          style: const TextStyle(fontSize: 14),
                         ),
                       ),
                     ],

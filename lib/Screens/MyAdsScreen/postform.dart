@@ -303,7 +303,7 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                     setState(() {
                       isLoading = true;
                       const CircularProgressIndicator(
-                        color: kPrimaryColor,
+                        color: Colors.white,
                       );
                     });
                     if (_formkey.currentState!.validate()) {

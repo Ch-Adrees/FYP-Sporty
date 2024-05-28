@@ -3,17 +3,16 @@ import 'package:fyp/Screens/DetailProduct/Components/product_color_circle.dart';
 import 'package:fyp/Models/product_model.dart';
 
 import '../../../HelperMaterial/constant.dart';
-class ProductColors extends StatefulWidget {
-  const ProductColors({super.key, required this.product});
+class ProductQuantity extends StatefulWidget {
+  const ProductQuantity({super.key, required this.product});
 
   final Products product;
 
   @override
-  _ProductColorsState createState() => _ProductColorsState();
+  _ProductQuantityState createState() => _ProductQuantityState();
 }
 
-class _ProductColorsState extends State<ProductColors> {
-  int selectedColor=3;
+class _ProductQuantityState extends State<ProductQuantity> {
   int productQuantity = 0;
   @override
   Widget build(BuildContext context) {
@@ -21,14 +20,6 @@ class _ProductColorsState extends State<ProductColors> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          ...List.generate(
-            widget.product.colors.length,
-                (index) => ColorDot(
-              color: widget.product.colors[index],
-              isSelected: index == selectedColor,
-            ),
-          ),
-          const Spacer(),
           RoundedIconBtn(
             icon: Icons.remove,
             press: () {

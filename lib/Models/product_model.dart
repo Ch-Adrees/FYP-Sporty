@@ -4,9 +4,8 @@ class Products {
   final int productId, ratingCount, productCode;
   final String title, description;
   final List<String> images;
-  final List<Color> colors;
   final double rating, price, totalRatingSum;
-  final bool? isFavourite, isPopular;
+  final bool? isFavourite;
   final String? sellerId;
   final String? productCategory;
   final bool? isDeleted;
@@ -17,13 +16,11 @@ class Products {
     required this.productCode,
     required this.productCategory,
     required this.images,
-    required this.colors,
     required this.title,
     required this.price,
     required this.sellerId,
     required this.description,
     this.isFavourite = false,
-    this.isPopular = false,
     this.rating = 0.0,
     this.ratingCount = 0,
     this.totalRatingSum = 0,
@@ -35,12 +32,10 @@ class Products {
       'title': title,
       'description': description,
       'images': images,
-      'colors': colors,
       'rating': rating,
       'price': price,
       'productCategory':productCategory,
       'isFavourite': isFavourite,
-      'isPopular': isPopular,
       'sellerId': sellerId,
       'isDeleted':isDeleted,
       'ratingCount':ratingCount,
@@ -71,13 +66,11 @@ class Products {
       title: json['title'] as String,
       description: json['description'] as String,
       images: (json['images'] as List).cast<String>().toList(), // Cast to List<String>
-      colors: (json['colors'] as List).where((color) => color!= null).map((color) => Color(int.parse(color))).toList(),
       rating: json['rating'], // Use nullable num for rating
       totalRatingSum: json['totalRatingSum'],
       ratingCount: json['ratingCount'],
       price: json['price'], // Use nullable num for price
       isFavourite: json['isFavourite'] as bool?, // Nullable boolean
-      isPopular: json['isPopular'] as bool?, // Nullable boolean
       sellerId: json['sellerId'] as String?,
       productCategory: json['productCategory'] as String?,
       isDeleted: json['isDeleted'] as bool?, // Nullable boolean
