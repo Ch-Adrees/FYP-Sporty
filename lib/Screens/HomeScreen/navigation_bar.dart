@@ -48,6 +48,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
     return Scaffold(
       body: pages[currentSelectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: kPrimaryLightColor.withOpacity(1),
         onTap: updateCurrentIndex,
         currentIndex: currentSelectedIndex,
         showSelectedLabels: false,

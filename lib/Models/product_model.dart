@@ -1,11 +1,10 @@
-
-
 class Products {
   final int productId, ratingCount, productCode;
   final String title, description;
   final List<String> images;
   final double rating, price, totalRatingSum;
-  final bool? isFavourite, isPopular;
+  final bool? isFavourite;
+  final bool? isPopular;
   final String? sellerId;
   final String? productCategory;
   final bool? isDeleted;
@@ -20,8 +19,8 @@ class Products {
     required this.price,
     required this.sellerId,
     required this.description,
+    required this.isPopular,
     this.isFavourite = false,
-    this.isPopular = false,
     this.rating = 0.0,
     this.ratingCount = 0,
     this.totalRatingSum = 0,
@@ -32,12 +31,11 @@ class Products {
       'productCode': productCode,
       'title': title,
       'description': description,
-      'images':images,
+      'images': images,
       'rating': rating,
       'price': price,
       'productCategory': productCategory,
       'isFavourite': isFavourite,
-      'isPopular': isPopular,
       'sellerId': sellerId,
       'isDeleted': isDeleted,
       'ratingCount': ratingCount,
@@ -51,7 +49,7 @@ class Products {
       productCode: map['productCode'],
       title: map['title'] as String,
       description: map['description'] as String,
-      images:List<String>.from(map['images'] as List ),// Cast to List<String>
+      images: List<String>.from(map['images'] as List), // Cast to List<String>
       rating: map['rating'], // Use nullable num for rating
       totalRatingSum: map['totalRatingSum'],
       ratingCount: map['ratingCount'],

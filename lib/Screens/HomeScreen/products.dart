@@ -15,6 +15,7 @@ class Product extends ConsumerStatefulWidget {
 }
 
 class _ProductState extends ConsumerState<Product> {
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -27,7 +28,7 @@ class _ProductState extends ConsumerState<Product> {
           },
         ),
       ),
-      StreamBuilder<List<Products>>(
+      StreamBuilder<List<Products>> (
           stream: getProductsFromFirebase(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -35,6 +36,9 @@ class _ProductState extends ConsumerState<Product> {
                   child: CircularProgressIndicator(
                     color: kPrimaryColor,
                   ));
+            }
+            if(snapshot.hasError){
+              return const Center(child: Text('Error in fetching Product.'));
             }
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Center(child: Text('No Product found.'));

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fyp/Features/provi_wid.dart';
 import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
+import 'package:fyp/Models/cart_model.dart';
 import 'package:fyp/Screens/DetailProduct/Components/product_data.dart';
+import 'package:fyp/Screens/DetailProduct/Components/product_quantity.dart';
 import 'package:fyp/Screens/DetailProduct/Components/rounded_containers.dart';
 import 'package:fyp/Screens/MycartScreen/mycart_screen.dart';
-import '../../Models/cart_model.dart';
-import 'Components/product_color_circle.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Components/product_image.dart';
 import 'Components/rating_service.dart';
 import 'Components/selected_detailed_product.dart';
@@ -24,30 +26,54 @@ class SingleProductScreen extends ConsumerStatefulWidget {
 }
 
 class _SingleProductScreenState extends ConsumerState<SingleProductScreen> {
-  void addItemTCart(CartModel cartItem, BuildContext context) {
-    ref.read(cartProvider.notifier).addItemToCart(cartItem, context);
+  int productQuantity = 0;
+  double currentRating = 0;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadUserRating();
+  }
+
+  void submitRating(int productId, double rating) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double? storedRating = prefs.getDouble('rating_$productId');
+    if (storedRating == null) {
+      RatingService ratingService = RatingService();
+      try {
+        await ratingService.addRating(productId, rating);
+        ProviderWidgets.showFlutterToast(context, 'Rating Updated');
+      } catch (e) {
+        ProviderWidgets.showFlutterToast(
+            context, 'Error in Updating Rating: $e');
+      }
+    }
+    await prefs.setDouble('rating_$productId', rating);
+    setState(() {
+      currentRating = rating;
+    });
+  }
+
+  void _loadUserRating() async {
+    final SelectedDetailedProduct selectedProduct =
+        ModalRoute.of(context)!.settings.arguments as SelectedDetailedProduct;
+    final product = selectedProduct.product;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double? rating = prefs.getDouble('rating_${product.productId}');
+    if (rating != null) {
+      setState(() {
+        currentRating = rating;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    int productQuantity = 1;
-    double currentRating = 0;
-
-    void submitRating(String productId, double rating) async {
-      RatingService ratingService = RatingService();
-      try {
-        // ignore: avoid_print
-        print('Rating submitted: $rating : $productId');
-        await ratingService.updateAdApprovalStatus(productId, rating);
-        // ignore: avoid_print
-        print('Rating submitted: $rating');
-      } catch (e) {
-        // ignore: avoid_print
-        print('Error submitting rating: $e');
-      }
-    }
-
-    // late List<Products> cartProducts;
     final SelectedDetailedProduct selectedProduct =
         ModalRoute.of(context)!.settings.arguments as SelectedDetailedProduct;
     final product = selectedProduct.product;
@@ -133,52 +159,14 @@ class _SingleProductScreenState extends ConsumerState<SingleProductScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        children: [
-                          RoundedIconBtn(
-                            icon: Icons.remove,
-                            press: () {
-                              setState(
-                                () {
-                                  if (productQuantity > 0) {
-                                    productQuantity--;
-                                  }
-                                },
-                              );
-                            },
-                          ),
-                          const SizedBox(width: 10),
-                          Container(
-                            width: 40,
-                            height: 40,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: kPrimaryColor),
-                              //borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              productQuantity.toString(),
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          RoundedIconBtn(
-                              icon: Icons.add,
-                              press: () {
-                                setState(() {
-                                  productQuantity++;
-                                });
-                              }),
-                        ],
-                      ),
+                      ProductQuantity(product: product),
                       const SizedBox(
                         height: 10,
                       ),
-                      //RatingBar.builder(itemBuilder: itemBuilder, onRatingUpdate: onRatingUpdate)4
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: RatingBar.builder(
-                          initialRating: 0,
+                          initialRating: currentRating,
                           minRating: 0,
                           direction: Axis.horizontal,
                           allowHalfRating: true,
@@ -190,20 +178,14 @@ class _SingleProductScreenState extends ConsumerState<SingleProductScreen> {
                             color: Colors.amber,
                           ),
                           itemSize: 35,
+                          tapOnlyMode: true,
                           onRatingUpdate: (rating) {
                             setState(() {
-                              currentRating = rating;
+                              ProviderWidgets.showFlutterToast(
+                                  context, "Rating already Given");
                             });
-
-                            submitRating(product.productId.toString(), rating);
+                            submitRating(product.productId, rating);
                           },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Rating: $currentRating',
-                          style: const TextStyle(fontSize: 14),
                         ),
                       ),
                     ],
@@ -235,5 +217,9 @@ class _SingleProductScreenState extends ConsumerState<SingleProductScreen> {
         ),
       ),
     );
+  }
+
+  void addItemTCart(CartModel cartItem, BuildContext context) {
+    ref.read(cartProvider.notifier).addItemToCart(cartItem, context);
   }
 }

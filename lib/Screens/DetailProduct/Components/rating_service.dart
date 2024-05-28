@@ -3,36 +3,46 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../Models/product_model.dart';
 
 class RatingService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<void> addRating(String productId, double rating) async {
-    DocumentReference productRef =
-        _firestore.collection('products').doc(productId);
+  Future<void> addRating(int productId, double rating) async {
 
-    // Run transaction to ensure consistency
-    await _firestore.runTransaction((transaction) async {
-      DocumentSnapshot productSnapshot = await transaction.get(productRef);
-      if (!productSnapshot.exists) {
+
+    QuerySnapshot querySnapshot = await firestore
+        .collection('products')
+        .where('productId', isEqualTo: productId)
+        .get();
+
+
+    if (querySnapshot.docs.isEmpty) {
+      throw Exception('Product does not exist');
+    }
+
+    DocumentSnapshot productSnapshot = querySnapshot.docs.first;
+    DocumentReference productRef = productSnapshot.reference;
+
+    await firestore.runTransaction((transaction) async {
+      DocumentSnapshot freshSnapshot = await transaction.get(productRef);
+      if (!freshSnapshot.exists) {
         throw Exception('Product does not exist');
       }
 
-      double currentRating = productSnapshot['rating'] ?? 0.0;
-      int ratingsCount = productSnapshot['ratingsCount'] ?? 0;
-      double totalRatingSum = productSnapshot['totalRatingSum'] ?? 0.0;
+      double currentRating = freshSnapshot['rating'] ?? 0.0;
+      int ratingsCount = freshSnapshot['ratingCount'] ?? 0;
+      double totalRatingSum = freshSnapshot['totalRatingSum'] ?? 0.0;
 
-      // Update values
       ratingsCount += 1;
       totalRatingSum += rating;
       currentRating = totalRatingSum / ratingsCount;
 
-      // Update product document with new ratings and average rating
       transaction.update(productRef, {
         'rating': currentRating,
-        'ratingsCount': ratingsCount,
+        'ratingCount': ratingsCount,
         'totalRatingSum': totalRatingSum,
       });
     });
   }
+
 
   Future<void> updateAdApprovalStatus(String productId, double rating) async {
     try {

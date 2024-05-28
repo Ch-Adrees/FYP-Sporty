@@ -1,12 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Models/product_model.dart';
 
 import '../DetailProduct/Components/selected_detailed_product.dart';
 import '../DetailProduct/detailed_product.dart';
-
-class ProductCard extends StatelessWidget {
+class ProductCard extends ConsumerStatefulWidget {
   const ProductCard({
     Key? key,
     this.width = 150,
@@ -20,13 +22,62 @@ class ProductCard extends StatelessWidget {
   final String? price;
 
   @override
+  ConsumerState<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends ConsumerState<ProductCard> {
+  bool isFavourite = false;
+  String? favouriteDocId;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfFavourite();
+  }
+
+  Future<void> _checkIfFavourite() async {
+    String customerId = await ref.read(authServicesProvider).getUserId();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(customerId)
+        .collection('favourites')
+        .where('productId', isEqualTo: widget.product.productId)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      setState(() {
+        isFavourite = true;
+        favouriteDocId = querySnapshot.docs.first.id;
+      });
+    }
+  }
+
+  Future<void> toggleFavourite() async {
+    String customerId = await ref.read(authServicesProvider).getUserId();
+    CollectionReference favourites = FirebaseFirestore.instance
+        .collection('users')
+        .doc(customerId)
+        .collection('favourites');
+
+    if (isFavourite) {
+      await favourites.doc(favouriteDocId).delete();
+    } else {
+      DocumentReference docRef = await favourites.add({'productId': widget.product.productId});
+      favouriteDocId = docRef.id;
+    }
+
+    setState(() {
+      isFavourite = !isFavourite;
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width,
+      width: widget.width,
       child: GestureDetector(
         onTap: () {
           Navigator.pushNamed(context, SingleProductScreen.routeName,
-              arguments: SelectedDetailedProduct(product: product));
+              arguments: SelectedDetailedProduct(product: widget.product));
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +91,7 @@ class ProductCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Image.network(
-                  product.images[0],
+                  widget.product.images[0],
                   width: 150,
                   height: 150,
                   fit: BoxFit.contain,
@@ -49,7 +100,7 @@ class ProductCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              product.title,
+              widget.product.title,
               //style: Theme.of(context).textTheme.bodyMedium,
               style: const TextStyle(
                 fontSize: 16,
@@ -61,7 +112,7 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Rs.${product.price.toInt()}",
+                  "Rs.${widget.product.price.toInt()}",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -70,13 +121,13 @@ class ProductCard extends StatelessWidget {
                 ),
                 InkWell(
                   borderRadius: BorderRadius.circular(50),
-                  onTap: () {},
+                  onTap: toggleFavourite,
                   child: Container(
                     padding: const EdgeInsets.all(6),
                     height: 24,
                     width: 24,
                     decoration: BoxDecoration(
-                      color: product.isFavourite!
+                      color: isFavourite
                           ? kPrimaryColor.withOpacity(0.15)
                           : kSecondaryColor.withOpacity(0.1),
                       shape: BoxShape.circle,
@@ -84,7 +135,7 @@ class ProductCard extends StatelessWidget {
                     child: SvgPicture.asset(
                       "assets/icons/Heart Icon_2.svg",
                       colorFilter: ColorFilter.mode(
-                          product.isFavourite!
+                          isFavourite
                               ? const Color(0xFFFF4848)
                               : const Color(0xFFDBDEE4),
                           BlendMode.srcIn),
@@ -99,3 +150,4 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+
