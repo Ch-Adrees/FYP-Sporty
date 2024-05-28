@@ -7,7 +7,7 @@ import 'package:fyp/Features/Product/product_provider.dart';
 import 'package:fyp/Features/Users/Customer/customer_notifier.dart';
 import 'package:fyp/Features/Users/Seller/seller_notifier.dart';
 import 'package:fyp/Models/advertisemnet.dart';
-import 'package:fyp/Models/cart.dart';
+import 'package:fyp/Models/cart_model.dart';
 import 'package:fyp/Models/customer_model.dart';
 import 'package:fyp/Models/seller_model.dart';
 

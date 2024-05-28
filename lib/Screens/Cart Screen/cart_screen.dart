@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
-import 'package:fyp/Models/cart.dart';
 import 'package:fyp/Screens/OrderCheckout/modals/shipping_address.dart';
 import 'components/body.dart';
 import 'models/Cart.dart';
 
 class MyCartScreen extends ConsumerWidget {
   static String routeName = "/mycartscreen";
-  const MyCartScreen({super.key, required this.listofCartedtems});
-  final List<CartModel> listofCartedtems;
+  const MyCartScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var list = ref.watch(cartProvider);
+   // final list = ModalRoute.of(context)!.settings.arguments as List<CartModel>;
     return Scaffold(
       appBar: buildAppBar(context),
-      body: MyBody(cartedProductList: listofCartedtems),
+      body: MyBody(cartedProductList: list),
       bottomNavigationBar: const CheckOutCard(),
     );
   }
@@ -70,7 +71,6 @@ class CheckOutCard extends StatelessWidget {
                   child: const Icon(Icons.receipt),
                 ),
                 const Spacer(),
-                const Text("Add Voucher Code"),
                 const SizedBox(
                   width: 5,
                 ),
@@ -92,7 +92,7 @@ class CheckOutCard extends StatelessWidget {
                     text: "Total:\n",
                     children: [
                       TextSpan(
-                        text: "\$${calculateTotal(demoCarts)}",
+                        text: "\$${calculateTotal(demoCarts).ceilToDouble()}",
                         style:
                             const TextStyle(fontSize: 16, color: Colors.black),
                       ),

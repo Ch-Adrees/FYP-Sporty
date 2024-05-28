@@ -12,6 +12,7 @@ import 'package:fyp/Screens/Success%20Screen/success_screen.dart';
 //import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
 import 'package:fyp/Screens/UserProfile/edit_profile_screen.dart';
 import 'package:fyp/Screens/WalletScreen/mywallet.dart';
+import 'package:fyp/Screens/MycartScreen/mycart_screen.dart';
 import 'package:fyp/Screens/onBoardingScreen/onboardscreen.dart';
 import 'package:fyp/Screens/SignInScreen/sigin.dart';
 import 'package:fyp/Screens/SignupScreen/signup.dart';
@@ -29,6 +30,7 @@ import 'package:fyp/Screens/CategoryScreen/catagory_screen.dart';
 
 final Map<String, WidgetBuilder> listOfRoutes = {
   NewOrderScreen.routeName:(context)=>const NewOrderScreen(),
+  CartScreenNew.routeName:(contex)=>const CartScreenNew(),
   SellerAllProducts.routeName:(context) =>const SellerAllProducts(products: [],),
   NavBarScreen.routeName: (context) => const NavBarScreen(),
   OnBoardScreen.routeName: (context) => const OnBoardScreen(),
@@ -46,7 +48,7 @@ final Map<String, WidgetBuilder> listOfRoutes = {
   WalletScreen.routeName: (context) => const WalletScreen(),
   SingleProductScreen.routeName: (context) => const SingleProductScreen(),
   CategoryScreen.routeName: (context) => const CategoryScreen(),
-  MyCartScreen.routeName: (context) => const MyCartScreen(listofCartedtems: [],),
+  MyCartScreen.routeName: (context) => const MyCartScreen(),
   ShippingAndPaymentScreen.routeName: (context) => const ShippingAndPaymentScreen(),
   SuccessScreen.routeName: (context) => const SuccessScreen(),
   MyOrder.routeName: (context) => const MyOrder(),

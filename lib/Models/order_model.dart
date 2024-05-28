@@ -1,4 +1,5 @@
-import 'package:fyp/Models/cart_item.dart';
+import 'package:fyp/Models/cart_model.dart';
+
 import 'package:fyp/Models/customer_model.dart';
 
 class OrderModel {
@@ -8,7 +9,7 @@ class OrderModel {
   final String sellerId;
   final String isDeleted;
   final String isAccepted;
-  final List<CartItems> orderedItems;
+  final List<CartModel> orderedItems;
   OrderModel(
       {required this.orderNo,
       required this.orderDateTime,
@@ -21,4 +22,4 @@ class OrderModel {
 
 List<OrderModel> orders = [];
 
-List<CartItems> orderItems = [];
+

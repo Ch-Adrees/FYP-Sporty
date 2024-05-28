@@ -1,4 +1,4 @@
-import 'package:fyp/Models/cart.dart';
+import 'package:fyp/Models/cart_model.dart';
 import 'package:fyp/Models/product_model.dart';
 
 class SelectedDetailedProduct{

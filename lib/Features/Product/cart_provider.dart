@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fyp/Features/provi_wid.dart';
-import 'package:fyp/Models/cart.dart';
+import 'package:fyp/Models/cart_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartNotifier extends StateNotifier<List<CartModel>> {
   CartNotifier(super._state) {
     loadCart();
   }
+
   void addItemToCart(CartModel cartItem, BuildContext context) {
     state = state.map((item) {
       if (item.product.productId == cartItem.product.productId) {
@@ -25,19 +26,24 @@ class CartNotifier extends StateNotifier<List<CartModel>> {
     if (!state
         .any((item) => item.product.productId == cartItem.product.productId)) {
       state = [...state, cartItem];
+      ProviderWidgets.showFlutterToast(
+          context, "Product added to cart Successfully");
     }
-    saveDataToSharedPreferences();
+
+    saveDataToSharedPreferences(context);
   }
 
-  void removeItemFromCart(CartModel item) {
+  void removeItemFromCart(CartModel item, BuildContext context) {
     state.removeWhere((element) => element == item);
+    saveDataToSharedPreferences(context);
+    loadCart();
   }
 
-  void saveDataToSharedPreferences() async {
-    final pref = await SharedPreferences.getInstance();
-
-    pref.setString(
-        'cart', jsonEncode(state.map((item) => item.toJson()).toList()));
+  Future<void> saveDataToSharedPreferences(BuildContext context) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    List<String> cartedItemList =
+        state.map((item) => jsonEncode(item.toJson())).toList();
+    await pref.setStringList('cart', cartedItemList);
   }
 
   void updateCartItemQuantity(CartModel item, int quantity) {
@@ -46,14 +52,13 @@ class CartNotifier extends StateNotifier<List<CartModel>> {
   }
 
   Future<void> loadCart() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey('cart')) {
-      state = (json.decode(prefs.getString('cart')!) as List)
-          .map((item) => CartModel.fromJson(item))
-          .toList();
-    }
-    else{
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? cartJson = prefs.getStringList('cart');
+    if (cartJson != null) {
+      state =
+          cartJson.map((item) => CartModel.fromJson(jsonDecode(item))).toList();
+    } else {
+      state = [];
     }
   }
 }

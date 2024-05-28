@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,9 +6,8 @@ import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/DetailProduct/Components/product_data.dart';
 import 'package:fyp/Screens/DetailProduct/Components/rounded_containers.dart';
-import '../../Models/cart.dart';
-import '../../Models/product_model.dart';
-import '../Cart Screen/cart_screen.dart';
+import 'package:fyp/Screens/MycartScreen/mycart_screen.dart';
+import '../../Models/cart_model.dart';
 import 'Components/product_color_circle.dart';
 import 'Components/product_image.dart';
 import 'Components/rating_service.dart';
@@ -32,7 +30,7 @@ class _SingleProductScreenState extends ConsumerState<SingleProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int productQuantity = 0;
+    int productQuantity = 1;
     double currentRating = 0;
 
     void submitRating(String productId, double rating) async {
@@ -48,7 +46,8 @@ class _SingleProductScreenState extends ConsumerState<SingleProductScreen> {
         print('Error submitting rating: $e');
       }
     }
-    late List<Products> cartProducts;
+
+    // late List<Products> cartProducts;
     final SelectedDetailedProduct selectedProduct =
         ModalRoute.of(context)!.settings.arguments as SelectedDetailedProduct;
     final product = selectedProduct.product;
@@ -172,7 +171,9 @@ class _SingleProductScreenState extends ConsumerState<SingleProductScreen> {
                               }),
                         ],
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       //RatingBar.builder(itemBuilder: itemBuilder, onRatingUpdate: onRatingUpdate)4
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -182,7 +183,8 @@ class _SingleProductScreenState extends ConsumerState<SingleProductScreen> {
                           direction: Axis.horizontal,
                           allowHalfRating: true,
                           itemCount: 5,
-                          itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          itemPadding:
+                              const EdgeInsets.symmetric(horizontal: 4.0),
                           itemBuilder: (context, _) => const Icon(
                             Icons.star,
                             color: Colors.amber,
@@ -223,11 +225,8 @@ class _SingleProductScreenState extends ConsumerState<SingleProductScreen> {
                 CartModel cartItem =
                     CartModel(product: product, quantity: productQuantity);
                 addItemTCart(cartItem, context);
-                var list = ref.read(cartProvider);
-                // ProviderWidgets.showFlutterToast(context, "Added Successfully");
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (BuildContext context) {
-                  return  MyCartScreen(listofCartedtems: list);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const CartScreenNew();
                 }));
               },
               child: const Text("Add To Cart"),

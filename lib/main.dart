@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
+import 'package:fyp/Screens/MycartScreen/mycart_screen.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/app_themes.dart';
@@ -64,7 +65,6 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Sporty App',
       theme: AppTheme.lightTheme(context),
-
       //home:const MyAdsScreen(),
       initialRoute: NavBarScreen.routeName,
       //home:const  InternetConnection(),

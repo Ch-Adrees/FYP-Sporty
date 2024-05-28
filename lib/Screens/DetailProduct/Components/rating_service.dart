@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 
-import '../../../Features/provi_wid.dart';
 import '../../../Models/product_model.dart';
 
 class RatingService {
@@ -43,6 +41,7 @@ class RatingService {
          // .where('productId', isEqualTo: productId)
           .get();
       if (!productSnapshot.exists) {
+        // ignore: avoid_print
         print("Found: $productId");
         final product =
             Products.fromJson(productSnapshot.data() as Map<String, dynamic>);
@@ -63,11 +62,14 @@ class RatingService {
           'ratingCount': ratingsCount,
           'totalRatingSum': totalRatingSum,
         });
+        // ignore: avoid_print
         print("Product $productId Updated.");
       } else {
+                // ignore: avoid_print
         print("Product $productId not found.");
       }
     } catch (e) {
+              // ignore: avoid_print
       print("Product Updating Error $e");
     }
   }

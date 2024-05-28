@@ -1,12 +1,9 @@
-import 'dart:convert';
 
-import 'package:flutter/material.dart';
 
 class Products {
   final int productId, ratingCount, productCode;
   final String title, description;
   final List<String> images;
-  final List<Color> colors;
   final double rating, price, totalRatingSum;
   final bool? isFavourite, isPopular;
   final String? sellerId;
@@ -19,7 +16,6 @@ class Products {
     required this.productCode,
     required this.productCategory,
     required this.images,
-    required this.colors,
     required this.title,
     required this.price,
     required this.sellerId,
@@ -36,41 +32,37 @@ class Products {
       'productCode': productCode,
       'title': title,
       'description': description,
-      'images': jsonEncode(images),
-      'colors': colors,
+      'images':images,
       'rating': rating,
       'price': price,
-      'productCategory':productCategory,
+      'productCategory': productCategory,
       'isFavourite': isFavourite,
       'isPopular': isPopular,
       'sellerId': sellerId,
-      'isDeleted':isDeleted,
-      'ratingCount':ratingCount,
+      'isDeleted': isDeleted,
+      'ratingCount': ratingCount,
       'totalRatingSum': totalRatingSum,
     };
   }
 
-
-  factory Products.fromJson(Map<String, dynamic> json) {
+  factory Products.fromJson(Map<String, dynamic> map) {
     return Products(
-      productId: json['productId'] as int,
-      productCode: json['productCode'],
-      title: json['title'] as String,
-      description: json['description'] as String,
-       images:List<String>.from(json['images']),// Cast to List<String>
-      colors: (json['colors'] as List).where((color) => color!= null).map((color) => Color(int.parse(color))).toList(),
-      rating: json['rating'], // Use nullable num for rating
-      totalRatingSum: json['totalRatingSum'],
-      ratingCount: json['ratingCount'],
-      price: json['price'], // Use nullable num for price
-      isFavourite: json['isFavourite'] as bool?, // Nullable boolean
-      isPopular: json['isPopular'] as bool?, // Nullable boolean
-      sellerId: json['sellerId'] as String?,
-      productCategory: json['productCategory'] as String?,
-      isDeleted: json['isDeleted'] as bool?, // Nullable boolean
+      productId: map['productId'] as int,
+      productCode: map['productCode'],
+      title: map['title'] as String,
+      description: map['description'] as String,
+      images:List<String>.from(map['images'] as List ),// Cast to List<String>
+      rating: map['rating'], // Use nullable num for rating
+      totalRatingSum: map['totalRatingSum'],
+      ratingCount: map['ratingCount'],
+      price: map['price'], // Use nullable num for price
+      isFavourite: map['isFavourite'] as bool?, // Nullable boolean
+      isPopular: map['isPopular'] as bool?, // Nullable boolean
+      sellerId: map['sellerId'] as String?,
+      productCategory: map['productCategory'] as String?,
+      isDeleted: map['isDeleted'] as bool?, // Nullable boolean
     );
   }
-
 }
 
 // const String description =

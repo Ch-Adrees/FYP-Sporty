@@ -27,7 +27,7 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
   late List<String> imagesUrls = [];
   List<File> productImages = [];
   Color? productColors;
-  List<Color> colors = [];
+
   void addError({String? error}) {
     if (!errors.contains(error)) {
       setState(() {
@@ -270,7 +270,6 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
                     productCode: int.parse(productCodeController.text),
                     productCategory: selectedCategory!,
                     images: imagesUrls,
-                    colors: colors,
                     title: productTitleController.text,
                     price: double.parse(productPriceController.text),
                     sellerId: sellerId,

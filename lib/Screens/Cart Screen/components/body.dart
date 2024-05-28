@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fyp/Models/cart.dart';
+import 'package:fyp/Models/cart_model.dart';
 import 'cart_item_card.dart';
 
 class MyBody extends StatefulWidget {

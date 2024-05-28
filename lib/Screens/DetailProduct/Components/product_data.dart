@@ -11,6 +11,7 @@ class ProductData extends StatelessWidget {
     if (text.isEmpty) return text;
     return text
         .split(' ')
+        .where((word) => word.isNotEmpty)
         .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
         .join(' ');
   }
@@ -62,15 +63,15 @@ class ProductData extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text(
-                "Rs. ${product.price.toInt()}",
-                style: const TextStyle(
-                  color: kPrimaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                )
+              Text("Rs. ${product.price.toInt()}",
+                  style: const TextStyle(
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  )),
+              const SizedBox(
+                height: 5,
               ),
-              const SizedBox(height: 5,),
             ],
           ),
         ),
