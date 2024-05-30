@@ -14,7 +14,7 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -30,8 +30,8 @@ class HomeHeader extends StatelessWidget {
                },
           ),
           const SizedBox(width: 8),
-          IconWithCount(
-              svgicon: "assets/icons/Bell.svg", count: 3, press: () {}),
+          // IconWithCount(
+          //     svgicon: "assets/icons/Bell.svg", count: 3, press: () {}),
         ],
       ),
     );

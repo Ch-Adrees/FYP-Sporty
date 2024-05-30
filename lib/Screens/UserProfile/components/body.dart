@@ -8,8 +8,10 @@ import 'package:fyp/Screens/MyAdsScreen/myads.dart';
 import 'package:fyp/Screens/SignInScreen/sigin.dart';
 import 'package:fyp/Screens/WalletScreen/mywallet.dart';
 
+import '../../FavouriteProductScreen/favourite_product_screen.dart';
+
 class Body extends StatelessWidget {
-  final String profilePic;
+  final String? profilePic;
 
   const Body({super.key, required this.profilePic});
   @override
@@ -25,7 +27,7 @@ class Body extends StatelessWidget {
             press: () {
                Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) {
-                        return  EditProfileScreen(imageUrl: profilePic,);
+                        return  EditProfileScreen(imageUrl: profilePic!,);
                       }));
             },
           ),
@@ -41,6 +43,17 @@ class Body extends StatelessWidget {
             text: "My Post",
             press: () {
               Navigator.pushNamed(context, MyAdsScreen.routeName);
+            },
+          ),
+          ProfileMenu(
+            icon: "assets/icons/Heart Icon.svg",
+            text: "Favourites",
+            press: () {
+              //Navigator.pushNamed(context, MyAdsScreen.routeName);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FavoriteProductsScreen()),
+              );
             },
           ),
           ProfileMenu(

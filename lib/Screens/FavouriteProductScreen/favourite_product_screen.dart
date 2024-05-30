@@ -7,6 +7,7 @@ import 'package:fyp/Screens/DetailProduct/Components/selected_detailed_product.d
 import 'package:fyp/Screens/DetailProduct/detailed_product.dart';
 
 import '../../HelperMaterial/constant.dart';
+import '../HomeScreen/productcard.dart';
 
 class FavoriteProductsScreen extends ConsumerWidget {
   const FavoriteProductsScreen({Key? key}) : super(key: key);
@@ -29,7 +30,8 @@ class FavoriteProductsScreen extends ConsumerWidget {
         future: ref.read(authServicesProvider).getUserId(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator(
+              color: kPrimaryColor,));
           }
 
           if (snapshot.hasError) {
@@ -37,7 +39,7 @@ class FavoriteProductsScreen extends ConsumerWidget {
           }
 
           if (!snapshot.hasData) {
-            return Center(child: const Text('User not found'));
+            return const Center(child: Text('User not found'));
           }
 
           String userId = snapshot.data!;
@@ -56,9 +58,14 @@ class FavoriteProductsScreen extends ConsumerWidget {
               if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               }
+              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                return const Center(child: Text('No favourite products found'));
+              }
 
-              List<String> favoriteProductIds = snapshot.data!.docs.map((doc) => doc['productId'] as String).toList();
-
+              List<int> favoriteProductIds = snapshot.data!.docs
+                  .map((doc) => doc['productId'])
+                  .whereType<int>()
+                  .toList();
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -68,66 +75,33 @@ class FavoriteProductsScreen extends ConsumerWidget {
                 ),
                 itemCount: favoriteProductIds.length,
                 itemBuilder: (context, index) {
-                  return FutureBuilder<DocumentSnapshot>(
-                    future: FirebaseFirestore.instance
+                  return StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
                         .collection('products')
-                        .doc(favoriteProductIds[index])
-                        .get(),
+                        .where('productId', isEqualTo: favoriteProductIds[index])
+                        .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator(
+                          color: kPrimaryColor,));
                       }
 
                       if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       }
 
-                      if (!snapshot.hasData || !snapshot.data!.exists) {
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                         return const Center(child: Text('Product not found'));
                       }
 
-                      Products product = Products.fromJson(snapshot.data!.data() as Map<String, dynamic>);
+                      Products product = Products.fromJson(snapshot.data!.docs[0].data() as Map<String, dynamic>);
 
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            SingleProductScreen.routeName,
-                            arguments: SelectedDetailedProduct(product: product),
-                          );
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.network(
-                              product.images[0],
-                              width: double.infinity,
-                              height: 150,
-                              fit: BoxFit.cover,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                product.title,
-                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                'Rs.${product.price.toInt()}',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green,
-                                ),
-                              ),
-                            ),
-                          ],
+                      return SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 7.0, right: 8.0),
+                          child: ProductCard(product: product),
                         ),
-                      );
+                          );
                     },
                   );
                 },
@@ -139,3 +113,4 @@ class FavoriteProductsScreen extends ConsumerWidget {
     );
   }
 }
+

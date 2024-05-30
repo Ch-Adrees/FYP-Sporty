@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Models/catagory_model.dart';
+import 'package:fyp/Screens/AllProducts/products_page.dart';
 import 'package:fyp/Screens/Cart%20Screen/cart_screen.dart';
+
+import 'category_product.dart';
 //import 'package:fyp/Models/catagory_model.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -21,10 +24,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // bool isSearching = false;
-
-    // Category selectedCategory = Category(category_name: "All");
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -90,58 +89,72 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   listOfColors[index % listOfColors.length];
                               String path =
                                   imagesPath[index % imagesPath.length];
-                              return Card(
-                                color: color,
-                                shadowColor: kPrimaryLightColor,
-                                surfaceTintColor: kPrimaryColor,
-                                borderOnForeground: true,
-                                elevation: 6.0,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5.0, horizontal: 16.0),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: 120,
-                                            height: 120,
-                                            decoration: const BoxDecoration(
-                                              color: Colors
-                                                  .blue, // Background color of the container
-                                              shape: BoxShape
-                                                  .circle, // Shape of the container (circular)
-                                            ),
-                                            child: ClipOval(
-                                              child: Image.asset(
-                                                path,
-                                                fit: BoxFit.cover,
-                                                width: 120,
-                                                height: 120,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text(
-                                            selectedcategory[index]
-                                                .categoryName,
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              color:
-                                                  kTextColor, // Set text color
-                                              fontWeight: FontWeight
-                                                  .w600, // Set text style
-                                            ),
-                                          ),
-                                        ],
+                              return GestureDetector(
+                                onTap: (){
+                                  //Navigator.pushNamed(context, CategoryProductPage.routeName);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CategoryProductPage(
+                                        categoryName: selectedcategory[index].categoryName,
+                                        searchQuery: '',
                                       ),
                                     ),
-                                  ],
+                                  );
+                                },
+                                child: Card(
+                                  color: color,
+                                  shadowColor: kPrimaryLightColor,
+                                  surfaceTintColor: kPrimaryColor,
+                                  borderOnForeground: true,
+                                  elevation: 6.0,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5.0, horizontal: 16.0),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 120,
+                                              height: 120,
+                                              decoration: const BoxDecoration(
+                                                color: Colors
+                                                    .blue, // Background color of the container
+                                                shape: BoxShape
+                                                    .circle, // Shape of the container (circular)
+                                              ),
+                                              child: ClipOval(
+                                                child: Image.asset(
+                                                  path,
+                                                  fit: BoxFit.cover,
+                                                  width: 120,
+                                                  height: 120,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(
+                                              selectedcategory[index]
+                                                  .categoryName,
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                color:
+                                                    kTextColor, // Set text color
+                                                fontWeight: FontWeight
+                                                    .w600, // Set text style
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             })))

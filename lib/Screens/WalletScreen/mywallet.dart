@@ -1,5 +1,3 @@
-
-
 // ignore_for_file: library_private_types_in_public_api, duplicate_ignore, duplicate_ignore, prefer_const_constructors, sized_box_for_whitespace, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
@@ -8,8 +6,6 @@ import 'package:fyp/Screens/WalletScreen/walletbutton.dart';
 import '../../HelperMaterial/constant.dart';
 import 'addmoney.dart' show AddMoneyDialog;
 import 'withdraw.dart' show WithDrawDialog;
-
-
 
 class WalletScreen extends StatefulWidget {
   static String routeName = '/wallet';
@@ -27,7 +23,7 @@ class _WalletScreenState extends State<WalletScreen> {
     setState(() {
       currentBalance += amount;
     });
-  }// Initial balance value
+  } // Initial balance value
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +61,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: const BoxDecoration(
-                        color: Color(0xFFCC5656),
+                        color: kPrimaryColor,
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(Icons.stacked_bar_chart_rounded),
@@ -93,37 +89,39 @@ class _WalletScreenState extends State<WalletScreen> {
               SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child:Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     WalletButtons(
                       iconPath: 'assets/icons/Plus Icon.svg',
                       textButton: 'Add',
                       press: () {
-                       showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AddMoneyDialog(
-                onAddMoney: (double amount) {
-                  // Call the updateBalance function to update the current balance in BalanceCard
-                  updateBalance(amount);
-                },
-              );
-            },
-          );
-        },
-      ),
-      SizedBox(height: 40,),
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AddMoneyDialog(
+                              onAddMoney: (double amount) {
+                                // Call the updateBalance function to update the current balance in BalanceCard
+                                updateBalance(amount);
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
                     WalletButtons(
                       iconPath: 'assets/icons/cash-withdraw-thin.svg',
                       textButton: 'WithDraw',
                       press: () {
                         showDialog(
-              context: context,
-              builder: (context) {
-                return const WithDrawDialog();
-              },
-            );
+                          context: context,
+                          builder: (context) {
+                            return const WithDrawDialog();
+                          },
+                        );
                       },
                     ),
                   ],
