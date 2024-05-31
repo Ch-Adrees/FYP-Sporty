@@ -30,19 +30,21 @@ class AllProducts extends ConsumerWidget {
             }
       
             List<Products> prodList = snapshot.data!;
-            return GridView.builder(
-              shrinkWrap: true,
-              itemCount: prodList.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisExtent: 238,
-                  mainAxisSpacing: 10),
-              itemBuilder: (context, index) {
-                Products product = prodList[index];
-                return ProductCard(product: product);
-
-              },
+            return SingleChildScrollView(
+              child: GridView.builder(
+                shrinkWrap: true,
+                itemCount: prodList.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisExtent: 238,
+                    mainAxisSpacing: 10),
+                itemBuilder: (context, index) {
+                  Products product = prodList[index];
+                  return ProductCard(product: product);
+              
+                },
+              ),
             );
           },
         ),

@@ -6,6 +6,7 @@ import 'package:fyp/Screens/HomeScreen/section_title.dart';
 import 'package:fyp/Screens/HomeScreen/catagorycard.dart';
 
 import '../CategoryScreen/catagory_screen.dart';
+import '../CategoryScreen/category_product.dart';
 
 //import '../CategoryScreen/catagories_screen.dart';
 
@@ -41,7 +42,15 @@ class Category extends StatelessWidget {
             (index) => CategoryCard(
               icon: categories[index]["icon"],
               text: categories[index]["text"],
-              press: () {},
+              press: () {Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CategoryProductPage(
+                    categoryName: categories[index]['text'],
+                    searchQuery: '',
+                  ),
+                ),
+              );},
             ),
           ),
         ),

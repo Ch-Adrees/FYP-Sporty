@@ -7,6 +7,7 @@ List<Category> listOfCategories = [
   Category(categoryName: 'Cricket'),
   Category(categoryName: 'Badminton'),
   Category(categoryName: 'Football'),
+  //Category(categoryName: 'Tennis'),
   Category(categoryName: 'Swimming'),
   Category(categoryName: 'Hockey'),
   Category(categoryName: 'Gym'),
@@ -14,6 +15,6 @@ List<Category> listOfCategories = [
   Category(categoryName: 'Volleyball'),
   Category(categoryName: 'Gymnastic'),
   Category(categoryName: 'Running'),
-  Category(categoryName: 'athletic'),
-  Category(categoryName: 'jumping'),
+  Category(categoryName: 'Athletic'),
+  Category(categoryName: 'Jumping'),
 ];

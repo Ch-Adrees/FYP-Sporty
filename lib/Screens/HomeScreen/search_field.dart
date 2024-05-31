@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 
+import '../CategoryScreen/category_product.dart';
+
 class SearchField extends StatelessWidget {
   const SearchField({
     Key? key,
@@ -10,8 +12,18 @@ class SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       child: TextFormField(
-        onChanged: (value) {
-
+        onFieldSubmitted: (value) {
+          if (value.isNotEmpty) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CategoryProductPage(
+                  categoryName: '', // Pass an empty category or handle accordingly
+                  searchQuery: value,
+                ),
+              ),
+            );
+          }
         },
         decoration: InputDecoration(
           filled: true,

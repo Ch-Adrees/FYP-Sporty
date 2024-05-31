@@ -2,14 +2,30 @@
 
 import 'package:flutter/material.dart';
 
+import '../../CategoryScreen/category_product.dart';
+
 class ProductSearchBar extends StatelessWidget {
   const ProductSearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    String searchQuery;
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: TextFormField(
+          onFieldSubmitted: (value) {
+            if (value.isNotEmpty) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CategoryProductPage(
+                    categoryName: '', // Pass an empty category or handle accordingly
+                    searchQuery: value,
+                  ),
+                ),
+              );
+            }
+          },
           decoration: InputDecoration(
             hintText:"Search Products",
             hintStyle: TextStyle(
@@ -17,15 +33,10 @@ class ProductSearchBar extends StatelessWidget {
               fontSize: 16,
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 15),
-            suffixIcon: IconButton(
-              icon:Icon(Icons.search_outlined),
-              onPressed: ()
-              {},
-            ),
-          ),
-          onChanged:(value){
+            suffixIcon:
+              Icon(Icons.search),
 
-          },
+          ),
         ),
       );
   }
