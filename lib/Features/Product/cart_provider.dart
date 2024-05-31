@@ -37,6 +37,7 @@ class CartNotifier extends StateNotifier<List<CartModel>> {
     state.removeWhere((element) => element == item);
     saveDataToSharedPreferences(context);
     loadCart();
+    totalAmount();
   }
 
   Future<void> saveDataToSharedPreferences(BuildContext context) async {
@@ -46,9 +47,27 @@ class CartNotifier extends StateNotifier<List<CartModel>> {
     await pref.setStringList('cart', cartedItemList);
   }
 
-  void updateCartItemQuantity(CartModel item, int quantity) {
+  void updateCartItemQuantity(
+      CartModel item, int quantity, BuildContext context) {
     int index = state.indexWhere((element) => element == item);
-    state[index].copywith(quantity: quantity);
+    if (index != -1) {
+      state = [
+        for (int i = 0; i < state.length; i++)
+          if (i == index) state[i].copywith(quantity: quantity) else state[i]
+      ];
+    }
+  }
+
+  double totalAmount() {
+    double totalAmount = 0;
+    if (state.isNotEmpty) {
+      for (int i = 0; i < state.length; i++) {
+        totalAmount += state[i].quantity * state[i].product.price;
+      }
+    } else {
+      totalAmount = 0;
+    }
+    return totalAmount.ceilToDouble();
   }
 
   Future<void> loadCart() async {

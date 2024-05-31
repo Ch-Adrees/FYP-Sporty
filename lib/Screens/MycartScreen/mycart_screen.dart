@@ -15,12 +15,24 @@ class CartScreenNew extends ConsumerStatefulWidget {
 class _CartScreenNewState extends ConsumerState<CartScreenNew> {
   late List<CartModel> list;
 
+  double totalAmount = 0;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     list = ref.watch(cartProvider);
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Cart Screen",style: TextStyle(color: kPrimaryColor,fontSize: 20,fontWeight: FontWeight.bold),),
+          title: const Text(
+            "Cart Screen",
+            style: TextStyle(
+                color: kPrimaryColor,
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
+          ),
           centerTitle: true,
         ),
         bottomSheet: Container(
@@ -33,12 +45,12 @@ class _CartScreenNewState extends ConsumerState<CartScreenNew> {
             const SizedBox(
               height: 10,
             ),
-            const Padding(
-              padding: EdgeInsets.all(15.0),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "Total :",
                     style: TextStyle(
                         fontSize: 16,
@@ -46,8 +58,8 @@ class _CartScreenNewState extends ConsumerState<CartScreenNew> {
                         color: Colors.red),
                   ),
                   Text(
-                    "\$10000",
-                    style: TextStyle(
+                    ref.watch(cartProvider.notifier).totalAmount().toString(),
+                    style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey),
@@ -58,7 +70,14 @@ class _CartScreenNewState extends ConsumerState<CartScreenNew> {
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await ref
+                      .read(orderProvider.notifier)
+                      .makeOrder(list, context, ref);
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  // return const  PaymentOption();
+                  // }));
+                },
                 style: ElevatedButton.styleFrom(elevation: 1),
                 child: const Text("Checkout"),
               ),

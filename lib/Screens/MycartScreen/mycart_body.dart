@@ -15,6 +15,13 @@ class CartScreenNewBody extends ConsumerStatefulWidget {
 }
 
 class _CartScreenNewBodyState extends ConsumerState<CartScreenNewBody> {
+  late int quantity;
+  @override
+  void initState() {
+    super.initState();
+    quantity = widget.cartItem.quantity;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -103,22 +110,47 @@ class _CartScreenNewBodyState extends ConsumerState<CartScreenNewBody> {
                     child: Row(
                       children: [
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if (quantity > 0) {
+                                  quantity--;
+                                }
+                                if (quantity == 0) {
+                                  ref
+                                      .read(cartProvider.notifier)
+                                      .removeItemFromCart(
+                                          widget.cartItem, context);
+                                }
+                                ref
+                                    .read(cartProvider.notifier)
+                                    .updateCartItemQuantity(
+                                        widget.cartItem, quantity, context);
+                              });
+                              setState(() {});
+                            },
                             icon:
                                 const Icon(Icons.remove, color: Colors.black)),
                         const SizedBox(
                           width: 5,
                         ),
-                        const Text(
-                          "1",
-                          style: TextStyle(
+                        Text(
+                          quantity.toString(),
+                          style: const TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           width: 5,
                         ),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                quantity++;
+                              });
+                              ref
+                                  .read(cartProvider.notifier)
+                                  .updateCartItemQuantity(
+                                      widget.cartItem, quantity, context);
+                            },
                             icon: const Icon(
                               Icons.add,
                               color: Colors.black,

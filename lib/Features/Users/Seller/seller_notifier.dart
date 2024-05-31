@@ -16,6 +16,7 @@ class SellerNotifier extends StateNotifier<SellerModel> {
             phoneNumber: "",
             address: "",
             profilePic: "",
+            fcmToken: "",
             userId: "",
             username: ""));
 

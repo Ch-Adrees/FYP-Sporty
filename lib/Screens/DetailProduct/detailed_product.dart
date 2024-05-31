@@ -6,8 +6,8 @@ import 'package:fyp/Features/provi_wid.dart';
 import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Models/cart_model.dart';
+import 'package:fyp/Screens/DetailProduct/Components/product_color_circle.dart';
 import 'package:fyp/Screens/DetailProduct/Components/product_data.dart';
-import 'package:fyp/Screens/DetailProduct/Components/product_quantity.dart';
 import 'package:fyp/Screens/DetailProduct/Components/rounded_containers.dart';
 import 'package:fyp/Screens/MycartScreen/mycart_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +26,7 @@ class SingleProductScreen extends ConsumerStatefulWidget {
 }
 
 class _SingleProductScreenState extends ConsumerState<SingleProductScreen> {
-  int productQuantity = 0;
+  int productQuantity =1;
   double currentRating = 0;
   @override
   void initState() {
@@ -159,7 +159,47 @@ class _SingleProductScreenState extends ConsumerState<SingleProductScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      ProductQuantity(product: product),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            RoundedIconBtn(
+                              icon: Icons.remove,
+                              press: () {
+                                setState(
+                                  () {
+                                    if (productQuantity > 0) {
+                                      productQuantity--;
+                                    }
+                                  },
+                                );
+                              },
+                            ),
+                            const SizedBox(width: 10),
+                            Container(
+                              width: 40,
+                              height: 40,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: kPrimaryColor),
+                                //borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                productQuantity.toString(),
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            RoundedIconBtn(
+                                icon: Icons.add,
+                                press: () {
+                                  setState(() {
+                                    productQuantity++;
+                                  });
+                                }),
+                          ],
+                        ),
+                      ),
                       const SizedBox(
                         height: 10,
                       ),

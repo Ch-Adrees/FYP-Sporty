@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/Features/Users/Customer/customer_notifier.dart';
@@ -12,7 +12,6 @@ import 'package:fyp/Models/seller_model.dart';
 import 'package:fyp/Models/user_model.dart';
 import 'package:fyp/Screens/AdminPanel/admin.dart';
 import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
-
 import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
 
 import 'package:fyp/Screens/SellerHomeScreen/seller_home_screen.dart';
@@ -22,6 +21,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final firbaseMessaging = FirebaseMessaging.instance;
+
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final CustomerNotifier customerNotifier = CustomerNotifier();
   final SellerNotifier sellerNotifier = SellerNotifier();
@@ -36,6 +37,9 @@ class AuthServices {
       // if (context.mounted) ProviderWidgets.showLoadingDialog(context);
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
+      await firbaseMessaging.requestPermission();
+      final fcmToken = await firbaseMessaging.getToken();
+      ProviderWidgets.showFlutterToast(context, fcmToken);
       await _firestore
           .collection('users')
           .doc(userCredential.user!.uid)
@@ -50,6 +54,7 @@ class AuthServices {
                   address: "",
                   profilePic: "",
                   userId: userCredential.user!.uid,
+                  fcmToken: fcmToken!,
                   username: email);
               await customerNotifier.createCustomer(
                   user as CustomerModel, _firestore, context);
@@ -68,6 +73,7 @@ class AuthServices {
                   phoneNumber: "",
                   address: "",
                   profilePic: "",
+                  fcmToken: fcmToken!,
                   userId: userCredential.user!.uid,
                   username: email);
 
@@ -219,10 +225,10 @@ class AuthServices {
           }
         }
       }
-    } on FirebaseAuthException catch (e) {
+    } catch (e) {
       if (context.mounted) {
         Navigator.of(context).pop();
-        ProviderWidgets.showFlutterToast(context, e.message!);
+        ProviderWidgets.showFlutterToast(context, e.toString());
       }
     }
     return userType;

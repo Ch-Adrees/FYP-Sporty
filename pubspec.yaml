@@ -37,9 +37,7 @@ dependencies:
   #cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.9
   auto_size_text: ^3.0.0
-  get: ^4.6.6
   image_picker: ^1.1.1
-  getwidget: ^4.0.0
   firebase_core: ^2.28.0
   flutter_riverpod: ^2.5.1
   firebase_auth: ^4.19.1
@@ -50,8 +48,11 @@ dependencies:
   connectivity_plus: ^6.0.3
   firebase_storage: ^11.7.5
   flutter_rating_bar: ^4.0.1
-  sqflite: ^2.3.3+1
   path: ^1.9.0
+  firebase_messaging: ^14.9.4
+  flutter_local_notifications: ^17.1.2
+  get: ^4.6.6
+  easypaisa_flutter: ^1.0.3
 
 
 dev_dependencies:
@@ -101,7 +102,7 @@ flutter:
           weight: 700
         - asset: assets/fonts/muli/Mulish-Light.ttf
           weight: 300
-          
+         
   
   
   # For details regarding fonts from package dependencies,

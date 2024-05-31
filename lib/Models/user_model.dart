@@ -5,6 +5,7 @@ abstract class UserModel {
   final String profilePic;
   final String userId;
   final String username;
+  final String fcmToken;
 
   UserModel(
       {required this.nameOfUser,
@@ -12,6 +13,7 @@ abstract class UserModel {
       required this.address,
       required this.profilePic,
       required this.userId,
+      required this.fcmToken,
       required this.username});
 
   UserModel copyWith({
@@ -21,7 +23,6 @@ abstract class UserModel {
     String? address,
     String? profilePic,
     String? userId,
-
   });
   Map<String, dynamic> userToMap() {
     return {
@@ -31,6 +32,7 @@ abstract class UserModel {
       'profilePic': profilePic,
       'userId': userId,
       'username': username,
+      'fcmToken':fcmToken,
     };
   }
 }

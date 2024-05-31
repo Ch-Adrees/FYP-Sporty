@@ -12,6 +12,7 @@ class SellerModel extends UserModel {
     required super.profilePic,
     required super.userId,
     required super.username,
+    required super.fcmToken,
   });
 
   @override
@@ -32,6 +33,7 @@ class SellerModel extends UserModel {
     String? userId,
     String? shopName,
     String? shopAddress,
+    String? fcmToken,
   }) {
     return SellerModel(
       nameOfUser: nameOfUser ?? this.nameOfUser,
@@ -42,6 +44,7 @@ class SellerModel extends UserModel {
       userId: userId ?? this.userId,
       shopName: shopName ?? this.shopName,
       shopAddress: shopAddress ?? this.shopAddress,
+      fcmToken: fcmToken ?? this.fcmToken,
     );
   }
 
@@ -54,6 +57,7 @@ class SellerModel extends UserModel {
         address: map['address'],
         profilePic: map['profilePic'],
         userId: map['userId'],
+        fcmToken: map['fcmToken'],
         username: map['username']);
   }
 }

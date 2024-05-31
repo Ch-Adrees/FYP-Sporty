@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fyp/Features/Advertisement/ads_notifire.dart';
 import 'package:fyp/Features/Authentication/auth_controller.dart';
 import 'package:fyp/Features/Authentication/auth_service.dart';
+import 'package:fyp/Features/Orders/order_notifier.dart';
 import 'package:fyp/Features/Product/cart_provider.dart';
 import 'package:fyp/Features/Product/product_provider.dart';
 import 'package:fyp/Features/Users/Customer/customer_notifier.dart';
@@ -9,6 +10,7 @@ import 'package:fyp/Features/Users/Seller/seller_notifier.dart';
 import 'package:fyp/Models/advertisemnet.dart';
 import 'package:fyp/Models/cart_model.dart';
 import 'package:fyp/Models/customer_model.dart';
+import 'package:fyp/Models/order_model.dart';
 import 'package:fyp/Models/seller_model.dart';
 
 import '../Models/product_model.dart';
@@ -50,4 +52,9 @@ final cartProvider =
     StateNotifierProvider<CartNotifier, List<CartModel>>((ref) {
   List<CartModel> list = [];
   return CartNotifier(list);
+});
+
+final orderProvider = StateNotifierProvider((ref) {
+  List<OrderModel> orders = [];
+  return Order(orders);
 });
