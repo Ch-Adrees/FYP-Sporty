@@ -14,6 +14,7 @@ import 'package:fyp/Models/order_model.dart';
 import 'package:fyp/Models/seller_model.dart';
 
 import '../Models/product_model.dart';
+import 'Orders/seller_order_notifier.dart';
 
 // These provider will Work for the Authentication and Authorization
 final authControllerProvider = StateProvider((ref) {
@@ -57,4 +58,8 @@ final cartProvider =
 final orderProvider = StateNotifierProvider((ref) {
   List<OrderModel> orders = [];
   return Order(orders);
+});
+
+final sellerOrderProvider = StateNotifierProvider<SellerOrder,List<OrderModel>>((ref) {
+  return SellerOrder();
 });

@@ -27,13 +27,13 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
   bool isLoading = false;
 
   // Variables to hold form data
-  TextEditingController AdnameController = TextEditingController();
-  TextEditingController AdvenueController = TextEditingController();
-  TextEditingController AdfeeController = TextEditingController();
-  TextEditingController AdorganizerController = TextEditingController();
-  TextEditingController AdphoneController = TextEditingController();
-  TextEditingController AdCategoryController = TextEditingController();
-  File? AdImage;
+  TextEditingController adNameController = TextEditingController();
+  TextEditingController adVenueController = TextEditingController();
+  TextEditingController adFeeController = TextEditingController();
+  TextEditingController adOrganizerController = TextEditingController();
+  TextEditingController adPhoneController = TextEditingController();
+  TextEditingController adCategoryController = TextEditingController();
+  File? adImage;
   String? imageUrl;
   final List<String> errors = [];
   String? selectedCategory;
@@ -87,8 +87,8 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                   height: 15,
                 ),
                 TextFormField(
-                  controller: AdnameController,
-                  onSaved: (newValue) => AdnameController.text = newValue!,
+                  controller: adNameController,
+                  onSaved: (newValue) => adNameController.text = newValue!,
                   onChanged: (value) {
                     if (value.isNotEmpty) {
                       removeError(error: kAdTitleNullError);
@@ -112,8 +112,8 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: AdvenueController,
-                  onSaved: (newValue) => AdvenueController.text = newValue!,
+                  controller: adVenueController,
+                  onSaved: (newValue) => adVenueController.text = newValue!,
                   onChanged: (value) {
                     if (value.isNotEmpty) {
                       removeError(error: kAdVenueNullError);
@@ -138,8 +138,8 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                 const SizedBox(height: 16),
                 TextFormField(
                   keyboardType: TextInputType.phone,
-                  controller: AdfeeController,
-                  onSaved: (newValue) => AdfeeController.text = newValue!,
+                  controller: adFeeController,
+                  onSaved: (newValue) => adFeeController.text = newValue!,
                   onChanged: (value) {
                     if (value.isNotEmpty) {
                       removeError(error: kAdFeeNullError);
@@ -163,8 +163,8 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: AdorganizerController,
-                  onSaved: (newValue) => AdorganizerController.text = newValue!,
+                  controller: adOrganizerController,
+                  onSaved: (newValue) => adOrganizerController.text = newValue!,
                   onChanged: (value) {
                     if (value.isNotEmpty) {
                       removeError(error: kAdOrganizerNameNullError);
@@ -189,8 +189,8 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                 const SizedBox(height: 16),
                 TextFormField(
                   keyboardType: TextInputType.phone,
-                  controller: AdphoneController,
-                  onSaved: (newValue) => AdphoneController.text = newValue!,
+                  controller: adPhoneController,
+                  onSaved: (newValue) => adPhoneController.text = newValue!,
                   onChanged: (value) {
                     if (value.isNotEmpty) {
                       removeError(error: kAdPhoneNumberNullError);
@@ -264,7 +264,7 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                   child: Center(
                     child: SizedBox(
                       width: 300.0,
-                      child: AdImage == null
+                      child: adImage == null
                           ? const Center(
                         child: Icon(Icons.image,
                             size: 40, color: kPrimaryColor),
@@ -279,7 +279,7 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                           return Center(
                               child: //kIsWeb
                               // ? Image.network(AdImage!.path)
-                              Image.file(AdImage!));
+                              Image.file(adImage!));
                         },
                       ),
                     ),
@@ -290,7 +290,7 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    AdImage = await ref
+                    adImage = await ref
                         .watch(adProvider.notifier)
                         .pickImagesFromGallery();
                     setState(() {});
@@ -313,18 +313,18 @@ class PostAdScreenState extends ConsumerState<PostAdScreen> {
 
                       imageUrl = (await ref
                           .read(adProvider.notifier)
-                          .uploadAdImage(AdImage, context));
+                          .uploadAdImage(adImage, context));
                       // String? userID = ref.read(authServicesProvider).authenticatedId();
                       String userID =
                       await ref.read(authServicesProvider).getUserId();
                       String uniqueAdId = DateTime.now().millisecondsSinceEpoch.toString();
                       Advertisements ads = Advertisements(
                         adID: uniqueAdId,
-                        adsName: AdnameController.text,
-                        venue: AdvenueController.text,
-                        fee: int.parse(AdfeeController.text),
-                        organizerName: AdorganizerController.text,
-                        phoneNo: AdphoneController.text,
+                        adsName: adNameController.text,
+                        venue: adVenueController.text,
+                        fee: int.parse(adFeeController.text),
+                        organizerName: adOrganizerController.text,
+                        phoneNo: adPhoneController.text,
                         category: selectedCategory!,
                         userId: userID,
                         image: imageUrl!,

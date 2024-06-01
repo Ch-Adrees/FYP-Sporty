@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Models/catagory_model.dart';
-import 'package:fyp/Screens/AllProducts/products_page.dart';
 import 'package:fyp/Screens/Cart%20Screen/cart_screen.dart';
 
 import 'category_product.dart';

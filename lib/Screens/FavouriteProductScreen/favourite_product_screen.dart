@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fyp/Features/providers.dart';
 import 'package:fyp/Models/product_model.dart';
-import 'package:fyp/Screens/DetailProduct/Components/selected_detailed_product.dart';
-import 'package:fyp/Screens/DetailProduct/detailed_product.dart';
 
 import '../../HelperMaterial/constant.dart';
 import '../HomeScreen/productcard.dart';

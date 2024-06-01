@@ -61,10 +61,11 @@ class PaymentOptionItem extends StatelessWidget {
               ],
             ),
             Container(
-              padding: EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.only(right: 10),
               width: width,
               child: SvgPicture.asset(
                 logo,
+                // ignore: deprecated_member_use
                 color: color,
               ),
             ),

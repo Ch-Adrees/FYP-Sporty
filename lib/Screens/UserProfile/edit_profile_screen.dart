@@ -94,6 +94,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       .routeName); // Close the current screen
                             },
                             style: ButtonStyle(
+                              // ignore: deprecated_member_use
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Color(0xFFFFE6E6)), // Change color here
                             ),

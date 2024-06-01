@@ -9,7 +9,6 @@ class ProductSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String searchQuery;
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: TextFormField(

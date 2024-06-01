@@ -71,9 +71,12 @@ class _CartScreenNewState extends ConsumerState<CartScreenNew> {
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
                 onPressed: () async {
-                  await ref
+                  ref
                       .read(orderProvider.notifier)
                       .makeOrder(list, context, ref);
+                  // ref
+                  //     .read(orderProvider.notifier)
+                  //     .loadAllTheOrderOfSellerFromFirebase(ref, context);
                   // Navigator.push(context, MaterialPageRoute(builder: (context) {
                   // return const  PaymentOption();
                   // }));
