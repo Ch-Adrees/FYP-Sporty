@@ -20,7 +20,7 @@ class DetailBanner extends StatelessWidget {
     return Container(
       width: double.infinity,
       //margin: const EdgeInsets.all(20),
-      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
       decoration: BoxDecoration(
         color: kPrimaryColor,
         borderRadius: BorderRadius.circular(20),
@@ -37,21 +37,33 @@ class DetailBanner extends StatelessWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(
-                backgroundColor: Colors.white30,
-                radius: 30.0,
-                child: profilePicture != null
-                    ? Image.network(
-                        profilePicture!,
-                        width: 80.0,
-                        height: 90.0,
-                      )
-                    : SvgPicture.asset(
-                        "assets/icons/username-icon.svg",
-                        width: 80.0,
-                        height: 90.0,
-                        color: Colors.white,
-                      ),
+              Container(
+                height: 100,
+                width: 100,
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle, // Make the container circular
+                  color:
+                      Colors.transparent, // Set container color to transparent
+                  border:
+                      Border.all(color: Colors.white, width: 2), // Add border
+                ),
+                child: ClipOval(
+                  child: profilePicture != null
+                      ? Image.network(
+                          profilePicture!,
+                          width: 100.0,
+                          height: 100.0,
+                          fit: BoxFit
+                              .cover, // Ensure the image covers the entire circular area
+                        )
+                      : SvgPicture.asset(
+                          "assets/icons/username-icon.svg",
+                          width: 80.0,
+                          height: 80.0,
+                          color: Colors.white,
+                        ),
+                ),
               ),
               const SizedBox(
                 width: 15,
@@ -61,17 +73,36 @@ class DetailBanner extends StatelessWidget {
                 children: [
                   Text(
                     name,
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 20.0,
+                        fontSize: 16.0,
                         fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    shopName,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold),
+                  Row(
+                    children: [
+                      const Text(
+                        "Shop Name: ",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      
+                      SizedBox(
+                        width: 100,
+                        child: Text(
+                          softWrap: true,
+                          overflow: TextOverflow.clip,
+                          shopName,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               )

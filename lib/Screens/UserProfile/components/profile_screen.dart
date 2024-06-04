@@ -6,7 +6,7 @@ import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/enum.dart';
 import 'package:fyp/Screens/UserProfile/components/body.dart';
 import 'package:fyp/Screens/UserProfile/components/custom_bar.dart';
-import 'package:fyp/Screens/UserProfile/edit_profile_screen.dart';
+
 import 'package:fyp/Screens/HomeScreen/home_screen.dart';
 import 'package:get/get.dart';
 
@@ -15,11 +15,7 @@ class ProfileScreen extends StatelessWidget {
   String name, email;
   String? shopName;
   String? profilePicture;
-  ProfileScreen( {
-    required this.name,
-    required this.email,
-    this.profilePicture
-  });
+  ProfileScreen({required this.name, required this.email, this.profilePicture});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,18 +39,32 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    SizedBox(
-                      width: 120,
-                      height: 120,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey.withOpacity(0.3),
-                        radius: 50,
-                        child:profilePicture != null? Image.network(profilePicture!) :SvgPicture.asset(
-                          "assets/icons/username-icon.svg",
-                          color: Colors.black45,
-                          height: 80,
-                          width: 65,
-                        )
+                    Container(
+                      height: 150,
+                      width: 150,
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle, // Make the container circular
+                        color: Colors
+                            .transparent, // Set container color to transparent
+                        border: Border.all(
+                            color: Colors.white, width: 2), // Add border
+                      ),
+                      child: ClipOval(
+                        child: profilePicture != null
+                            ? Image.network(
+                                profilePicture!,
+                                width: 100.0,
+                                height: 100.0,
+                                fit: BoxFit
+                                    .cover, // Ensure the image covers the entire circular area
+                              )
+                            : SvgPicture.asset(
+                                "assets/icons/username-icon.svg",
+                                width: 80.0,
+                                height: 80.0,
+                                color: Colors.white,
+                              ),
                       ),
                     ),
                   ],

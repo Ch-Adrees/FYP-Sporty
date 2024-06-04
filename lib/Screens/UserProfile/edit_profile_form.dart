@@ -6,15 +6,14 @@ import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/HelperMaterial/errors.dart';
 
-class CompleteProfileForm extends ConsumerStatefulWidget {
-  const CompleteProfileForm({required this.userId, super.key});
-  final String userId;
+class EditProfileForm extends ConsumerStatefulWidget {
+  const EditProfileForm({super.key});
 
   @override
-  CompleteProfileFormState createState() => CompleteProfileFormState();
+  EditProfileFormState createState() => EditProfileFormState();
 }
 
-class CompleteProfileFormState extends ConsumerState<CompleteProfileForm> {
+class EditProfileFormState extends ConsumerState<EditProfileForm> {
   bool isLoading = false;
   final _formkey = GlobalKey<FormState>();
   TextEditingController firstNameController = TextEditingController();
@@ -64,7 +63,8 @@ class CompleteProfileFormState extends ConsumerState<CompleteProfileForm> {
               },
               child: const Text("Click here to choose picture")),
           const SizedBox(height: 20),
-         // const Text("Enter data only in those fields which you want to update .//Adding data in all the feeds is not necessary"),
+          const Text(
+              "Enter data only in those fields which you want to update .//Adding data in all the feeds is not necessary"),
           const SizedBox(height: 20),
           TextFormField(
             onSaved: (newValue) => firstNameController.text = newValue!,
@@ -224,73 +224,35 @@ class CompleteProfileFormState extends ConsumerState<CompleteProfileForm> {
           FormError(errors: errors),
           ElevatedButton(
             onPressed: () async {
-              if (_formkey.currentState!.validate()) {
                 _formkey.currentState!.save();
                 isLoading = true;
-                setState(() {
-                  
-                });
+                setState(() {});
                 imageUrl = await ref
                     .read(authServicesProvider)
                     .uploadAdImage(file, context);
-                await ref.read(sellerProvider.notifier).completeProfileScreen(
-                    context,
-                    imageUrl,
-                    "${firstNameController.text} ${lastNameController.text}",
-                    phoneNoController.text,
-                    shopNameController.text,
-                    shopAddressController.text,
-                    addressController.text,
-                    ref,
-                    widget.userId);
+                await ref
+                    .read(sellerProvider.notifier)
+                    .updateSellerProfileScreen(
+                        context,
+                        "${firstNameController.text} ${lastNameController.text}",
+                        phoneNoController.text.toString(),
+                        addressController.text.toString(),
+                        imageUrl,
+                        shopNameController.text.toString(),
+                        shopAddressController.text.toString(),
+                        ref);
                 isLoading = false;
-                setState(() {
-                  
-                });
-              }
+                setState(() {});
+              
             },
-            child:isLoading?const CircularProgressIndicator(color: Colors.white,): const Text("Continue"),
+            child: isLoading
+                ? const CircularProgressIndicator(
+                    color: Colors.white,
+                  )
+                : const Text("Continue"),
           ),
         ],
       ),
     );
   }
 }
-
-
-// Future<void> _pickImage() async {
-//   final ImagePicker _picker = ImagePicker();
-//   XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-//
-//   if (image != null) {
-//     // Process the selected image (save it, display it, etc.)
-//     // You can set the image variable in your state to display it in the UI
-//   }
-// }
-
-
-// ElevatedButton normal1(BuildContext context) {
-//   return ElevatedButton(
-//     onPressed: () async {
-//       ImagePickerPlus picker = ImagePickerPlus(context);
-//
-//       SelectedImagesDetails? details =
-//       await picker.pickImage(source: ImageSource.gallery);
-//       if (details != null) await displayDetails(details);
-//     },
-//     child: const Text("Normal 1"),
-//   );
-// }
-
-// Future<void> displayDetails(SelectedImagesDetails details) async {
-//   await Navigator.of(context).push(
-//     CupertinoPageRoute(
-//       builder: (context) {
-//         // return DisplayImages(
-//         //     selectedBytes: details.selectedFiles,
-//         //     details: details,
-//         //     aspectRatio: details.aspectRatio);
-//       },
-//     ),
-//   );
-//}

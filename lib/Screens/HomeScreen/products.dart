@@ -68,5 +68,5 @@ Stream<List<Products>> getProductsFromFirebase() {
       .limit(10)
       .snapshots()
       .map((snapshot) =>
-      snapshot.docs.map((doc) => Products.fromJson(doc.data() as Map<String, dynamic>)).toList());
+      snapshot.docs.map((doc) => Products.fromJson(doc.data())).toList());
 }

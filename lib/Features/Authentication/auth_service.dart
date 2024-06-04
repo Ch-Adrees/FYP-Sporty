@@ -13,7 +13,6 @@ import 'package:fyp/Models/user_model.dart';
 import 'package:fyp/Screens/AdminPanel/admin.dart';
 import 'package:fyp/Screens/CompleteProfile/complete_profile_screen.dart';
 import 'package:fyp/Screens/HomeScreen/navigation_bar.dart';
-
 import 'package:fyp/Screens/SellerHomeScreen/seller_home_screen.dart';
 import 'package:fyp/Screens/SignInScreen/sigin.dart';
 import 'package:image_picker/image_picker.dart';
@@ -39,7 +38,7 @@ class AuthServices {
           .createUserWithEmailAndPassword(email: email, password: password);
       await firbaseMessaging.requestPermission();
       final fcmToken = await firbaseMessaging.getToken();
-      ProviderWidgets.showFlutterToast(context, fcmToken);
+      //ProviderWidgets.showFlutterToast(context, fcmToken);
       await _firestore
           .collection('users')
           .doc(userCredential.user!.uid)
@@ -205,12 +204,15 @@ class AuthServices {
               case 'seller':
                 SellerModel? seller = await sellerNotifier.getSellerbyId(
                     userCredential.user!.uid, context);
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) {
-                  return SellerHomeScreen(
-                    seller: seller!,
-                  );
-                }));
+                if (seller != null) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return SellerHomeScreen(
+                      seller: seller,
+                    );
+                  }));
+                }
+                
                 break;
               case 'Admin':
                 Navigator.pushReplacement(context,

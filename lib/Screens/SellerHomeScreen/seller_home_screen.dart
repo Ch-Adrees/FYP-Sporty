@@ -13,7 +13,6 @@ import 'package:fyp/Screens/SellerHomeScreen/seller_product_card.dart';
 
 import 'package:fyp/Screens/UploadProductsScreen/upload_products_screen.dart';
 import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
-
 import '../../Models/product_model.dart';
 
 class SellerHomeScreen extends ConsumerStatefulWidget {
@@ -28,6 +27,15 @@ class SellerHomeScreen extends ConsumerStatefulWidget {
 class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   int count = 1;
   List<Products> ownProdcts = [];
+  void counterValue() async {
+    String sellerId = await ref.read(authServicesProvider).getUserId();
+    int? counted = await ref
+        .read(sellerOrderProvider.notifier)
+        .getTotalNumberOfOrdersOfSeller(sellerId, context);
+    setState(() {
+      count = counted!;
+    });
+  }
 
   void getOwnProducts() async {
     List<Products> tempProducts =
@@ -40,12 +48,13 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   @override
   void initState() {
     super.initState();
-    getOwnProducts();
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    getOwnProducts();
+    counterValue();
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -72,7 +81,6 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          reverse: true,
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
           child: Column(
             children: [
@@ -92,6 +100,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                   }),
               const SizedBox(height: 5),
               ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: ownProdcts.length < 5 ? ownProdcts.length : 5,
                   itemBuilder: (context, index) {

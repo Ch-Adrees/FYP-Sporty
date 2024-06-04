@@ -56,6 +56,6 @@ class AllProducts extends ConsumerWidget {
 Stream<List<Products>> getProductsFromFirebase() {
   return FirebaseFirestore.instance.collection('products').snapshots().map(
       (snapshot) => snapshot.docs
-          .map((doc) => Products.fromJson(doc.data() as Map<String, dynamic>))
+          .map((doc) => Products.fromJson(doc.data()))
           .toList());
 }

@@ -31,6 +31,49 @@ class SellerOrder extends StateNotifier<List<OrderModel>> {
     }
   }
 
+  Future<void> acceptOrder(
+      int orderNumber, String sellerId, BuildContext context) async {
+    try {
+      QuerySnapshot snapshot = await firestore
+          .collection('sellers')
+          .doc(sellerId)
+          .collection('orders')
+          .where('orderNo', isEqualTo: orderNumber)
+          .get();
+      if (snapshot.docs.isNotEmpty) {
+        for (DocumentSnapshot documentSnapshot in snapshot.docs) {
+          documentSnapshot.reference.update({'isAccepted': true});
+        }
+        ProviderWidgets.showFlutterToast(context, "Order Accepted");
+      } else {
+        debugPrint("List is Empty");
+      }
+    } catch (e) {
+      ProviderWidgets.showFlutterToast(context, "Error: ${e.toString()}");
+    }
+  }
+  Future<void> rejectOrder(
+      int orderNumber, String sellerId, BuildContext context) async {
+    try {
+      QuerySnapshot snapshot = await firestore
+          .collection('sellers')
+          .doc(sellerId)
+          .collection('orders')
+          .where('orderNo', isEqualTo: orderNumber)
+          .get();
+      if (snapshot.docs.isNotEmpty) {
+        for (DocumentSnapshot documentSnapshot in snapshot.docs) {
+          documentSnapshot.reference.update({'isRejected': true});
+        }
+        ProviderWidgets.showFlutterToast(context, "Order Accepted");
+      } else {
+        debugPrint("List is Empty");
+      }
+    } catch (e) {
+      ProviderWidgets.showFlutterToast(context, "Error: ${e.toString()}");
+    }
+  }
+
   Future<void> fetchTheTotalOrdersFromTheFirebase(
       String sellerId, BuildContext context) async {
     List<OrderModel> orders = [];
@@ -39,6 +82,8 @@ class SellerOrder extends StateNotifier<List<OrderModel>> {
           .collection('sellers')
           .doc(sellerId)
           .collection('orders')
+          .where('isAccepted', isEqualTo: false)
+          .where('isRejected', isEqualTo: false)
           .get();
       for (var document in snapshot.docs) {
         orders

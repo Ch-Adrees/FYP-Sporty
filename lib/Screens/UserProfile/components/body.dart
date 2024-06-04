@@ -3,9 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/Screens/SellerHomeScreen/new_order_screen.dart';
 import 'package:fyp/Screens/UserProfile/components/profile_menu.dart';
-import 'package:fyp/Screens/UserProfile/edit_profile_screen.dart';
+
 import 'package:fyp/Screens/MyAdsScreen/myads.dart';
 import 'package:fyp/Screens/SignInScreen/sigin.dart';
+import 'package:fyp/Screens/UserProfile/edit_profile.dart';
 import 'package:fyp/Screens/WalletScreen/mywallet.dart';
 
 import '../../FavouriteProductScreen/favourite_product_screen.dart';
@@ -20,15 +21,14 @@ class Body extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 10),
-         
           ProfileMenu(
             icon: "assets/icons/User Icon.svg",
             text: "Edit Profile",
             press: () {
-               Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) {
-                        return  EditProfileScreen(imageUrl: profilePic!,);
-                      }));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return SellerEditProfileScreen();
+              }));
             },
           ),
           ProfileMenu(
@@ -52,7 +52,8 @@ class Body extends StatelessWidget {
               //Navigator.pushNamed(context, MyAdsScreen.routeName);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FavoriteProductsScreen()),
+                MaterialPageRoute(
+                    builder: (context) => FavoriteProductsScreen()),
               );
             },
           ),

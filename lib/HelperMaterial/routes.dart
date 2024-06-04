@@ -9,8 +9,6 @@ import 'package:fyp/Screens/OrderCheckout/modals/shipping_address.dart';
 import 'package:fyp/Screens/SellerHomeScreen/new_order_screen.dart';
 import 'package:fyp/Screens/SellerHomeScreen/seller_all_product_screen.dart';
 import 'package:fyp/Screens/Success%20Screen/success_screen.dart';
-//import 'package:fyp/Screens/UserProfile/components/profile_screen.dart';
-import 'package:fyp/Screens/UserProfile/edit_profile_screen.dart';
 import 'package:fyp/Screens/WalletScreen/mywallet.dart';
 import 'package:fyp/Screens/MycartScreen/mycart_screen.dart';
 import 'package:fyp/Screens/onBoardingScreen/onboardscreen.dart';
@@ -44,7 +42,6 @@ final Map<String, WidgetBuilder> listOfRoutes = {
   UploadProducts.routeName: (context) => const UploadProducts(),
   ProductPage.routeName: (context) => const ProductPage(),
   AdminPage.routeName: (context) => const AdminPage(),
-  EditProfileScreen.routeName: (context) => const EditProfileScreen(imageUrl: "",),
   WalletScreen.routeName: (context) => const WalletScreen(),
   SingleProductScreen.routeName: (context) => const SingleProductScreen(),
   CategoryScreen.routeName: (context) => const CategoryScreen(),

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Screens/AllProducts/Parts/search_bar.dart';
-
 import '../../Models/product_model.dart';
 import '../HomeScreen/productcard.dart';
 
@@ -104,7 +103,7 @@ Stream<List<Products>> getProductsByCategory(String categoryName) {
       .where('productCategory', isEqualTo: categoryName)
       .snapshots().map(
           (snapshot) => snapshot.docs
-          .map((doc) => Products.fromJson(doc.data() as Map<String, dynamic>))
+          .map((doc) => Products.fromJson(doc.data()))
           .toList());
 }
 
@@ -114,7 +113,7 @@ Stream<List<Products>> searchProductsByName(String searchQuery) {
       .where('title', isLessThanOrEqualTo: '$searchQuery\uf8ff')
       .snapshots().map(
           (snapshot) => snapshot.docs
-          .map((doc) => Products.fromJson(doc.data() as Map<String, dynamic>))
+          .map((doc) => Products.fromJson(doc.data()))
           .toList());
 }
 

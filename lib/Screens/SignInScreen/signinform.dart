@@ -21,6 +21,7 @@ class _SigninFormState extends ConsumerState<SigninForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isObscure = false;
+  bool isLoading = false;
 
   final List<String?> errors = [];
 
@@ -148,6 +149,8 @@ class _SigninFormState extends ConsumerState<SigninForm> {
           const SizedBox(height: 35),
           ElevatedButton(
             onPressed: () async {
+              isLoading = true;
+              setState(() {});
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 if (email == "chadreeswarriach@gmail.com" &&
@@ -158,14 +161,19 @@ class _SigninFormState extends ConsumerState<SigninForm> {
                       email: _emailController.text.toString(),
                       password: _passwordController.text,
                       context: context);
-                 
                 }
+                isLoading = false;
+                setState(() {});
 
                 // if all are valid then go to success screen
                 //KeyboardUtil.hideKeyboard(context);
               }
             },
-            child: const Text("Sign In"),
+            child: isLoading
+                ? const CircularProgressIndicator(
+                    color: Colors.white,
+                  )
+                : const Text("Sign In"),
           ),
         ],
       ),

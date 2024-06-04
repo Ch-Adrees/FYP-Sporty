@@ -181,7 +181,7 @@ class SignUpFormState extends ConsumerState<SignUpForm> {
               padding: const EdgeInsets.fromLTRB(10, 5, 0.0, 0.0),
               borderRadius: BorderRadius.circular(50),
               value: selectedRole,
-              hint: const Text('Select Your Role='),
+              hint: const Text('Select Your Role'),
               icon: const Icon(Icons.arrow_drop_down),
               underline: Container(
                 height: 0,
@@ -195,7 +195,7 @@ class SignUpFormState extends ConsumerState<SignUpForm> {
                   selectedRole = newValue!;
                 });
               },
-              items: <String>['Select', 'customer', 'Seller']
+              items: <String>['Select', 'customer', 'seller']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,

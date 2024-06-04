@@ -267,7 +267,7 @@ Stream<List<Advertisements>> getAdsFromFirebase(String selectedButton) {
       .where('category', isEqualTo: selectedButton)
       .snapshots()
       .map((snapshot) =>
-      snapshot.docs.map((doc) => Advertisements.fromJson(doc.data() as Map<String, dynamic>)).toList());
+      snapshot.docs.map((doc) => Advertisements.fromJson(doc.data())).toList());
 }
 
 

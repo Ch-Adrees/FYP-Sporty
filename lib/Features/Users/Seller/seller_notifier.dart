@@ -1,8 +1,8 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fyp/Features/provi_wid.dart';
+import 'package:fyp/Features/providers.dart';
 import 'package:fyp/Models/seller_model.dart';
 import 'package:fyp/Screens/SignInScreen/sigin.dart';
 
@@ -61,13 +61,47 @@ class SellerNotifier extends StateNotifier<SellerModel> {
           .set(newSeller.userToMap());
       SetOptions(merge: true);
       ProviderWidgets.showFlutterToast(context, "Profile has been updated.");
-      Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) {
-              return const SignInScreen();
-            }));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return const SignInScreen();
+      }));
     } catch (e) {
       ProviderWidgets.showFlutterToast(
           context, "Error in completing profile: ${e.toString()}");
+    }
+  }
+
+  Future<void> updateSellerProfileScreen(
+      BuildContext context,
+      String? nameofUser,
+      String? phoneNumber,
+      String? address,
+      String? profilePic,
+      String? shopName,
+      String? shopAddress,
+      WidgetRef ref) async {
+    try {
+      String sellerId = await ref.read(authServicesProvider).getUserId();
+      SellerModel? seller = await ref
+          .read(sellerProvider.notifier)
+          .getSellerbyId(sellerId, context);
+     
+      if (seller != null) {
+         SellerModel newSeller=seller.copyWith(
+            nameOfUser: nameofUser,
+            address: address,
+            shopAddress: shopAddress,
+            shopName: shopName,
+            profilePic: profilePic,
+            phoneNumber: phoneNumber);
+        await firestore
+            .collection('sellers')
+            .doc(sellerId)
+            .set(newSeller.userToMap());
+        SetOptions(merge: true);
+        ProviderWidgets.showFlutterToast(context, "Profile has been updated.");
+      } else {}
+    } catch (e) {
+      ProviderWidgets.showFlutterToast(context, "Error ${e.toString()}");
     }
   }
 

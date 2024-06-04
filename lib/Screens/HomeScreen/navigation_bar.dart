@@ -33,7 +33,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
     const HomeScreen(),
 //    const FavoriteScreen(),
     const CategoryScreen(),
-    PostAdScreen(),
+   const PostAdScreen(),
     const AllAdsScreen(),
     ProfileScreen(
       name: 'Ali',

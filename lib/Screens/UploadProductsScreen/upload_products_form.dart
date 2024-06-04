@@ -8,6 +8,7 @@ import 'package:fyp/HelperMaterial/suffixicons.dart';
 import 'package:fyp/Models/catagory_model.dart';
 import 'package:fyp/Models/product_model.dart';
 
+
 class UploadProductsForm extends ConsumerStatefulWidget {
   const UploadProductsForm({super.key});
 
@@ -22,7 +23,7 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
   TextEditingController productTitleController = TextEditingController();
   TextEditingController productDescriptionController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
-   String? selectedCategory;
+  String? selectedCategory;
   final List<String> errors = [];
   late List<String> imagesUrls = [];
   List<File> productImages = [];
@@ -264,7 +265,7 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
                     await ref.read(authServicesProvider).getUserId();
                 int uniqueProductId = DateTime.now().millisecondsSinceEpoch;
                 Products product = Products(
-                  productId: uniqueProductId,
+                    productId: uniqueProductId,
                     productCode: int.parse(productCodeController.text),
                     productCategory: selectedCategory!,
                     images: imagesUrls,
@@ -272,7 +273,8 @@ class UploadProductsFormState extends ConsumerState<UploadProductsForm> {
                     price: double.parse(productPriceController.text),
                     sellerId: sellerId,
                     isDeleted: false,
-                    description: productDescriptionController.text, isPopular: false);
+                    description: productDescriptionController.text,
+                    isPopular: false);
                 if (context.mounted) {
                   await ref
                       .read(productProvider.notifier)

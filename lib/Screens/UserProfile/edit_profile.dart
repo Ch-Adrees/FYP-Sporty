@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:fyp/HelperMaterial/constant.dart';
-import 'package:fyp/Screens/CompleteProfile/complete_profile_form.dart';
+import 'package:fyp/Screens/UserProfile/edit_profile_form.dart';
+import '../../HelperMaterial/constant.dart';
 
-class CompleteProfile extends StatelessWidget {
-  const CompleteProfile({super.key, required this.userId});
-  static String routeName = "/complete_profile";
-  final String userId;
+class SellerEditProfileScreen extends StatelessWidget {
+  const SellerEditProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Complete Profile',
+          'Edit Profile',
           //textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 26.0,
@@ -22,18 +20,18 @@ class CompleteProfile extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body:  SafeArea(
+      body: const SafeArea(
         child: SizedBox(
           width: double.infinity,
           child: Padding(
-            padding:const EdgeInsets.symmetric(horizontal: 20),
+            padding:  EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(children: [
-                const SizedBox(
+                 SizedBox(
                   height: 16,
                 ),
-                CompleteProfileForm(userId: userId,),
-              const  SizedBox(height: 30),
+                EditProfileForm(),
+                const SizedBox(height: 30),
               ]),
             ),
           ),
