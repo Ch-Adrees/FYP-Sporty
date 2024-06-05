@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:fyp/Screens/UserProfile/edit_profile_form.dart';
-import '../../HelperMaterial/constant.dart';
+import 'package:fyp/HelperMaterial/constant.dart';
+import 'package:fyp/Screens/SellerHomeScreen/seller_product_edit_form.dart';
 
-class SellerEditProfileScreen extends StatelessWidget {
-  const SellerEditProfileScreen({super.key});
+class EditProductScreen extends StatelessWidget {
+  const EditProductScreen({super.key,required this.productCode});
+  static String routeName = "/upload_products";
+  final int productCode;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Edit Profile',
+          'Edit Product',
           //textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 26.0,
@@ -20,18 +22,16 @@ class SellerEditProfileScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: const SafeArea(
+      body:  SafeArea(
         child: SizedBox(
           width: double.infinity,
           child: Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(children: [
-                 SizedBox(
-                  height: 16,
-                ),
-                EditProfileForm(),
-                SizedBox(height: 30),
+              const  SizedBox(height: 16),
+                EditProductsForm(productCode: productCode,),
+               const SizedBox(height: 30),
               ]),
             ),
           ),

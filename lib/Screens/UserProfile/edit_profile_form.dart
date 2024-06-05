@@ -62,9 +62,13 @@ class EditProfileFormState extends ConsumerState<EditProfileForm> {
                 setState(() {});
               },
               child: const Text("Click here to choose picture")),
-          const SizedBox(height: 20),
-          const Text(
-              "Enter data only in those fields which you want to update .//Adding data in all the feeds is not necessary"),
+          const SizedBox(height: 10),
+          const SizedBox(
+            width: 350,
+            child: Text(
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 10),
+                "Enter data only in those fields which you want to update .Adding data in all the feeds is not necessary."),
+          ),
           const SizedBox(height: 20),
           TextFormField(
             onSaved: (newValue) => firstNameController.text = newValue!,
@@ -224,26 +228,23 @@ class EditProfileFormState extends ConsumerState<EditProfileForm> {
           FormError(errors: errors),
           ElevatedButton(
             onPressed: () async {
-                _formkey.currentState!.save();
-                isLoading = true;
-                setState(() {});
-                imageUrl = await ref
-                    .read(authServicesProvider)
-                    .uploadAdImage(file, context);
-                await ref
-                    .read(sellerProvider.notifier)
-                    .updateSellerProfileScreen(
-                        context,
-                        "${firstNameController.text} ${lastNameController.text}",
-                        phoneNoController.text.toString(),
-                        addressController.text.toString(),
-                        imageUrl,
-                        shopNameController.text.toString(),
-                        shopAddressController.text.toString(),
-                        ref);
-                isLoading = false;
-                setState(() {});
-              
+              _formkey.currentState!.save();
+              isLoading = true;
+              setState(() {});
+              imageUrl = await ref
+                  .read(authServicesProvider)
+                  .uploadAdImage(file, context);
+              await ref.read(sellerProvider.notifier).updateSellerProfileScreen(
+                  context,
+                  "${firstNameController.text} ${lastNameController.text}",
+                  phoneNoController.text.toString(),
+                  addressController.text.toString(),
+                  imageUrl,
+                  shopNameController.text.toString(),
+                  shopAddressController.text.toString(),
+                  ref);
+              isLoading = false;
+              setState(() {});
             },
             child: isLoading
                 ? const CircularProgressIndicator(

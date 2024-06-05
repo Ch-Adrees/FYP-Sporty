@@ -20,7 +20,7 @@ class DetailBanner extends StatelessWidget {
     return Container(
       width: double.infinity,
       //margin: const EdgeInsets.all(20),
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       decoration: BoxDecoration(
         color: kPrimaryColor,
         borderRadius: BorderRadius.circular(20),
@@ -40,7 +40,7 @@ class DetailBanner extends StatelessWidget {
               Container(
                 height: 100,
                 width: 100,
-                padding: const EdgeInsets.all(5),
+                // padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle, // Make the container circular
                   color:
@@ -66,7 +66,7 @@ class DetailBanner extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: 15,
+                width: 10,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,6 +80,9 @@ class DetailBanner extends StatelessWidget {
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     children: [
                       const Text(
@@ -89,9 +92,9 @@ class DetailBanner extends StatelessWidget {
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold),
                       ),
-                      
                       SizedBox(
-                        width: 100,
+                        width: 120,
+                        height: 50,
                         child: Text(
                           softWrap: true,
                           overflow: TextOverflow.clip,

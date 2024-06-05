@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
+import 'package:fyp/Screens/SellerHomeScreen/seller_product_edit_screen.dart';
 
 import '../../Models/product_model.dart';
 
-class SellerProductCard extends StatelessWidget {
+class SellerProductCard extends ConsumerWidget {
   const SellerProductCard({super.key, required this.product});
   final Products product;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: Card(
@@ -49,7 +52,14 @@ class SellerProductCard extends StatelessWidget {
                       ),
                       child: IconButton(
                         icon: const Icon(Icons.edit),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return EditProductScreen(
+                              productCode: product.productCode,
+                            );
+                          }));
+                        },
                         color: kPrimaryColor,
                       ),
                     ),
@@ -65,7 +75,17 @@ class SellerProductCard extends StatelessWidget {
                       ),
                       child: IconButton(
                         icon: const Icon(Icons.delete),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await ref.read(productProvider.notifier).updateProductData(
+                              context,
+                              null,
+                              null,
+                              null,
+                              null,
+                              null,
+                              true,
+                              product.productCode);
+                        },
                         color: kPrimaryColor,
                       ),
                     ),

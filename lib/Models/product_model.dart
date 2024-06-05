@@ -25,6 +25,33 @@ class Products {
     this.ratingCount = 0,
     this.totalRatingSum = 0,
   });
+
+  Products copyWith({
+    String? title,
+    String? description,
+    List<String>? images,
+    double? price,
+    String? productCategory,
+    bool? isDeleted,
+  }) {
+    return Products(
+      productId:  productId,
+      ratingCount:  ratingCount,
+      productCode:  productCode,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      images: images ?? this.images,
+      rating:rating,
+      price: price ?? this.price,
+      totalRatingSum: totalRatingSum,
+      isFavourite:isFavourite,
+      isPopular:isPopular,
+      sellerId:sellerId,
+      productCategory: productCategory ?? this.productCategory,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'productId': productId,

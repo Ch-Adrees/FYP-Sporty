@@ -23,6 +23,45 @@ class ProductNotifier extends StateNotifier<List<Products>> {
     return files;
   }
 
+  Future<void> updateProductData(
+      BuildContext context,
+      String? title,
+      String? description,
+      List<String>? images,
+      double? price,
+      String? productCategory,
+      bool? isDeleted,
+      int productCode) async {
+    try {
+      QuerySnapshot snap = await _firestore
+          .collection('products')
+          .where('productCode', isEqualTo: productCode)
+          .get();
+      List<DocumentSnapshot> documents = snap.docs;
+      if (documents.isNotEmpty) {
+        final DocumentSnapshot docs = documents[0];
+        Products products =
+            Products.fromJson(docs.data() as Map<String, dynamic>);
+        Products newProduct = products.copyWith(
+            title: title,
+            description: description,
+            images: images,
+            price: price,
+            productCategory: productCategory,
+            isDeleted: isDeleted);
+
+        await _firestore
+            .collection('products')
+            .doc(docs.id)
+            .update(newProduct.toJson());
+        ProviderWidgets.showFlutterToast(
+            context, "Opearationa Successful !");
+      }
+    } catch (e) {
+      ProviderWidgets.showFlutterToast(context, "Error: ${e.toString()}");
+    }
+  }
+
   Future<List<File>> pickImagesFromGallery() async {
     List<File> files = [];
     ImagePicker imagePicker = ImagePicker();
@@ -56,7 +95,6 @@ class ProductNotifier extends StateNotifier<List<Products>> {
       if (context.mounted) {
         ProviderWidgets.showFlutterToast(context, e.toString());
       }
-      debugPrint("The error is ${e.toString()}");
     }
     return imagesUrls;
   }
