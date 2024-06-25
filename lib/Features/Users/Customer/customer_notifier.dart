@@ -30,6 +30,8 @@ class CustomerNotifier extends StateNotifier<CustomerModel> {
       }
     }
   }
+  
+
 
   Future<CustomerModel?> getCustomerById(
       BuildContext context) async {

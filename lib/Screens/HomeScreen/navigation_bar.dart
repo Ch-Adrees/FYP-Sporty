@@ -35,9 +35,10 @@ class _NavBarScreenState extends State<NavBarScreen> {
     const CategoryScreen(),
    const PostAdScreen(),
     const AllAdsScreen(),
-    ProfileScreen(
-      name: 'Ali',
-      email: 'Adrees@gmail.com',
+   const ProfileScreen(
+      name: 'Muhammad Hanan Haider',
+      email: 'customer786@gmail.com',
+      profilePicture: "https://firebasestorage.googleapis.com/v0/b/sporty-database.appspot.com/o/images%2FUsers%2F1717516615760.jpg?alt=media&token=9a02c3e0-524f-44ea-981d-c2fab7d609db",
     ),
 
     //ProfileScreen(),

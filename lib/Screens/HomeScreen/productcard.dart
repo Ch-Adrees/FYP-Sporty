@@ -8,6 +8,7 @@ import 'package:fyp/Models/product_model.dart';
 
 import '../DetailProduct/Components/selected_detailed_product.dart';
 import '../DetailProduct/detailed_product.dart';
+
 class ProductCard extends ConsumerStatefulWidget {
   const ProductCard({
     Key? key,
@@ -62,7 +63,8 @@ class _ProductCardState extends ConsumerState<ProductCard> {
     if (isFavourite) {
       await favourites.doc(favouriteDocId).delete();
     } else {
-      DocumentReference docRef = await favourites.add({'productId': widget.product.productId});
+      DocumentReference docRef =
+          await favourites.add({'productId': widget.product.productId});
       favouriteDocId = docRef.id;
     }
 
@@ -70,6 +72,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
       isFavourite = !isFavourite;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -150,4 +153,3 @@ class _ProductCardState extends ConsumerState<ProductCard> {
     );
   }
 }
-

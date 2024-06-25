@@ -5,6 +5,7 @@ import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Models/seller_model.dart';
 import 'package:fyp/Screens/HomeScreen/icon_with_count.dart';
+import 'package:fyp/Screens/MyAdsScreen/allads.dart';
 import 'package:fyp/Screens/SellerHomeScreen/detail_banner.dart';
 import 'package:fyp/Screens/HomeScreen/section_title.dart';
 import 'package:fyp/Screens/SellerHomeScreen/new_order_screen.dart';
@@ -125,7 +126,9 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                     color: kPrimaryColor,
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, AllAdsScreen.routeName);
+                    },
                     icon: SvgPicture.asset(
                       "assets/icons/speaker-icon.svg",
                       height: 25,

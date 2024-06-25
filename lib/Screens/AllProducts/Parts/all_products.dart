@@ -7,7 +7,6 @@ import 'package:fyp/Screens/HomeScreen/productcard.dart';
 
 import '../../../HelperMaterial/constant.dart';
 
-
 class AllProducts extends ConsumerWidget {
   const AllProducts({super.key});
 
@@ -28,23 +27,20 @@ class AllProducts extends ConsumerWidget {
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Center(child: Text('No Product found.'));
             }
-      
+
             List<Products> prodList = snapshot.data!;
-            return SingleChildScrollView(
-              child: GridView.builder(
-                shrinkWrap: true,
-                itemCount: prodList.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisExtent: 238,
-                    mainAxisSpacing: 10),
-                itemBuilder: (context, index) {
-                  Products product = prodList[index];
-                  return ProductCard(product: product);
-              
-                },
-              ),
+            return GridView.builder(
+              shrinkWrap: true,
+              itemCount: prodList.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisExtent: 240,
+                  mainAxisSpacing: 10),
+              itemBuilder: (context, index) {
+                Products product = prodList[index];
+                return ProductCard(product: product);
+              },
             );
           },
         ),
@@ -55,7 +51,6 @@ class AllProducts extends ConsumerWidget {
 
 Stream<List<Products>> getProductsFromFirebase() {
   return FirebaseFirestore.instance.collection('products').snapshots().map(
-      (snapshot) => snapshot.docs
-          .map((doc) => Products.fromJson(doc.data()))
-          .toList());
+      (snapshot) =>
+          snapshot.docs.map((doc) => Products.fromJson(doc.data())).toList());
 }

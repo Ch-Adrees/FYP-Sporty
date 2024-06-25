@@ -4,6 +4,7 @@ import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
 import 'package:fyp/Models/cart_model.dart';
 import 'package:fyp/Screens/MycartScreen/mycart_body.dart';
+import 'package:fyp/Screens/payment/payment_options.dart';
 
 class CartScreenNew extends ConsumerStatefulWidget {
   const CartScreenNew({super.key});
@@ -71,15 +72,15 @@ class _CartScreenNewState extends ConsumerState<CartScreenNew> {
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
                 onPressed: () async {
-                  ref
-                      .read(orderProvider.notifier)
-                      .makeOrder(list, context, ref);
+                  // ref
+                  //     .read(orderProvider.notifier)
+                  //     .makeOrder(list, context, ref);
                   // ref
                   //     .read(orderProvider.notifier)
                   //     .loadAllTheOrderOfSellerFromFirebase(ref, context);
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  // return const  PaymentOption();
-                  // }));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return   PaymentOption(list: list,);
+                  }));
                 },
                 style: ElevatedButton.styleFrom(elevation: 1),
                 child: const Text("Checkout"),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fyp/Features/providers.dart';
 import 'package:fyp/HelperMaterial/constant.dart';
+import 'package:fyp/Models/cart_model.dart';
 
 class PaymentOptionItem extends StatelessWidget {
   final String paymentMethod;
@@ -76,14 +79,18 @@ class PaymentOptionItem extends StatelessWidget {
   }
 }
 
-class PaymentOption extends StatefulWidget {
-  const PaymentOption({Key? key}) : super(key: key);
+class PaymentOption extends ConsumerStatefulWidget {
+  final List<CartModel> list;
+  const PaymentOption({
+    required this.list,
+    Key? key,
+  }) : super(key: key);
 
   @override
-  State<PaymentOption> createState() => _PaymentOptionState();
+  ConsumerState<PaymentOption> createState() => _PaymentOptionState();
 }
 
-class _PaymentOptionState extends State<PaymentOption> {
+class _PaymentOptionState extends ConsumerState<PaymentOption> {
   String selectedPayment = "easypaisa";
 
   @override
@@ -170,43 +177,18 @@ class _PaymentOptionState extends State<PaymentOption> {
         ),
       ),
       bottomSheet: Container(
-        height: 150,
+        height: 120,
         decoration: BoxDecoration(
             color: kSecondaryColor.withOpacity(0.1),
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30), topRight: Radius.circular(30))),
         child: Column(children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(20.0, 10, 20, 10),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Cash on Delievery:",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red),
-                ),
-                Text(
-                  "\$10000",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey),
-                )
-              ],
-            ),
-          ),
-          // const SizedBox(
-          //   height: 10,
-          // ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
+                const Text(
                   "Total :",
                   style: TextStyle(
                       fontSize: 16,
@@ -214,8 +196,8 @@ class _PaymentOptionState extends State<PaymentOption> {
                       color: Colors.red),
                 ),
                 Text(
-                  "\$10000",
-                  style: TextStyle(
+                  ref.watch(cartProvider.notifier).totalAmount().toString(),
+                  style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey),
@@ -226,10 +208,10 @@ class _PaymentOptionState extends State<PaymentOption> {
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const PaymentOption();
-                }));
+              onPressed: () async {
+                ref
+                    .read(orderProvider.notifier)
+                    .makeOrder(widget.list, context, ref);
               },
               style: ElevatedButton.styleFrom(elevation: 1),
               child: const Text("Place Order"),
